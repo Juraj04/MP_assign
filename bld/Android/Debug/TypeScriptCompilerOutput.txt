@@ -12,3 +12,17 @@ C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\
 C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\app.module.js.map
 C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\main.js
 C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\main.js.map
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\pages\about\about.js
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\pages\about\about.js.map
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\pages\contact\contact.js
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\pages\contact\contact.js.map
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\pages\home\home.js
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\pages\home\home.js.map
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\pages\tabs\tabs.js
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\pages\tabs\tabs.js.map
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\app.component.js
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\app.component.js.map
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\app.module.js
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\app.module.js.map
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\main.js
+C:\Users\janik\OneDrive\Dokumenty\Visual Studio 2017\Projects\MP_assign\src\app\main.js.map
