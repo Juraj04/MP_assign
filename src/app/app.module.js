@@ -12,8 +12,10 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ProductsPage } from '../pages/products/products';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { DatabaseProvider } from '../providers/database/database';
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,7 +28,8 @@ AppModule = __decorate([
             AboutPage,
             ContactPage,
             HomePage,
-            TabsPage
+            TabsPage,
+            ProductsPage
         ],
         imports: [
             BrowserModule,
@@ -38,12 +41,14 @@ AppModule = __decorate([
             AboutPage,
             ContactPage,
             HomePage,
-            TabsPage
+            TabsPage,
+            ProductsPage
         ],
         providers: [
             StatusBar,
             SplashScreen,
-            { provide: ErrorHandler, useClass: IonicErrorHandler }
+            { provide: ErrorHandler, useClass: IonicErrorHandler },
+            DatabaseProvider
         ]
     })
 ], AppModule);

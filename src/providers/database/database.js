@@ -7,23 +7,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
-import { ProductsPage } from '../products/products';
-var TabsPage = (function () {
-    function TabsPage() {
-        this.tab1Root = ProductsPage;
-        this.tab2Root = AboutPage;
-        this.tab3Root = ContactPage;
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
+/*
+  Generated class for the DatabaseProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var DatabaseProvider = (function () {
+    function DatabaseProvider(http) {
+        this.http = http;
+        console.log('Hello DatabaseProvider Provider');
     }
-    return TabsPage;
+    return DatabaseProvider;
 }());
-TabsPage = __decorate([
-    Component({
-        templateUrl: 'tabs.html'
-    }),
-    __metadata("design:paramtypes", [])
-], TabsPage);
-export { TabsPage };
-//# sourceMappingURL=tabs.js.map
+DatabaseProvider = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [Http])
+], DatabaseProvider);
+export { DatabaseProvider };
+//# sourceMappingURL=database.js.map

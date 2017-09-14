@@ -7,12 +7,20 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>products</ion-title>
+    <ion-title>Products</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <h1>Hello world!</h1>
+  <ion-list inset>
+    <button ion-item *ngFor="let product of products" (click)="itemSelected(item)">
+      {{ product.name }}
+      <br />
+
+      {{ "price: " + product.price }}
+      {{ "rating: " + product.rating }}
+    </button>
+  </ion-list>
 </ion-content>

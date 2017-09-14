@@ -8,22 +8,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
-import { ProductsPage } from '../products/products';
-var TabsPage = (function () {
-    function TabsPage() {
-        this.tab1Root = ProductsPage;
-        this.tab2Root = AboutPage;
-        this.tab3Root = ContactPage;
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+/**
+ * Generated class for the ProductsPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ProductsPage = (function () {
+    function ProductsPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
     }
-    return TabsPage;
+    ProductsPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ProductsPage');
+    };
+    return ProductsPage;
 }());
-TabsPage = __decorate([
+ProductsPage = __decorate([
+    IonicPage(),
     Component({
-        templateUrl: 'tabs.html'
+        selector: 'page-products',
+        templateUrl: 'products.html',
     }),
-    __metadata("design:paramtypes", [])
-], TabsPage);
-export { TabsPage };
-//# sourceMappingURL=tabs.js.map
+    __metadata("design:paramtypes", [NavController, NavParams])
+], ProductsPage);
+export { ProductsPage };
+//# sourceMappingURL=products.js.map
