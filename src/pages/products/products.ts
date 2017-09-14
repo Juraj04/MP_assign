@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DatabaseProvider } from '../../providers/database/database';
+import { DummyDatabaseProvider } from '../../providers/dummy-database/dummy-database';
 
 import { Product } from '../../models/product'
 
@@ -19,7 +19,7 @@ import { Product } from '../../models/product'
 export class ProductsPage {
     products = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private db: DatabaseProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private db: DummyDatabaseProvider) {
 
     }
 
@@ -44,8 +44,8 @@ export class ProductsPage {
             if (rdy) {
                 this.loadProducts();
 
-                let product = new Product('test_name', "test_location", 123, "01.01.2000", 5, 100, 50);
-                this.addProduct(product);
+                //let product = new Product('test_name', "test_location", 123, "01.01.2000", 5, 100, 50);
+                //this.addProduct(product);
             }
         })
     }

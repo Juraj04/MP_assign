@@ -13,11 +13,10 @@ import { Product } from '../../models/product';
 */
 @Injectable()
 export class DummyDatabaseProvider {
-    private databaseReady: BehaviorSubject<boolean>;
+    private databaseReady: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
     constructor() {
         console.log('Hello DummyDatabaseProvider Provider');
-        this.databaseReady.next(true);
     }
 
     addProduct(product: Product): Promise<any> {
