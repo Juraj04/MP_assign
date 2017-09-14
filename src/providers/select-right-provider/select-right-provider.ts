@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 import {Platform} from "ionic-angular";
 import {DatabaseProvider} from "../database/database";
 import {DummyDatabaseProvider} from "../dummy-database/dummy-database";
+import {SQLitePorter} from "@ionic-native/sqlite-porter";
+import {SQLite} from "@ionic-native/sqlite";
 
 /*
   Generated class for the SelectRightProviderProvider provider.
@@ -14,13 +16,14 @@ import {DummyDatabaseProvider} from "../dummy-database/dummy-database";
 @Injectable()
 export class SelectRightProviderProvider {
 
-  constructor(public platform: Platform,public db: DatabaseProvider, public dummy:DummyDatabaseProvider) {
+  constructor(public platform: Platform) {
     console.log('Hello SelectRightProviderProvider Provider');
   }
 
   GetDatabaseProvider(){
-    if(this.platform.is("core")) return this.db;
-    return this.dummy;
+    console.log(this.platform.platforms());
+    if(this.platform.is('core') || this.platform.is('mobileweb')) return new DummyDatabaseProvider();
+    return new DatabaseProvider(new SQLite, new SQLitePorter);
   }
 
 }
