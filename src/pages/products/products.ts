@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DummyDatabaseProvider } from '../../providers/dummy-database/dummy-database';
 
 import { Product } from '../../models/product'
+import {SelectRightProviderProvider} from "../../providers/select-right-provider/select-right-provider";
+import {DatabaseProvider} from "../../providers/database/database";
 
 /**
  * Generated class for the ProductsPage page.
@@ -18,10 +20,12 @@ import { Product } from '../../models/product'
 })
 export class ProductsPage {
     products = [];
+    private db: DummyDatabaseProvider | DatabaseProvider;
 
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private db: DummyDatabaseProvider) {
-
+    constructor(public navCtrl: NavController, public navParams: NavParams,  select: SelectRightProviderProvider) {
+        this.db = select.GetDatabaseProvider();
+        this.loadProducts();
     }
 
     loadProducts() {
@@ -45,8 +49,6 @@ export class ProductsPage {
             if (rdy) {
                 this.loadProducts();
 
-                let product = new Product('test_name', "test_location", 123, "01.01.2000", 5, 100, 50);
-                //this.addProduct(product);
             }
         })
     }
