@@ -6,15 +6,15 @@ import { HomePage } from '../home/home';
 import { ProductsPage } from '../products/products'
 
 @Component({
-  templateUrl: 'tabs.html'
+    templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
     tab1Root = ProductsPage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+    tab2Root = AboutPage;
+    tab3Root = ContactPage;
 
-  constructor() {
+    constructor() {
 
-  }
+    }
 }
