@@ -14,9 +14,11 @@ import { Product } from '../../models/product';
 @Injectable()
 export class DummyDatabaseProvider {
     private databaseReady: BehaviorSubject<boolean> = new BehaviorSubject(true);
+    products: Product[];
 
     constructor() {
         console.log('Hello DummyDatabaseProvider Provider');
+        this.products = [];
     }
 
     addProduct(product: Product): Promise<any> {
@@ -29,5 +31,12 @@ export class DummyDatabaseProvider {
 
     getDatabaseState(): Observable<boolean> {
         return this.databaseReady.asObservable();
+    }
+
+    createDummyProducts(){
+        let names = ["voda", "mnasko", "cipsik", "vlocky", "jogurt", "kondomy", "chlieb", "ryza"];
+        let locations = ["prisma", "lidl", "kmarket", "tesco"];
+        let dates = ["1.1.2017", "2.2.2017", "3.3.2017", "4.4.2017"];
+
     }
 }
