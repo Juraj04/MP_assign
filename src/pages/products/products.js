@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DatabaseProvider } from '../../providers/database/database';
 /**
  * Generated class for the ProductsPage page.
  *
@@ -16,9 +17,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 var ProductsPage = (function () {
-    function ProductsPage(navCtrl, navParams) {
+    function ProductsPage(navCtrl, navParams, db) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.db = db;
+        console.log('ProductsPage -> creating DatabaseProvider');
     }
     ProductsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ProductsPage');
@@ -31,7 +34,7 @@ ProductsPage = __decorate([
         selector: 'page-products',
         templateUrl: 'products.html',
     }),
-    __metadata("design:paramtypes", [NavController, NavParams])
+    __metadata("design:paramtypes", [NavController, NavParams, DatabaseProvider])
 ], ProductsPage);
 export { ProductsPage };
 //# sourceMappingURL=products.js.map
