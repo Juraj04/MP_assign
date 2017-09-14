@@ -16,6 +16,7 @@ import { DatabaseProvider } from '../providers/database/database';
 import { SQLitePorter } from '@ionic-native/sqlite-porter';
 import { SQLite } from '@ionic-native/sqlite';
 import { DummyDatabaseProvider } from '../providers/dummy-database/dummy-database';
+import { SelectRightProviderProvider } from '../providers/select-right-provider/select-right-provider';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { DummyDatabaseProvider } from '../providers/dummy-database/dummy-databas
         DatabaseProvider,
         SQLitePorter,
         SQLite,
-        DummyDatabaseProvider
+        DummyDatabaseProvider,
+    SelectRightProviderProvider
     ]
 })
 export class AppModule { }
