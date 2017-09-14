@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DatabaseProvider } from '../../providers/database/database';
 
+import { Product } from '../../data/product'
 
 /**
  * Generated class for the ProductsPage page.
@@ -15,12 +17,41 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
     templateUrl: 'products.html',
 })
 export class ProductsPage {
+    products = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {        
+    constructor(public navCtrl: NavController, public navParams: NavParams, private db: DatabaseProvider) {
+        
+    }
+
+    loadProducts() {
+        this.db.getAllProducts().then(data => {
+            this.products = data;
+        })
+        console.log('--> products: LOADED PRODUCTS');
+        console.log(this.products);
+    }
+
+    addProduct(product: Product) {
+        console.log('--> products: addProduct START');
+        this.db.addProduct(product)
+            .then(data => {
+                this.loadProducts();
+            });
+
+        console.log('--> products: addProduct END');
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad ProductsPage');
+
+        this.db.getDatabaseState().subscribe(rdy => {
+            if (rdy) {
+                this.loadProducts();
+
+                let product = new Product('test_name', "test_location", 123, "01.01.2000", 5, 100, 50);
+                this.addProduct(product);
+            }
+        })
     }
 
 }
