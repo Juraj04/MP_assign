@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 
-import { Product } from '../../data/product'
+import { Product } from '../../models/product'
 
 /**
  * Generated class for the ProductsPage page.
@@ -20,25 +20,21 @@ export class ProductsPage {
     products = [];
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private db: DatabaseProvider) {
-        
+
     }
 
     loadProducts() {
         this.db.getAllProducts().then(data => {
             this.products = data;
         })
-        console.log('--> products: LOADED PRODUCTS');
         console.log(this.products);
     }
 
     addProduct(product: Product) {
-        console.log('--> products: addProduct START');
         this.db.addProduct(product)
             .then(data => {
                 this.loadProducts();
             });
-
-        console.log('--> products: addProduct END');
     }
 
     ionViewDidLoad() {

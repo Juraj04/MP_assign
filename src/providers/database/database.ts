@@ -4,8 +4,9 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { SQLitePorter } from '@ionic-native/sqlite-porter';
 import { BehaviorSubject } from 'rxjs/Rx';
 //import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs/Observable';
 
-import { Product } from '../../data/product'
+import { Product } from '../../models/product';
 
 /*
   Generated class for the DatabaseProvider provider.
@@ -42,7 +43,7 @@ export class DatabaseProvider {
     }
 
     //fillDatabase() {
-    createTables() {
+    private createTables() {
         /*this.http.get('assets/dummyDump.sql')
             .map(res => res.text())
             .subscribe(sql => {*/
@@ -52,17 +53,15 @@ export class DatabaseProvider {
         this.sqlitePorter.importSqlToDb(this.database, sql)
             .then(()/*data*/ => {
                 this.databaseReady.next(true);
-                console.log('Tables created')
                 //this.storage.set('database_filled', true);
             })
             .catch(e => console.error(e));
         //});
     }
 
-    addProduct(product: Product) {
+    addProduct(product: Product): Promise<any> {
         let data = [product.name, product.location, product.price, product.date, product.rating, product.quantity, product.count_fridge];
         return this.database.executeSql("INSERT INTO products (name, location, price, date, rating, quantity, count_fridge) VALUES (?,?,?,?,?,?,?)", data).then(data => {
-            console.log('--> database: addProduct');
             return data;
         }, err => {
             console.log('Error: ', err);
@@ -70,15 +69,15 @@ export class DatabaseProvider {
         });
     }
 
-    getAllProducts() {
+    getAllProducts(): Promise<Product[]> {
         return this.database.executeSql("SELECT * FROM products", []).then((data) => {
             let products = [];
             if (data.rows.length > 0) {
                 for (var i = 0; i < data.rows.length; i++) {
-                    products.push({ id: data.rows.item(i).id, name: data.rows.item(i).name, location: data.rows.item(i).location, price: data.rows.item(i).price, date: data.rows.item(i).date, rating: data.rows.item(i).rating, quantity: data.rows.item(i).quantity, count_fridge: data.rows.item(i).count_fridge });
+                    products.push(new Product(data.rows.item(i).name, data.rows.item(i).location, data.rows.item(i).price, data.rows.item(i).date, data.rows.item(i).rating, data.rows.item(i).quantity, data.rows.item(i).count_fridge));
+                    //products.push({ id: data.rows.item(i).id, name: data.rows.item(i).name, location: data.rows.item(i).location, price: data.rows.item(i).price, date: data.rows.item(i).date, rating: data.rows.item(i).rating, quantity: data.rows.item(i).quantity, count_fridge: data.rows.item(i).count_fridge });
                 }
             }
-            console.log('--> database: getAllProducts');
             return products;
         }, err => {
             console.log('Error: ', err);
@@ -86,8 +85,7 @@ export class DatabaseProvider {
         });
     }
 
-    getDatabaseState() {
-        console.log('--> database: getDatabaseState');
+    getDatabaseState(): Observable<boolean> {
         return this.databaseReady.asObservable();
     }
 
