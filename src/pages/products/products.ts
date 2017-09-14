@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Product } from '../../Models/Product';
+//import { Product } from '../../Models/Product';
 
 /**
  * Generated class for the ProductsPage page.
@@ -15,11 +15,11 @@ import { Product } from '../../Models/Product';
   templateUrl: 'products.html',
 })
 export class ProductsPage {
-    products: Product[];
+   // products: Product[];
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
-        this.products = new Array<Product>();
-        this.createSomeProducts();
+       // this.products = new Array<Product>();
+       // this.createSomeProducts();
   }
 
   ionViewDidLoad() {
@@ -35,14 +35,14 @@ export class ProductsPage {
       var quanTITIES = [0, 85, 9, 13000];
       var counts = [0, 3, 50, 6, 8, 2];
 
-      for (let data of names) {
+     /* for (let data of names) {
           this.products.push(new Product(data, locations[Math.round(Math.random() * 10 % locations.length)],
               prices[Math.round(Math.random() * 10 % prices.length)],
               dates[Math.round(Math.random() * 10 % dates.length)],
               ratings[Math.round(Math.random() * 10 % ratings.length)],
               quanTITIES[Math.round(Math.random() * 10 % quanTITIES.length)]));         
 
-      }
+      }*/
 
       
       
