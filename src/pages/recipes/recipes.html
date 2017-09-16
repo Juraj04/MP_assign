@@ -1,0 +1,28 @@
+<!--
+  Generated template for the RecipesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Recipes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngFor="let recipe of  recipes">
+    <img src="https://www.google.fi/imgres?imgurl=https%3A%2F%2Fwww.bbcgoodfood.com%2Fsites%2Fdefault%2Ffiles%2Frecipe-collections%2Fcollection-image%2F2013%2F05%2Ffrying-pan-pizza-easy-recipe-collection.jpg&imgrefurl=https%3A%2F%2Fwww.bbcgoodfood.com%2Frecipes%2Fcollection%2Feasy&docid=L6FA3gV1XSM2KM&tbnid=9_OOaw7zGbFv2M%3A&vet=10ahUKEwi5leHxpKnWAhVKEpoKHTRvAQ4QMwgmKAIwAg..i&w=500&h=454&bih=662&biw=1366&q=recipe&ved=0ahUKEwi5leHxpKnWAhVKEpoKHTRvAQ4QMwgmKAIwAg&iact=mrc&uact=8"/>
+    <ion-card-content>
+      <ion-card-title>
+        Name
+      </ion-card-title>
+      <p>
+       Description
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
