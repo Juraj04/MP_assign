@@ -1,0 +1,60 @@
+<!--
+  Generated template for the RecipeDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar >
+    <ion-title>{{recipe.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content  *ngIf="recipe">
+  <img  src="{{recipe.photo}}"/>
+
+  <ion-fab top right>
+    <button ion-fab (click)="prepareFood()">
+      <ion-icon name="pizza"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <div padding>
+
+    <p><span *ngFor="let tag of recipe.tags" class="tag" > #{{tag }} </span></p>
+
+
+    <p>
+      <span>
+          <ion-icon name="timer"></ion-icon>
+          <span>{{recipe.time}} | </span>
+      </span>
+      <span>
+          <ion-icon name="star-outline"></ion-icon>
+          <span>{{recipe.rating}} | </span>
+      </span>
+      <span center text-center>
+        <ion-icon name="people"></ion-icon>
+        <span>{{recipe.portions}} | </span>
+      </span>
+      <span>{{recipe.difficulty | difficulty}}</span>
+    </p>
+
+
+    <ion-list>
+      <ion-item *ngFor="let item of recipe.items">
+
+        {{item.food.name}}
+        <ion-note item-end>{{item.count}} {{item.food.unit | unit}} </ion-note>
+
+      </ion-item>
+
+    </ion-list>
+
+
+    {{recipe.description}}
+  </div>
+</ion-content>

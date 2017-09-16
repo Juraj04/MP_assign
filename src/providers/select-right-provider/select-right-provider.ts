@@ -16,14 +16,18 @@ import {SQLite} from "@ionic-native/sqlite";
 @Injectable()
 export class SelectRightProviderProvider {
 
+  dummy=new DummyDatabaseProvider();
+  db;
   constructor(public platform: Platform) {
     console.log('Hello SelectRightProviderProvider Provider');
   }
 
   GetDatabaseProvider(){
     console.log(this.platform.platforms());
-    if(this.platform.is('core') || this.platform.is('mobileweb')) return new DummyDatabaseProvider();
-    return new DatabaseProvider(new SQLite, new SQLitePorter);
+    if(this.platform.is('core') || this.platform.is('mobileweb')) return this.dummy;
+
+    if(this.db == null) this.db =new DatabaseProvider(new SQLite, new SQLitePorter);
+    return this.db;
   }
 
 }

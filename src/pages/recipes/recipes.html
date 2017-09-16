@@ -7,22 +7,59 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Recipes</ion-title>
+    <ion-searchbar
+      [(ngModel)]="myInput"
+      [showCancelButton]="shouldShowCancel"
+      (ionInput)="onInput($event)"
+      (ionCancel)="onCancel($event)">
+    </ion-searchbar>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-  <ion-card *ngFor="let recipe of  recipes">
-    <img src="https://www.google.fi/imgres?imgurl=https%3A%2F%2Fwww.bbcgoodfood.com%2Fsites%2Fdefault%2Ffiles%2Frecipe-collections%2Fcollection-image%2F2013%2F05%2Ffrying-pan-pizza-easy-recipe-collection.jpg&imgrefurl=https%3A%2F%2Fwww.bbcgoodfood.com%2Frecipes%2Fcollection%2Feasy&docid=L6FA3gV1XSM2KM&tbnid=9_OOaw7zGbFv2M%3A&vet=10ahUKEwi5leHxpKnWAhVKEpoKHTRvAQ4QMwgmKAIwAg..i&w=500&h=454&bih=662&biw=1366&q=recipe&ved=0ahUKEwi5leHxpKnWAhVKEpoKHTRvAQ4QMwgmKAIwAg&iact=mrc&uact=8"/>
+<ion-content >
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="CreateRecipe()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-card *ngFor="let recipe of  recipes" >
+    <img src="{{recipe.photo}}" (click)="onCardClicked(recipe)"/>
     <ion-card-content>
       <ion-card-title>
-        Name
+        {{recipe.name}}
       </ion-card-title>
       <p>
-       Description
+        {{recipe.description | longText:45}}
+      </p>
+
+      <p><span *ngFor="let tag of recipe.tags" class="tag" (click)="onTagClicked(tag)"> #{{tag }} </span></p>
+
+
+      <p>
+      <span>
+          <ion-icon name="timer"></ion-icon>
+          <span>{{recipe.time}} | </span>
+      </span>
+        <span>
+          <ion-icon name="star-outline"></ion-icon>
+          <span>{{recipe.rating }} | </span>
+      </span>
+        <span center text-center>
+        <ion-icon name="people"></ion-icon>
+        <span>{{recipe.portions}} | </span>
+      </span>
+        <span>{{recipe.difficulty | difficulty}}</span>
       </p>
     </ion-card-content>
+
+
   </ion-card>
 </ion-content>

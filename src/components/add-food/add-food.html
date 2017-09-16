@@ -1,0 +1,38 @@
+<!-- Generated template for the AddFoodComponent component -->
+<ion-header>
+
+  <ion-navbar>
+    <ion-searchbar [(ngModel)]="searchText" (ionInput)="getItems($event)"></ion-searchbar>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let food of foods" (click)="selectFood(food)">
+      {{food.name}}
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="food">
+    <h2>{{food.name}}</h2>
+
+    <ion-item *ngIf="newFood">
+      <ion-label>Select Unit
+      </ion-label>
+      <ion-select [(ngModel)]="unit" cancelText="Nah" okText="Okay!">
+        <ion-option *ngFor="let i of [1,2,3]" value="{{i}}">{{i | unit}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <p *ngIf="!newFood">Unit: {{food.unit | unit}}</p>
+
+    <ion-item >
+      <ion-label>Count
+      </ion-label>
+      <ion-input type="number" [(ngModel)]="count"></ion-input>
+    </ion-item>
+
+    <button ion-button  (click)="addItem()">Add</button>
+
+  </div>
+</ion-content>
+

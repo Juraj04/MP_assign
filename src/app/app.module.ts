@@ -18,6 +18,12 @@ import {SQLite} from '@ionic-native/sqlite';
 import {DummyDatabaseProvider} from '../providers/dummy-database/dummy-database';
 import {SelectRightProviderProvider} from '../providers/select-right-provider/select-right-provider';
 import {RecipesPage} from "../pages/recipes/recipes";
+import {RecipeDetailPage} from "../pages/recipe-detail/recipe-detail";
+import {NewRecipePage} from "../pages/new-recipe/new-recipe";
+import {DifficultyPipe} from "../pipes/difficulty/difficulty";
+import {UnitPipe} from "../pipes/unit/unit";
+import {LongTextPipe} from "../pipes/long-text/long-text";
+import {AddFoodComponent} from "../components/add-food/add-food";
 
 
 @NgModule({
@@ -28,7 +34,13 @@ import {RecipesPage} from "../pages/recipes/recipes";
     HomePage,
     TabsPage,
     ProductsPage,
-    RecipesPage
+    RecipesPage,
+    RecipeDetailPage,
+    NewRecipePage,
+    DifficultyPipe,
+    UnitPipe,
+    LongTextPipe,
+    AddFoodComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +54,10 @@ import {RecipesPage} from "../pages/recipes/recipes";
     HomePage,
     TabsPage,
     ProductsPage,
-    RecipesPage
+    RecipesPage,
+    RecipeDetailPage,
+    NewRecipePage,
+    AddFoodComponent
   ],
   providers: [
     StatusBar,
@@ -52,7 +67,7 @@ import {RecipesPage} from "../pages/recipes/recipes";
     SQLitePorter,
     SQLite,
     DummyDatabaseProvider,
-    SelectRightProviderProvider
+    SelectRightProviderProvider,
   ]
 })
 export class AppModule {
