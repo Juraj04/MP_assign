@@ -20,7 +20,7 @@ export class DummyDatabaseProvider {
   products: Product[];
   food: Food[];
   tags: string[];
-  recipes: Recipe[];
+  recipes: Recipe[] = [];
 
   constructor() {
     console.log('Hello DummyDatabaseProvider Provider');
@@ -44,6 +44,7 @@ export class DummyDatabaseProvider {
 
   addRecipe(recipe: Recipe){
     this.recipes.push(recipe);
+    console.log(this.recipes);
   }
 
   getAllRecipes():Promise<Recipe[]> {
@@ -62,7 +63,9 @@ export class DummyDatabaseProvider {
       let it: RecipeItem = new RecipeItem(this.food[i],i);
       items.push(it);
     }
-    var rec: Recipe = new Recipe("Sracka",3,60,4,1,"Toto je postup varenia ...","nejaka skurvena url pre fotku",items,this.tags)
+    var rec: Recipe = new Recipe("Sracka",3,60,4,1,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.","http://www.seriouseats.com/images/2015/09/20150914-pressure-cooker-recipes-roundup-09.jpg",items,this.tags)
+
+    this.recipes.push(rec);
   }
 
   createDummyProducts() {
