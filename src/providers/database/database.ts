@@ -74,7 +74,7 @@ export class DatabaseProvider {
             let products = [];
             if (data.rows.length > 0) {
                 for (var i = 0; i < data.rows.length; i++) {
-                    products.push(new Product(data.rows.item(i).name, data.rows.item(i).location, data.rows.item(i).price, data.rows.item(i).date, data.rows.item(i).rating, data.rows.item(i).quantity, data.rows.item(i).count_fridge));
+                    //products.push(new Product(data.rows.item(i).name, data.rows.item(i).location, data.rows.item(i).price, data.rows.item(i).date, data.rows.item(i).rating, data.rows.item(i).quantity, data.rows.item(i).count_fridge));
                     //products.push({ id: data.rows.item(i).id, name: data.rows.item(i).name, location: data.rows.item(i).location, price: data.rows.item(i).price, date: data.rows.item(i).date, rating: data.rows.item(i).rating, quantity: data.rows.item(i).quantity, count_fridge: data.rows.item(i).count_fridge });
                 }
             }
