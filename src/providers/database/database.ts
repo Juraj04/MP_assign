@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 
 import { Product } from '../../models/product';
+import {Recipe} from "../../models/recipe";
 
 /*
   Generated class for the DatabaseProvider provider.
@@ -84,6 +85,16 @@ export class DatabaseProvider {
             return [];
         });
     }
+
+
+
+  addRecipe(recipe: Recipe){
+  }
+
+  getAllRecipes(): Promise<Recipe[]>{
+      return null; // TODO dorobit
+  }
+
 
     getDatabaseState(): Observable<boolean> {
         return this.databaseReady.asObservable();
