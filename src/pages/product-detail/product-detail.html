@@ -1,0 +1,50 @@
+<!--
+  Generated template for the ProductDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title></ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+        <img src="../../assets/img/midf.jpg">
+
+            <ion-card-title>
+                <h1 class="name">{{product.name}}</h1>
+            </ion-card-title>
+
+            <span class="category">{{product.food.name}}</span>
+
+            <ion-row>
+                <ion-col col-8>
+                    <div (click)="clickLocation()">
+                        <ion-icon class="point" name="md-pin"></ion-icon>
+                        <span class="location">{{ product.location }}</span>
+                    </div>
+
+                </ion-col>
+                <ion-col>
+                    <ion-icon class="like" name="md-star"></ion-icon>&nbsp;{{ product.rating }} &nbsp;&nbsp;
+                </ion-col>
+                <ion-col>
+                    <ion-icon class="price" name="ios-cash"></ion-icon>&nbsp;{{product.price }}
+                </ion-col>
+            </ion-row>
+
+
+
+    <ion-fab right top>
+        <button ion-fab>
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-content>

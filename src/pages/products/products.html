@@ -25,7 +25,18 @@
                      src="https://ae01.alicdn.com/kf/HTB1s_InOVXXXXbLapXXq6xXFXXX8/-font-b-Middle-b-font-font-b-Finger-b-font-Funny-Die-Cut-Vinyl-Decal.jpg">
                 <!--<img src="../../assets/img/midf.jpg"> -->
             </ion-avatar>
-            <h2 class="productName">{{ product.name }} </h2>
+            <ion-row>
+                <ion-col col-8>
+                    <h2 class="productName">{{ product.name }} </h2>
+                </ion-col>
+                <ion-col>
+
+                </ion-col>
+                <ion-col>
+                    <span class="category">{{product.food.name}} </span>
+                </ion-col>
+            </ion-row>
+
             <br/>
             <ion-row>
                 <ion-col col-8>

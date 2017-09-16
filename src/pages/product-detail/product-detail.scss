@@ -1,22 +1,13 @@
-page-products {
+page-product-detail {
   font-family: Roboto;
 
-  .picture {
-  }
-  .listItem {
-    margin-left: -10px;
-  }
-  .productName {
+  .name{
     text-transform: capitalize;
-    line-height: 0.8;
-    font-style: normal;
-    font-size: 130%;
-    margin-left: 1%;
   }
   .category{
-    float: left;
-    color: #8e9093;
+    font-style: italic;
   }
+
   .point {
     color: red;
     float: left;
@@ -35,6 +26,4 @@ page-products {
     position: relative;
     float: left;
   }
-
-
 }
