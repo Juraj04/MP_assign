@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DummyDatabaseProvider } from '../../providers/dummy-database/dummy-database';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {DummyDatabaseProvider} from '../../providers/dummy-database/dummy-database';
 
-import { Product } from '../../models/product'
+import {Product} from '../../models/product'
 import {SelectRightProviderProvider} from "../../providers/select-right-provider/select-right-provider";
 import {DatabaseProvider} from "../../providers/database/database";
+import {ProductDetailPage} from "../product-detail/product-detail";
 
 /**
  * Generated class for the ProductsPage page.
@@ -23,7 +24,7 @@ export class ProductsPage {
     private db: DummyDatabaseProvider | DatabaseProvider;
 
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,  select: SelectRightProviderProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, select: SelectRightProviderProvider) {
         this.db = select.GetDatabaseProvider();
         this.loadProducts();
     }
@@ -53,4 +54,11 @@ export class ProductsPage {
         })
     }
 
+    itemSelected(product) {
+        this.navCtrl.push(ProductDetailPage, {
+            product: product
+        });
+    }
 }
+
+

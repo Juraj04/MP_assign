@@ -7,7 +7,8 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { ProductsPage } from '../pages/products/products'
+import { ProductsPage } from '../pages/products/products';
+import { ProductDetailPage } from '../pages/product-detail/product-detail';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,7 +27,8 @@ import { SelectRightProviderProvider } from '../providers/select-right-provider/
         ContactPage,
         HomePage,
         TabsPage,
-        ProductsPage
+        ProductsPage,
+        ProductDetailPage
     ],
     imports: [
         BrowserModule,
@@ -39,7 +41,8 @@ import { SelectRightProviderProvider } from '../providers/select-right-provider/
         ContactPage,
         HomePage,
         TabsPage,
-        ProductsPage
+        ProductsPage,
+        ProductDetailPage
     ],
     providers: [
         StatusBar,
