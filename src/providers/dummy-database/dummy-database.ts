@@ -92,7 +92,7 @@ export class DummyDatabaseProvider {
         rating, quantity, count_fridge,
         this.food[Math.trunc((Math.random() * 10) % this.food.length)],
         photos[Math.trunc((Math.random() * 10) % this.food.length)],
-        tags
+        this.tags
       ));
     }
   }

@@ -24,51 +24,54 @@ import {DifficultyPipe} from "../pipes/difficulty/difficulty";
 import {UnitPipe} from "../pipes/unit/unit";
 import {LongTextPipe} from "../pipes/long-text/long-text";
 import {AddFoodComponent} from "../components/add-food/add-food";
+import {ProductDetailPage} from "../pages/product-detail/product-detail";
 
 
 @NgModule({
-  declarations: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage,
-    ProductsPage,
-    RecipesPage,
-    RecipeDetailPage,
-    NewRecipePage,
-    DifficultyPipe,
-    UnitPipe,
-    LongTextPipe,
-    AddFoodComponent
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage,
-    ProductsPage,
-    RecipesPage,
-    RecipeDetailPage,
-    NewRecipePage,
-    AddFoodComponent
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DatabaseProvider,
-    SQLitePorter,
-    SQLite,
-    DummyDatabaseProvider,
-    SelectRightProviderProvider,
-  ]
+    declarations: [
+        MyApp,
+        AboutPage,
+        ContactPage,
+        HomePage,
+        TabsPage,
+        ProductsPage,
+        RecipesPage,
+        RecipeDetailPage,
+        NewRecipePage,
+        DifficultyPipe,
+        UnitPipe,
+        LongTextPipe,
+        AddFoodComponent,
+        ProductDetailPage
+    ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(MyApp)
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        MyApp,
+        AboutPage,
+        ContactPage,
+        HomePage,
+        TabsPage,
+        ProductsPage,
+        RecipesPage,
+        RecipeDetailPage,
+        NewRecipePage,
+        AddFoodComponent,
+        ProductDetailPage
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        DatabaseProvider,
+        SQLitePorter,
+        SQLite,
+        DummyDatabaseProvider,
+        SelectRightProviderProvider,
+    ]
 })
 export class AppModule {
 }

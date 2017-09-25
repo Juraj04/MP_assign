@@ -26,6 +26,19 @@ export class ProductDetailPage {
   }
 
   clickLocation(){
-    console.log("ksksks");
+    console.log(this.product.tags[0]);
+  }
+
+  getColorByRating(){
+    let colors = ["danger","danger","rating2","rating3", "rating4","rating5"];
+    return colors[this.product.rating];
+  }
+
+  getEmojiByRating(){
+    if (this.product.rating > 2){
+      return "md-happy";
+    } else {
+      return "md-sad";
+    }
   }
 }

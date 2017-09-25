@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title></ion-title>
+        <ion-title class="name">{{product.name}}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -16,35 +16,36 @@
 <ion-content padding>
 
 
-        <img src="../../assets/img/midf.jpg">
+    <img src="../../assets/img/midf.jpg">
 
-            <ion-card-title>
-                <h1 class="name">{{product.name}}</h1>
-            </ion-card-title>
 
-            <span class="category">{{product.food.name}}</span>
+    <p><span class="category">{{product.food.name}}</span></p>
 
-            <ion-row>
-                <ion-col col-8>
-                    <div (click)="clickLocation()">
-                        <ion-icon class="point" name="md-pin"></ion-icon>
-                        <span class="location">{{ product.location }}</span>
-                    </div>
 
-                </ion-col>
-                <ion-col>
-                    <ion-icon class="like" name="md-star"></ion-icon>&nbsp;{{ product.rating }} &nbsp;&nbsp;
-                </ion-col>
-                <ion-col>
-                    <ion-icon class="price" name="ios-cash"></ion-icon>&nbsp;{{product.price }}
-                </ion-col>
-            </ion-row>
+    <div (click)="clickLocation()">
+        <ion-icon class="point" name="md-pin"></ion-icon>
+        <p><span class="location">{{ product.location }}</span></p>
+    </div>
+    <ion-icon class="like" name="md-star"></ion-icon>&nbsp;{{ product.rating }} &nbsp;&nbsp;
+    <br>
+    <ion-icon class="price" name="ios-cash"></ion-icon>&nbsp;{{product.price }}
 
+
+    <p><span *ngFor="let tag of product.tags" class="tag"> #{{tag }} </span></p>
 
 
     <ion-fab right top>
-        <button ion-fab>
-            <ion-icon name="add"></ion-icon>
-        </button>
+            <button ion-fab color="{{getColorByRating()}}">
+                <ion-icon name="{{getEmojiByRating()}}"></ion-icon>
+            </button>
+            <ion-fab-list side="down">
+                <button ion-fab>
+                    <ion-icon name="md-thumbs-up"></ion-icon>
+                </button>
+                <button ion-fab>
+                    <ion-icon name="md-thumbs-down"></ion-icon>
+                </button>
+            </ion-fab-list>
+
     </ion-fab>
 </ion-content>
