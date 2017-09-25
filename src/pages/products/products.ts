@@ -16,49 +16,53 @@ import {ProductDetailPage} from "../product-detail/product-detail";
 
 @IonicPage()
 @Component({
-    selector: 'page-products',
-    templateUrl: 'products.html',
+  selector: 'page-products',
+  templateUrl: 'products.html',
 })
 export class ProductsPage {
-    products = [];
-    private db: DummyDatabaseProvider | DatabaseProvider;
+  products = [];
+  private db: DummyDatabaseProvider | DatabaseProvider;
 
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, select: SelectRightProviderProvider) {
-        this.db = select.GetDatabaseProvider();
-        this.loadProducts();
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams, select: SelectRightProviderProvider) {
+    this.db = select.GetDatabaseProvider();
+    this.loadProducts();
+  }
 
-    loadProducts() {
+  loadProducts() {
+    this.db.getDatabaseState().subscribe(rdy => { //!
+      if (rdy) {                                        //!
         this.db.getAllProducts().then(data => {
-            this.products = data;
+          this.products = data;
         })
         console.log(this.products);
-    }
+      }                                                 //!
+    })                                                  //!
+  }
 
-    addProduct(product: Product) {
-        this.db.addProduct(product)
-            .then(data => {
-                this.loadProducts();
-            });
-    }
+  addProduct(product: Product) {
+    this.db.addProduct(product)
+      .then(data => {
+        this.loadProducts();
+      });
+  }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad ProductsPage');
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ProductsPage');
 
-        this.db.getDatabaseState().subscribe(rdy => {
-            if (rdy) {
-                this.loadProducts();
+    this.db.getDatabaseState().subscribe(rdy => {
+      if (rdy) {
+        this.loadProducts();
 
-            }
-        })
-    }
+      }
+    })
+  }
 
-    itemSelected(product) {
-        this.navCtrl.push(ProductDetailPage, {
-            product: product
-        });
-    }
+  itemSelected(product) {
+    this.navCtrl.push(ProductDetailPage, {
+      product: product
+    });
+  }
 }
 
 
