@@ -27,6 +27,7 @@ import {AddFoodComponent} from "../components/add-food/add-food";
 import { RecipeStore } from '../providers/recipe-store/recipe-store';
 import {ProductDetailPage} from "../pages/product-detail/product-detail";
 import {NewProductPage} from "../pages/new-product/new-product";
+import { ProductStoreProvider } from '../providers/product-store/product-store';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import {NewProductPage} from "../pages/new-product/new-product";
         SQLite,
         DummyDatabaseProvider,
         SelectRightProviderProvider,
-        RecipeStore
+        RecipeStore,
+        ProductStoreProvider
     ]
 })
 export class AppModule {
