@@ -6,6 +6,8 @@ import {Product} from '../../models/product'
 import {SelectRightProviderProvider} from "../../providers/select-right-provider/select-right-provider";
 import {DatabaseProvider} from "../../providers/database/database";
 import {ProductDetailPage} from "../product-detail/product-detail";
+import {NewProductPage} from "../new-product/new-product";
+import {ProductStoreProvider} from "../../providers/product-store/product-store";
 
 /**
  * Generated class for the ProductsPage page.
@@ -16,53 +18,34 @@ import {ProductDetailPage} from "../product-detail/product-detail";
 
 @IonicPage()
 @Component({
-  selector: 'page-products',
-  templateUrl: 'products.html',
+    selector: 'page-products',
+    templateUrl: 'products.html',
 })
 export class ProductsPage {
-  products = [];
-  private db: DummyDatabaseProvider | DatabaseProvider;
+    products: Product[]= [];
+    allProducts: Product[] = [];
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, select: SelectRightProviderProvider) {
-    this.db = select.GetDatabaseProvider();
-    this.loadProducts();
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams, private productStore: ProductStoreProvider) {
 
-  loadProducts() {
-    this.db.getDatabaseState().subscribe(rdy => { //!
-      if (rdy) {                                        //!
-        this.db.getAllProducts().then(data => {
-          this.products = data;
+    }
+
+    ionViewDidLoad() {
+        this.productStore.products.subscribe(data => {
+            this.allProducts = data
+            this.products = this.allProducts;
         })
-        console.log(this.products);
-      }                                                 //!
-    })                                                  //!
-  }
+    }
 
-  addProduct(product: Product) {
-    this.db.addProduct(product)
-      .then(data => {
-        this.loadProducts();
-      });
-  }
+    itemSelected(product) {
+        this.navCtrl.push(ProductDetailPage, {
+            product: product
+        });
+    }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductsPage');
-
-    this.db.getDatabaseState().subscribe(rdy => {
-      if (rdy) {
-        this.loadProducts();
-
-      }
-    })
-  }
-
-  itemSelected(product) {
-    this.navCtrl.push(ProductDetailPage, {
-      product: product
-    });
-  }
+    gotoCreateProduct() {
+        this.navCtrl.push(NewProductPage, {});
+    }
 }
 
 

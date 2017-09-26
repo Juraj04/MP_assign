@@ -24,7 +24,10 @@ import {DifficultyPipe} from "../pipes/difficulty/difficulty";
 import {UnitPipe} from "../pipes/unit/unit";
 import {LongTextPipe} from "../pipes/long-text/long-text";
 import {AddFoodComponent} from "../components/add-food/add-food";
+import { RecipeStore } from '../providers/recipe-store/recipe-store';
 import {ProductDetailPage} from "../pages/product-detail/product-detail";
+import {NewProductPage} from "../pages/new-product/new-product";
+import { ProductStoreProvider } from '../providers/product-store/product-store';
 
 
 @NgModule({
@@ -42,7 +45,8 @@ import {ProductDetailPage} from "../pages/product-detail/product-detail";
         UnitPipe,
         LongTextPipe,
         AddFoodComponent,
-        ProductDetailPage
+        ProductDetailPage,
+        NewProductPage
     ],
     imports: [
         BrowserModule,
@@ -60,7 +64,8 @@ import {ProductDetailPage} from "../pages/product-detail/product-detail";
         RecipeDetailPage,
         NewRecipePage,
         AddFoodComponent,
-        ProductDetailPage
+        ProductDetailPage,
+        NewProductPage
     ],
     providers: [
         StatusBar,
@@ -71,6 +76,8 @@ import {ProductDetailPage} from "../pages/product-detail/product-detail";
         SQLite,
         DummyDatabaseProvider,
         SelectRightProviderProvider,
+        RecipeStore,
+        ProductStoreProvider
     ]
 })
 export class AppModule {

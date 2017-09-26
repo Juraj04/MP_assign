@@ -7,6 +7,7 @@ import {Recipe} from "../../models/recipe";
 import {RecipeDetailPage} from "../recipe-detail/recipe-detail";
 import {NewRecipePage} from "../new-recipe/new-recipe";
 import {DifficultyPipe} from "../../pipes/difficulty/difficulty";
+import {RecipeStore} from "../../providers/recipe-store/recipe-store";
 
 /**
  * Generated class for the RecipesPage page.
@@ -26,27 +27,20 @@ export class RecipesPage {
   myInput: string = "";
   allRecipes: Recipe[] = [];
   recipes: Recipe[] = [];
-  private db: DummyDatabaseProvider | DatabaseProvider;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, select: SelectRightProviderProvider) {
-    this.db = select.GetDatabaseProvider();
+  constructor(public navCtrl: NavController, private recipeStore: RecipeStore) {
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RecipesPage');
-    this.db.getDatabaseState().subscribe(rdy => {
-      if (rdy) {
-        this.db.getAllRecipes().then(value => {
-          this.recipes = value;
-          this.allRecipes = value;
-          console.log(this.recipes)
-        })
-      }
+    this.recipeStore.recipes.subscribe(data => {
+      this.allRecipes = data
+      this.recipes = this.allRecipes;
     })
 
   }
 
-  doRefresh($event){
+  doRefresh($event) {
     this.ionViewDidLoad();
     $event.complete();
   }
@@ -71,7 +65,7 @@ export class RecipesPage {
 
 
   onInput($event) {
-    if(this.myInput.trim() == "") {
+    if (this.myInput.trim() == "") {
       this.recipes = this.allRecipes;
       return;
     }
@@ -80,7 +74,7 @@ export class RecipesPage {
 
   }
 
-  CreateRecipe(){
+  CreateRecipe() {
     // TODO dorobit !!!!
     console.log("CreateRecipe!!");
     this.navCtrl.push(NewRecipePage);

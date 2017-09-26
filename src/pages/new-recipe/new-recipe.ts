@@ -6,6 +6,7 @@ import {Recipe} from "../../models/recipe";
 import {SelectRightProviderProvider} from "../../providers/select-right-provider/select-right-provider";
 import {DatabaseProvider} from "../../providers/database/database";
 import {DummyDatabaseProvider} from "../../providers/dummy-database/dummy-database";
+import {RecipeStore} from "../../providers/recipe-store/recipe-store";
 
 /**
  * Generated class for the NewRecipePage page.
@@ -21,7 +22,7 @@ import {DummyDatabaseProvider} from "../../providers/dummy-database/dummy-databa
 })
 export class NewRecipePage {
 
-  difficulty: number;
+  difficulty: number = 2;
   portions: number;
   time: number;
   name: string;
@@ -29,10 +30,8 @@ export class NewRecipePage {
   description: string;
   tags: string = "";
   photo: string = "http://www.seriouseats.com/images/2015/09/20150914-pressure-cooker-recipes-roundup-09.jpg";
-  private db: DummyDatabaseProvider | DatabaseProvider;
 
-  constructor(public navCtrl: NavController, public modal: ModalController, select: SelectRightProviderProvider) {
-    this.db = select.GetDatabaseProvider();
+  constructor(public navCtrl: NavController, public modal: ModalController,private recipeStore:RecipeStore) {
   }
 
   ionViewDidLoad() {
@@ -53,11 +52,9 @@ export class NewRecipePage {
   createRecipe() {
 
     var tgs: string[] = this.tags.split(" ");
-
     this.items.forEach(value => tgs.push(value.food.name));
-
     var recipe: Recipe = new Recipe(this.name, this.portions, this.time, 5, this.difficulty, this.description, this.photo, this.items, tgs);
-    this.db.addRecipe(recipe);
+    this.recipeStore.addRecipe(recipe);
     this.navCtrl.pop();
 
   }
