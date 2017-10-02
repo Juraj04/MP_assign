@@ -7,6 +7,7 @@ import {Product} from '../../models/product';
 import {Food, Unit} from "../../models/food";
 import {Recipe} from "../../models/recipe";
 import {RecipeItem} from "../../models/recipeItem";
+import {Location} from '../../models/location';
 
 /*
   Generated class for the DummyDatabaseProvider provider.
@@ -21,12 +22,14 @@ export class DummyDatabaseProvider {
   food: Food[];
   tags: string[];
   recipes: Recipe[] = [];
+  private locations: Location[];
 
   constructor() {
     console.log('Hello DummyDatabaseProvider Provider');
     this.food = [new Food("voda", Unit.l), new Food("maso", Unit.kg), new Food("jogurt", Unit.pcs)];
     this.products = [];
     this.tags = ["glutenFree", "raw", "hipster", "nom", "nomnom", "nomnomnom", "chefmode"];
+    this.locations = [new Location('Prisma',0,0),new Location('Lidl',0,0), new Location('K-Market',0,0), new Location('Tesco',0,0)];
     this.createDummyProducts();
     this.createDummyRecipes();
   }
@@ -70,7 +73,6 @@ export class DummyDatabaseProvider {
 
   createDummyProducts() {
     let names = ["voda", "mnasko", "cipsik", "vlocky", "jogurt", "kondomy", "chlieb", "ryza"];
-    let locations = ["prisma", "lidl", "kmarket", "tesco"];
     let dates = ["1.1.2017", "2.2.2017", "3.3.2017", "4.4.2017", "5.5.2017", "6.6.2017"];
     let photos = ["1.jpg", "2.jpg", "3.jpg"];
 
@@ -86,7 +88,7 @@ export class DummyDatabaseProvider {
       }
 
       this.products.push(new Product(names[Math.trunc((Math.random() * 10) % names.length)],
-        locations[Math.trunc((Math.random() * 10) % locations.length)],
+        this.locations[Math.trunc((Math.random() * 10) % this.locations.length)],
         price,
         dates[Math.trunc((Math.random() * 10) % dates.length)],
         rating, quantity, count_fridge,
