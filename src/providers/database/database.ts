@@ -46,50 +46,61 @@ export class DatabaseProvider {
   }
 
   test() {
-    let food1: Food = new Food("FoodName", Unit.kg);
-    let location1: Location = new Location("LocationName", 100.10, 100.20);
-    let product: Product = new Product('ProductName', location1, 123, 'ProductDate', 1, 100, 50, food1, 'ProductPhoto', ['ProductTag1', 'ProductTag2', 'ProductTag3']);
+    let prisma: Location = new Location("Prisma", 100.10, 100.20);
+    let lidl: Location = new Location("Lidl", 200.10, 200.20);
+    let kmarket: Location = new Location("K-Market", 300.10, 300.20);
+    let smarket: Location = new Location("S-Market", 400.10, 400.20);
 
-    this.addLocation(location1);
-    this.addProduct(product)
+    let pastry: Food = new Food("Bread", Unit.kg);
+    let egg: Food = new Food("Eggs", Unit.pcs);
+    let milk: Food = new Food("Milk", Unit.l);
+    let butter: Food = new Food('Butter', Unit.pcs);
+
+    //let bread: Product = new Product('Bread', prisma, 2.99, '4.10.2017', 5, 1, 1, pastry, 'ProductPhoto', ['BreadTag1', 'BreadTag2', 'BreadTag3']);
+    let eggs: Product = new Product('Eggs', lidl, 1.99, '7.10.2017', 5, 12, 10, egg, 'ProductPhoto', ['EggsTag1', 'EggsTag2', 'EggsTag3']);
+    let milk2: Product = new Product('Milk', prisma, 0.68, '5.10.2017', 3, 1, 0, egg, 'ProductPhoto', ['MilkTag1', 'MilkTag2', 'MilkTag3']);
+    let milk3: Product = new Product('Milk2', smarket, 0.99, '5.10.2017', 3, 1, 0, egg, 'ProductPhoto', ['MilkTag21', 'MilkTag22', 'MilkTag23']);
+
+    this.addLocation(prisma)
       .then(() => {
-        /*this.getAllLocations();
-        this.getLocation(2);
-        this.getAllFoods();
-        this.getFood(1);
-        this.getAllProductTags();
-        this.getAllProductTagsByProductId(1);*/
-
-        this.getProduct(1);
+        return this.getLocation(1);
+      })
+      .then(data => {
+        let bread: Product = new Product('Bread', data, 2.99, '4.10.2017', 5, 1, 1, pastry, 'ProductPhoto', ['BreadTag1', 'BreadTag2', 'BreadTag3']);
+        return this.addProduct(bread);
+      })
+      .then(() => {
+        this.getAllLocations();
+        this.getAllProducts();
       });
   }
 
   addLocation(location: Location): Promise<any> {
-    let sql = 'INSERT INTO ' + DatabaseModel.TABLE_LOCATIONS
-      + ' ('
-      + DatabaseModel.COLUMN_NAME + ', '
-      + DatabaseModel.COLUMN_X + ', '
-      + DatabaseModel.COLUMN_Y
-      + ') VALUES (?, ?, ?)';
-    let values = [location.name, location.x, location.y];
+    if (location.id == null) {
+      let sql = 'INSERT INTO ' + DatabaseModel.TABLE_LOCATIONS
+        + ' ('
+        + DatabaseModel.COLUMN_NAME + ', '
+        + DatabaseModel.COLUMN_X + ', '
+        + DatabaseModel.COLUMN_Y
+        + ') VALUES (?, ?, ?)';
 
-    return this.database.executeSql(sql, values)
-      .then(data => {
-        console.log('Executed: ', sql);
-        console.log('addLocation data= ', data);
-        return data;
-      }).catch(err => console.log(err));
+      return this.database.executeSql(sql, [location.name, location.x, location.y])
+        .then(data => {
+          console.log('Executed: ', sql);
+          console.log('addLocation data= ', data);
+          return data;
+        }).catch(err => console.log(err));
+    } else return Promise.resolve(location);
   }
 
   getLocation(id: number): Promise<Location> {
     let sql = 'SELECT * FROM ' + DatabaseModel.TABLE_LOCATIONS + ' WHERE ' + DatabaseModel.COLUMN_ID + ' = (?)';
-    let values = [id];
 
-    return this.database.executeSql(sql, values)
+    return this.database.executeSql(sql, [id])
       .then(data => {
         console.log('Executed: ', sql);
-        let location = null;
-        if (data.rows.length > 0) {
+        let location: Location = null;
+        if (data.rows.length == 1) {
           location = new Location(data.rows.item(0).name, data.rows.item(0).x, data.rows.item(0).y);
           location.id = data.rows.item(0).id;
         }
@@ -104,10 +115,10 @@ export class DatabaseProvider {
     return this.database.executeSql(sql, [])
       .then((data) => {
         console.log('Executed: ', sql);
-        let locations = [];
+        let locations: Location[] = [];
         if (data.rows.length > 0) {
-          for (var i = 0; i < data.rows.length; i++) {
-            let location = new Location(data.rows.item(i).name, data.rows.item(i).x, data.rows.item(i).y);
+          for (let i = 0; i < data.rows.length; i++) {
+            let location: Location = new Location(data.rows.item(i).name, data.rows.item(i).x, data.rows.item(i).y);
             location.id = data.rows.item(i).id;
             locations.push(location);
           }
@@ -118,29 +129,29 @@ export class DatabaseProvider {
   }
 
   addFood(food: Food): Promise<any> {
-    let sql = 'INSERT INTO ' + DatabaseModel.TABLE_FOODS
-      + ' ('
-      + DatabaseModel.COLUMN_NAME + ', '
-      + DatabaseModel.COLUMN_UNIT
-      + ') VALUES (?, ?)';
-    let values = [food.name, food.unit]
+    if (food.id == null) {
+      let sql = 'INSERT INTO ' + DatabaseModel.TABLE_FOODS
+        + ' ('
+        + DatabaseModel.COLUMN_NAME + ', '
+        + DatabaseModel.COLUMN_UNIT
+        + ') VALUES (?, ?)';
 
-    return this.database.executeSql(sql, values)
-      .then(data => {
-        console.log('Executed: ', sql);
-        console.log('addFood data= ', data);
-        return data;
-      }).catch(err => console.log(err));
+      return this.database.executeSql(sql, [food.name, food.unit])
+        .then(data => {
+          console.log('Executed: ', sql);
+          console.log('addFood data= ', data);
+          return data;
+        }).catch(err => console.log(err));
+    } else return Promise.resolve(location);
   }
 
   getFood(id: number): Promise<Food> {
     let sql = 'SELECT * FROM ' + DatabaseModel.TABLE_FOODS + ' WHERE ' + DatabaseModel.COLUMN_ID + ' = (?)';
-    let values = [id];
 
-    return this.database.executeSql(sql, values)
+    return this.database.executeSql(sql, [id])
       .then(data => {
         console.log('Executed: ', sql);
-        let food = null;
+        let food: Food = null;
         if (data.rows.length > 0) {
           food = new Food(data.rows.item(0).name, data.rows.item(0).unit);
           food.id = data.rows.item(0).id;
@@ -156,10 +167,10 @@ export class DatabaseProvider {
     return this.database.executeSql(sql, [])
       .then((data) => {
         console.log('Executed: ', sql);
-        let foods = [];
+        let foods: Food[] = [];
         if (data.rows.length > 0) {
-          for (var i = 0; i < data.rows.length; i++) {
-            let food = new Food(data.rows.item(i).name, data.rows.item(i).unit);
+          for (let i = 0; i < data.rows.length; i++) {
+            let food: Food = new Food(data.rows.item(i).name, data.rows.item(i).unit);
             food.id = data.rows.item(i).id;
             foods.push(food);
           }
@@ -175,9 +186,8 @@ export class DatabaseProvider {
       + DatabaseModel.COLUMN_ID_PRODUCT + ', '
       + DatabaseModel.COLUMN_NAME
       + ') VALUES (?, ?)';
-    let values = [id_product, name];
 
-    return this.database.executeSql(sql, values)
+    return this.database.executeSql(sql, [id_product, name])
       .then(data => {
         console.log('Executed: ', sql);
         console.log('addProductTag data= ', data);
@@ -187,14 +197,13 @@ export class DatabaseProvider {
 
   getAllProductTagsByProductId(id: number): Promise<string[]> {
     let sql = 'SELECT * FROM ' + DatabaseModel.TABLE_PRODUCT_TAGS + ' WHERE ' + DatabaseModel.COLUMN_ID_PRODUCT + ' = (?)';
-    let values = [id];
 
-    return this.database.executeSql(sql, values)
+    return this.database.executeSql(sql, [id])
       .then((data) => {
         console.log('Executed: ', sql);
-        let productTags = [];
+        let productTags: string[] = [];
         if (data.rows.length > 0) {
-          for (var i = 0; i < data.rows.length; i++) {
+          for (let i = 0; i < data.rows.length; i++) {
             productTags.push(data.rows.item(i).name);
           }
         }
@@ -209,9 +218,9 @@ export class DatabaseProvider {
     return this.database.executeSql(sql, [])
       .then((data) => {
         console.log('Executed: ', sql);
-        let productTags = [];
+        let productTags: string[] = [];
         if (data.rows.length > 0) {
-          for (var i = 0; i < data.rows.length; i++) {
+          for (let i = 0; i < data.rows.length; i++) {
             productTags.push(data.rows.item(i).name);
           }
         }
@@ -221,88 +230,176 @@ export class DatabaseProvider {
   }
 
   addProduct(product: Product): Promise<any> {
-    return Promise.all([this.addLocation(product.location), this.addFood(product.food)]).then(data => {
-      let lastLocationID = data[0].insertId;
-      let lastFoodID = data[1].insertId;
+    if (product.id == null) {
+      return Promise.all([this.addLocation(product.location), this.addFood(product.food)]).then(data => {
+        let sql = 'INSERT INTO ' + DatabaseModel.TABLE_PRODUCTS
+          + ' ('
+          + DatabaseModel.COLUMN_NAME + ', '
+          + DatabaseModel.COLUMN_PRICE + ', '
+          + DatabaseModel.COLUMN_DATE + ', '
+          + DatabaseModel.COLUMN_RATING + ', '
+          + DatabaseModel.COLUMN_QUANTITY + ', '
+          + DatabaseModel.COLUMN_COUNT_FRIDGE + ', '
+          + DatabaseModel.COLUMN_PHOTO + ', '
+          + DatabaseModel.COLUMN_ID_LOCATION + ', '
+          + DatabaseModel.COLUMN_ID_FOOD
+          + ') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-      let sql = 'INSERT INTO ' + DatabaseModel.TABLE_PRODUCTS
-        + ' ('
-        + DatabaseModel.COLUMN_NAME + ', '
-        + DatabaseModel.COLUMN_PRICE + ', '
-        + DatabaseModel.COLUMN_DATE + ', '
-        + DatabaseModel.COLUMN_RATING + ', '
-        + DatabaseModel.COLUMN_QUANTITY + ', '
-        + DatabaseModel.COLUMN_COUNT_FRIDGE + ', '
-        + DatabaseModel.COLUMN_PHOTO + ', '
-        + DatabaseModel.COLUMN_ID_LOCATION + ', '
-        + DatabaseModel.COLUMN_ID_FOOD
-        + ') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-      let values = [product.name, product.price, product.date, product.rating, product.quantity, product.count_fridge, product.photo, lastLocationID, lastFoodID];
-
-      return this.database.executeSql(sql, values)
-        .then(data => {
-          console.log('Executed: ', sql);
-          console.log('addProduct data= ', data);
-
-          for (let tag of product.tags) {
-            this.addProductTag(data.insertId, tag);
-          }
-
-          return data;
-        }).catch(err => console.log(err));
-    });
+        return this.database.executeSql(sql,
+          [product.name, product.price, product.date, product.rating, product.quantity, product.count_fridge, product.photo, data[0].insertId, data[1].insertId])
+          .then(data => {
+            console.log('Executed: ', sql);
+            console.log('addProduct data= ', data);
+            for (let tag of product.tags) {
+              this.addProductTag(data.insertId, tag);
+            }
+            return data;
+          }).catch(err => console.log(err));
+      });
+    } else return Promise.resolve(product);
   }
 
   getProduct(id: number): Promise<Product> {
     let sql = 'SELECT '
-      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_ID + ' AS test, '
-      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_NAME + ', '
-      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_PRICE + ', '
-      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_DATE + ', '
-      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_RATING + ', '
-      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_QUANTITY + ', '
-      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_COUNT_FRIDGE + ', '
-      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_PHOTO + ', '
-      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_ID + ', '
-      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_NAME + ', '
-      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_X + ', '
-      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_Y + ', '
-      + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_ID + ', '
-      + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_NAME + ', '
-      + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_UNIT
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_ID + ' AS id, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_NAME + ' AS name, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_PRICE + ' AS price, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_DATE + ' AS date, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_RATING + ' AS rating, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_QUANTITY + ' AS quantity, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_COUNT_FRIDGE + ' AS count_fridge, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_PHOTO + ' AS photo, '
+      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_ID + ' AS location_id, '
+      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_NAME + ' AS location_name, '
+      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_X + ' AS location_x, '
+      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_Y + ' AS location_y, '
+      + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_ID + ' AS food_id, '
+      + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_NAME + ' AS food_name, '
+      + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_UNIT + ' AS food_unit'
       + ' FROM ' + DatabaseModel.TABLE_PRODUCTS
       + ' JOIN ' + DatabaseModel.TABLE_LOCATIONS + ' ON '
       + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_ID_LOCATION + ' = ' + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_ID
       + ' JOIN ' + DatabaseModel.TABLE_FOODS + ' ON '
       + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_ID_FOOD + ' = ' + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_ID
       + ' WHERE ' + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_ID + ' = (?)';
-    let values = [id];
 
-    return this.database.executeSql(sql, values)
+    return Promise.all([this.database.executeSql(sql, [id]), this.getAllProductTagsByProductId(id)]).then((data) => {
+      console.log('Executed: ', sql);
+      let product: Product = null;
+      if (data[0].rows.length > 0) {
+        let location: Location = new Location(data[0].rows.item(0).location_name, data[0].rows.item(0).location_x, data[0].rows.item(0).location_y)
+        location.id = data[0].rows.item(0).location_id;
+        let food: Food = new Food(data[0].rows.item(0).food_name, data[0].rows.item(0).food_unit);
+        food.id = data[0].rows.item(0).food_id;
+
+        product = new Product(
+          data[0].rows.item(0).name,
+          location,
+          data[0].rows.item(0).price,
+          data[0].rows.item(0).date,
+          data[0].rows.item(0).rating,
+          data[0].rows.item(0).quantity,
+          data[0].rows.item(0).count_fridge,
+          food,
+          data[0].rows.item(0).photo,
+          data[1]);
+        product.id = data[0].rows.item(0).id;
+      }
+      console.log('getProduct product= ', product);
+      return product;
+    }).catch(err => console.log(err));
+
+    /*return this.database.executeSql(sql, [id])
       .then(data => {
         console.log('Executed: ', sql);
-        console.log('DATA: ', data);
+        let product: Product = null;
 
-        console.log('TEST: ', data.rows.item(0).test);
-        return null;
+        this.getAllProductTagsByProductId(id)
+          .then(tags => {
+            if (data.rows.length > 0) {
+              let location: Location = new Location(data.rows.item(0).location_name, data.rows.item(0).location_x, data.rows.item(0).location_y)
+              location.id = data.rows.item(0).location_id;
+              let food: Food = new Food(data.rows.item(0).food_name, data.rows.item(0).food_unit);
+              food.id = data.rows.item(0).food_id;
+
+              product = new Product(
+                data.rows.item(0).name,
+                location,
+                data.rows.item(0).price,
+                data.rows.item(0).date,
+                data.rows.item(0).rating,
+                data.rows.item(0).quantity,
+                data.rows.item(0).count_fridge,
+                food,
+                data.rows.item(0).photo,
+                tags);
+              product.id = data.rows.item(0).id;
+            }
+            console.log('getProduct product= ', product);
+            return product;
+          });
+        return product;
+      }).catch(err => console.log(err));*/
+  }
+
+  getAllProducts(): Promise<Product[]> {
+    let sql = 'SELECT '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_ID + ' AS id, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_NAME + ' AS name, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_PRICE + ' AS price, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_DATE + ' AS date, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_RATING + ' AS rating, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_QUANTITY + ' AS quantity, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_COUNT_FRIDGE + ' AS count_fridge, '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_PHOTO + ' AS photo, '
+      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_ID + ' AS location_id, '
+      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_NAME + ' AS location_name, '
+      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_X + ' AS location_x, '
+      + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_Y + ' AS location_y, '
+      + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_ID + ' AS food_id, '
+      + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_NAME + ' AS food_name, '
+      + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_UNIT + ' AS food_unit'
+      + ' FROM ' + DatabaseModel.TABLE_PRODUCTS
+      + ' JOIN ' + DatabaseModel.TABLE_LOCATIONS + ' ON '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_ID_LOCATION + ' = ' + DatabaseModel.TABLE_LOCATIONS + '.' + DatabaseModel.COLUMN_ID
+      + ' JOIN ' + DatabaseModel.TABLE_FOODS + ' ON '
+      + DatabaseModel.TABLE_PRODUCTS + '.' + DatabaseModel.COLUMN_ID_FOOD + ' = ' + DatabaseModel.TABLE_FOODS + '.' + DatabaseModel.COLUMN_ID;
+
+    return this.database.executeSql(sql, [])
+      .then(data => {
+        console.log('Executed: ', sql);
+        let products: Product[] = [];
+        if (data.rows.length > 0) {
+          for (let i = 0; i < data.rows.length; i++) {
+            let location: Location = new Location(data.rows.item(i).location_name, data.rows.item(i).location_x, data.rows.item(i).location_y)
+            location.id = data.rows.item(i).location_id;
+            let food: Food = new Food(data.rows.item(i).food_name, data.rows.item(i).food_unit);
+            food.id = data.rows.item(i).food_id;
+
+            this.getAllProductTagsByProductId(data.rows.item(i).id)
+              .then(tags => {
+                let product: Product = new Product(
+                  data.rows.item(i).name,
+                  location,
+                  data.rows.item(i).price,
+                  data.rows.item(i).date,
+                  data.rows.item(i).rating,
+                  data.rows.item(i).quantity,
+                  data.rows.item(i).count_fridge,
+                  food,
+                  data.rows.item(i).photo,
+                  tags);
+                product.id = data.rows.item(i).id;
+                products.push(product);
+              })
+          }
+        }
+        console.log('getAllProducts products= ', products);
+        return products;
       }).catch(err => console.log(err));
   }
 
-
-  getAllProducts(): Promise<Product[]> {
-    return this.database.executeSql("SELECT * FROM products", []).then((data) => {
-      let products = [];
-      if (data.rows.length > 0) {
-        for (var i = 0; i < data.rows.length; i++) {
-          //products.push(new Product(data.rows.item(i).name, data.rows.item(i).location, data.rows.item(i).price, data.rows.item(i).date, data.rows.item(i).rating, data.rows.item(i).quantity, data.rows.item(i).count_fridge));
-          //products.push({ id: data.rows.item(i).id, name: data.rows.item(i).name, location: data.rows.item(i).location, price: data.rows.item(i).price, date: data.rows.item(i).date, rating: data.rows.item(i).rating, quantity: data.rows.item(i).quantity, count_fridge: data.rows.item(i).count_fridge });
-        }
-      }
-      return products;
-    }).catch(err => console.log(err));
-  }
-
-
+  //TODO: Recipes
   addRecipe(recipe: Recipe) {
     let sql: string = '';
     this.sqlitePorter.importSqlToDb(this.database, sql)
