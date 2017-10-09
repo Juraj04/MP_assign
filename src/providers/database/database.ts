@@ -32,50 +32,58 @@ export class DatabaseProvider {
       })
         .then((database: SQLiteObject) => {
           this.database = database;
-          DatabaseModel.dropAllTables(sqlitePorter, this.database).then(() => {
-            DatabaseModel.createTables(sqlitePorter, this.database);
-          });
+          //DatabaseModel.dropAllTables(sqlitePorter, this.database).then(() => {
+          DatabaseModel.createTables(sqlitePorter, this.database);
+          //});
         });
     });
 
     this.getDatabaseState().subscribe(rdy => {
       if (rdy) {
+        //this.createProducts();
         this.test();
       }
     })
   }
 
   test() {
-    let prisma: Location = new Location("Prisma", 100.10, 100.20);
-    let lidl: Location = new Location("Lidl", 200.10, 200.20);
-    let kmarket: Location = new Location("K-Market", 300.10, 300.20);
-    let smarket: Location = new Location("S-Market", 400.10, 400.20);
-
-    let pastry: Food = new Food("Bread", Unit.kg);
-    let egg: Food = new Food("Eggs", Unit.pcs);
-    let milk: Food = new Food("Milk", Unit.l);
-    let butter: Food = new Food('Butter', Unit.pcs);
-
-    //let bread: Product = new Product('Bread', prisma, 2.99, '4.10.2017', 5, 1, 1, pastry, 'ProductPhoto', ['BreadTag1', 'BreadTag2', 'BreadTag3']);
-    let eggs: Product = new Product('Eggs', lidl, 1.99, '7.10.2017', 5, 12, 10, egg, 'ProductPhoto', ['EggsTag1', 'EggsTag2', 'EggsTag3']);
-    let milk2: Product = new Product('Milk', prisma, 0.68, '5.10.2017', 3, 1, 0, egg, 'ProductPhoto', ['MilkTag1', 'MilkTag2', 'MilkTag3']);
-    let milk3: Product = new Product('Milk2', smarket, 0.99, '5.10.2017', 3, 1, 0, egg, 'ProductPhoto', ['MilkTag21', 'MilkTag22', 'MilkTag23']);
-
-    this.addLocation(prisma)
-      .then(() => {
-        return this.getLocation(1);
-      })
-      .then(data => {
-        let bread: Product = new Product('Bread', data, 2.99, '4.10.2017', 5, 1, 1, pastry, 'ProductPhoto', ['BreadTag1', 'BreadTag2', 'BreadTag3']);
-        return this.addProduct(bread);
-      })
-      .then(() => {
-        this.getAllLocations();
-        this.getAllProducts();
-      });
   }
 
-  addLocation(location: Location): Promise<any> {
+  createProducts() {
+    let names = ["voda", "mnasko", "cipsik", "vlocky", "jogurt", "kondomy", "chlieb", "ryza"];
+    let locations = [new Location('Prisma', 0, 0), new Location('Lidl', 0, 0), new Location('K-Market', 0, 0), new Location('Tesco', 0, 0)];
+    let dates = ["1.1.2017", "2.2.2017", "3.3.2017", "4.4.2017", "5.5.2017", "6.6.2017"];
+    let foods = [new Food("water", Unit.l), new Food("meat", Unit.kg), new Food("yogurt", Unit.pcs)];
+    let product_tags = ["glutenFree", "raw", "hipster", "nom", "nomnom", "nomnomnom", "chefmode"];
+    let photos = ["1.jpg", "2.jpg", "3.jpg"];
+
+    for (let i = 0; i < 10; i++) {
+      let price = Math.trunc((Math.random() * 100) % 100);
+      let rating = Math.trunc((Math.random() * 10) & 5);
+      let quantity = Math.trunc((Math.random() * 100) % 100);
+      let count_fridge = Math.trunc((Math.random() * 100) % 10);
+
+      let tags = [];
+      for (let j = 0; j < Math.random() % product_tags.length; j++) {
+        tags[j] = product_tags[Math.trunc((Math.random() * 10) % product_tags.length)];
+      }
+
+      this.addProduct(new Product(
+        names[Math.trunc((Math.random() * 10) % names.length)],
+        locations[Math.trunc((Math.random() * 10) % locations.length)],
+        price,
+        dates[Math.trunc((Math.random() * 10) % dates.length)],
+        rating,
+        quantity,
+        count_fridge,
+        foods[Math.trunc((Math.random() * 10) % foods.length)],
+        photos[Math.trunc((Math.random() * 10) % photos.length)],
+        tags
+      ));
+    }
+  }
+
+  addLocation(location: Location): Promise<Location> {
     if (location.id == null) {
       let sql = 'INSERT INTO ' + DatabaseModel.TABLE_LOCATIONS
         + ' ('
@@ -87,10 +95,27 @@ export class DatabaseProvider {
       return this.database.executeSql(sql, [location.name, location.x, location.y])
         .then(data => {
           console.log('Executed: ', sql);
-          console.log('addLocation data= ', data);
-          return data;
+          location.id = data.insertId;
+          console.log('addLocation location= ', location);
+          return location;
         }).catch(err => console.log(err));
     } else return Promise.resolve(location);
+  }
+
+  updateLocation(location: Location): Promise<Location> {
+    let sql = 'UPDATE ' + DatabaseModel.TABLE_LOCATIONS
+      + ' SET '
+      + DatabaseModel.COLUMN_NAME + ' = (?), '
+      + DatabaseModel.COLUMN_X + ' = (?), '
+      + DatabaseModel.COLUMN_Y + ' = (?)'
+      + ' WHERE ' + DatabaseModel.COLUMN_ID + ' = (?)';
+
+    return this.database.executeSql(sql, [location.name, location.x, location.y, location.id])
+      .then(() => {
+        console.log('Executed: ', sql);
+        console.log('updateLocation location= ', location);
+        return location;
+      }).catch(err => console.log(err));
   }
 
   getLocation(id: number): Promise<Location> {
@@ -128,7 +153,7 @@ export class DatabaseProvider {
       }).catch(err => console.log(err));
   }
 
-  addFood(food: Food): Promise<any> {
+  addFood(food: Food): Promise<Food> {
     if (food.id == null) {
       let sql = 'INSERT INTO ' + DatabaseModel.TABLE_FOODS
         + ' ('
@@ -139,10 +164,26 @@ export class DatabaseProvider {
       return this.database.executeSql(sql, [food.name, food.unit])
         .then(data => {
           console.log('Executed: ', sql);
-          console.log('addFood data= ', data);
-          return data;
+          food.id = data.insertId;
+          console.log('addFood food= ', food);
+          return food;
         }).catch(err => console.log(err));
-    } else return Promise.resolve(location);
+    } else return Promise.resolve(food);
+  }
+
+  updateFood(food: Food): Promise<Food> {
+    let sql = 'UPDATE ' + DatabaseModel.TABLE_FOODS
+      + ' SET '
+      + DatabaseModel.COLUMN_NAME + ' = (?), '
+      + DatabaseModel.COLUMN_UNIT + ' = (?)'
+      + ' WHERE ' + DatabaseModel.COLUMN_ID + ' = (?)';
+
+    return this.database.executeSql(sql, [food.name, food.unit, food.id])
+      .then(() => {
+        console.log('Executed: ', sql);
+        console.log('updateFood food= ', food);
+        return food;
+      }).catch(err => console.log(err));
   }
 
   getFood(id: number): Promise<Food> {
@@ -180,7 +221,7 @@ export class DatabaseProvider {
       }).catch(err => console.log(err));
   }
 
-  addProductTag(id_product: number, name: string): Promise<any> {
+  addProductTag(id_product: number, name: string): Promise<string> {
     let sql = 'INSERT INTO ' + DatabaseModel.TABLE_PRODUCT_TAGS
       + ' ('
       + DatabaseModel.COLUMN_ID_PRODUCT + ', '
@@ -190,8 +231,8 @@ export class DatabaseProvider {
     return this.database.executeSql(sql, [id_product, name])
       .then(data => {
         console.log('Executed: ', sql);
-        console.log('addProductTag data= ', data);
-        return data;
+        console.log('addProductTag name= ', name);
+        return name;
       }).catch(err => console.log(err));
   }
 
@@ -229,7 +270,7 @@ export class DatabaseProvider {
       }).catch(err => console.log(err));
   }
 
-  addProduct(product: Product): Promise<any> {
+  addProduct(product: Product): Promise<Product> {
     if (product.id == null) {
       return Promise.all([this.addLocation(product.location), this.addFood(product.food)]).then(data => {
         let sql = 'INSERT INTO ' + DatabaseModel.TABLE_PRODUCTS
@@ -246,17 +287,23 @@ export class DatabaseProvider {
           + ') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         return this.database.executeSql(sql,
-          [product.name, product.price, product.date, product.rating, product.quantity, product.count_fridge, product.photo, data[0].insertId, data[1].insertId])
+          [product.name, product.price, product.date, product.rating, product.quantity, product.count_fridge, product.photo, data[0].id, data[1].id])
           .then(data => {
             console.log('Executed: ', sql);
-            console.log('addProduct data= ', data);
+            product.id = data.insertId;
+            console.log('addProduct product= ', product);
             for (let tag of product.tags) {
-              this.addProductTag(data.insertId, tag);
+              this.addProductTag(product.id, tag);
             }
-            return data;
+            return product;
           }).catch(err => console.log(err));
       });
     } else return Promise.resolve(product);
+  }
+
+  updateProduct(product: Product): Promise<Product> {
+    //chcem updatetovat location? food? pri tagoch update ani neexistuje
+    return null;
   }
 
   getProduct(id: number): Promise<Product> {
