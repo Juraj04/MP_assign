@@ -79,6 +79,15 @@ export class DummyDatabaseProvider {
     return Promise.resolve(location);
   }
 
+  /*//useless
+  updateLocation(location: Location): Promise<Location> {
+    return null;
+  }*/
+
+  /*deleteLocation(location: Location): Promise<Location> {
+    return null;
+  }*/
+
   getLocation(id: number): Promise<Location> {
     for (let location of this.locations) {
       if (id == location.id)
@@ -98,6 +107,15 @@ export class DummyDatabaseProvider {
     }
     return Promise.resolve(food);
   }
+
+  /*//useless
+  updateFood(food: Food): Promise<Food> {
+    return null;
+  }*/
+
+  /*deleteFood(food: Food): Promise<Food> {
+    return null;
+  }*/
 
   getFood(id: number): Promise<Food> {
     for (let food of this.foods) {
@@ -119,6 +137,18 @@ export class DummyDatabaseProvider {
     }
     this.product_tags.push([id_product, name]);
     return Promise.resolve(name);
+  }
+
+  deleteAllProductTagsByProductId(id: number): Promise<boolean> {
+    for (let tag of this.product_tags) {
+      if (id == tag[0]) {
+        const index: number = this.product_tags.indexOf(tag);
+        if (index != -1) {
+          this.product_tags.splice(index, 1);
+        }
+      }
+    }
+    return Promise.resolve(true);
   }
 
   getAllProductTagsByProductId(id: number): Promise<string[]> {
@@ -149,6 +179,25 @@ export class DummyDatabaseProvider {
       }
     }
     return Promise.resolve(product);
+  }
+
+  updateProduct(product: Product): Promise<Product> {
+    for (let varProduct of this.products) {
+      if (product.id == varProduct.id) {
+        varProduct = product;
+        return Promise.resolve(product);
+      }
+    }
+    return Promise.resolve(null);
+  }
+
+  deleteProduct(product: Product): Promise<Product> {
+    const index: number = this.products.indexOf(product);
+    if (index != -1) {
+      this.product_tags.splice(index, 1);
+      return Promise.resolve(product);
+    }
+    return Promise.resolve(null);
   }
 
   getProduct(id: number): Promise<Product> {

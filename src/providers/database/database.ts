@@ -41,12 +41,8 @@ export class DatabaseProvider {
     this.getDatabaseState().subscribe(rdy => {
       if (rdy) {
         //this.createProducts();
-        this.test();
       }
     })
-  }
-
-  test() {
   }
 
   createProducts() {
@@ -96,12 +92,13 @@ export class DatabaseProvider {
         .then(data => {
           console.log('Executed: ', sql);
           location.id = data.insertId;
-          console.log('addLocation location= ', location);
+          //console.log('addLocation location= ', location);
           return location;
         }).catch(err => console.log(err));
     } else return Promise.resolve(location);
   }
 
+  /*//useless
   updateLocation(location: Location): Promise<Location> {
     let sql = 'UPDATE ' + DatabaseModel.TABLE_LOCATIONS
       + ' SET '
@@ -113,10 +110,14 @@ export class DatabaseProvider {
     return this.database.executeSql(sql, [location.name, location.x, location.y, location.id])
       .then(() => {
         console.log('Executed: ', sql);
-        console.log('updateLocation location= ', location);
+        //console.log('updateLocation location= ', location);
         return location;
       }).catch(err => console.log(err));
-  }
+  }*/
+
+  /*deleteLocation(location: Location): Promise<Location> {
+    return null;
+  }*/
 
   getLocation(id: number): Promise<Location> {
     let sql = 'SELECT * FROM ' + DatabaseModel.TABLE_LOCATIONS + ' WHERE ' + DatabaseModel.COLUMN_ID + ' = (?)';
@@ -129,7 +130,7 @@ export class DatabaseProvider {
           location = new Location(data.rows.item(0).name, data.rows.item(0).x, data.rows.item(0).y);
           location.id = data.rows.item(0).id;
         }
-        console.log('getLocation location= ', location);
+        //console.log('getLocation location= ', location);
         return location;
       }).catch(err => console.log(err));
   }
@@ -148,7 +149,7 @@ export class DatabaseProvider {
             locations.push(location);
           }
         }
-        console.log('getAllLocations locations= ', locations);
+        //console.log('getAllLocations locations= ', locations);
         return locations;
       }).catch(err => console.log(err));
   }
@@ -165,12 +166,13 @@ export class DatabaseProvider {
         .then(data => {
           console.log('Executed: ', sql);
           food.id = data.insertId;
-          console.log('addFood food= ', food);
+          //console.log('addFood food= ', food);
           return food;
         }).catch(err => console.log(err));
     } else return Promise.resolve(food);
   }
 
+  /*//useless
   updateFood(food: Food): Promise<Food> {
     let sql = 'UPDATE ' + DatabaseModel.TABLE_FOODS
       + ' SET '
@@ -181,10 +183,14 @@ export class DatabaseProvider {
     return this.database.executeSql(sql, [food.name, food.unit, food.id])
       .then(() => {
         console.log('Executed: ', sql);
-        console.log('updateFood food= ', food);
+        //console.log('updateFood food= ', food);
         return food;
       }).catch(err => console.log(err));
-  }
+  }*/
+
+  /*deleteFood(food: Food): Promise<Food> {
+    return null;
+  }*/
 
   getFood(id: number): Promise<Food> {
     let sql = 'SELECT * FROM ' + DatabaseModel.TABLE_FOODS + ' WHERE ' + DatabaseModel.COLUMN_ID + ' = (?)';
@@ -197,7 +203,7 @@ export class DatabaseProvider {
           food = new Food(data.rows.item(0).name, data.rows.item(0).unit);
           food.id = data.rows.item(0).id;
         }
-        console.log('getFood food= ', food);
+        //console.log('getFood food= ', food);
         return food;
       }).catch(err => console.log(err));
   }
@@ -216,7 +222,7 @@ export class DatabaseProvider {
             foods.push(food);
           }
         }
-        console.log('getAllFoods foods= ', foods);
+        //console.log('getAllFoods foods= ', foods);
         return foods;
       }).catch(err => console.log(err));
   }
@@ -231,8 +237,18 @@ export class DatabaseProvider {
     return this.database.executeSql(sql, [id_product, name])
       .then(data => {
         console.log('Executed: ', sql);
-        console.log('addProductTag name= ', name);
+        //console.log('addProductTag name= ', name);
         return name;
+      }).catch(err => console.log(err));
+  }
+
+  deleteAllProductTagsByProductId(id: number): Promise<boolean> {
+    let sql = 'DELETE FROM ' + DatabaseModel.TABLE_PRODUCT_TAGS + ' WHERE ' + DatabaseModel.COLUMN_ID_PRODUCT + ' = (?)';
+
+    return this.database.executeSql(sql, [id])
+      .then(() => {
+        console.log('Executed: ', sql);
+        return true;
       }).catch(err => console.log(err));
   }
 
@@ -248,7 +264,7 @@ export class DatabaseProvider {
             productTags.push(data.rows.item(i).name);
           }
         }
-        console.log('getAllProductTagsByProductId productTags= ', productTags);
+        //console.log('getAllProductTagsByProductId productTags= ', productTags);
         return productTags;
       }).catch(err => console.log(err));
   }
@@ -265,7 +281,7 @@ export class DatabaseProvider {
             productTags.push(data.rows.item(i).name);
           }
         }
-        console.log('getAllProductTagsByProductId productTags= ', productTags);
+        //console.log('getAllProductTagsByProductId productTags= ', productTags);
         return productTags;
       }).catch(err => console.log(err));
   }
@@ -291,7 +307,7 @@ export class DatabaseProvider {
           .then(data => {
             console.log('Executed: ', sql);
             product.id = data.insertId;
-            console.log('addProduct product= ', product);
+            //console.log('addProduct product= ', product);
             for (let tag of product.tags) {
               this.addProductTag(product.id, tag);
             }
@@ -302,8 +318,48 @@ export class DatabaseProvider {
   }
 
   updateProduct(product: Product): Promise<Product> {
-    //chcem updatetovat location? food? pri tagoch update ani neexistuje
-    return null;
+    return Promise.all([this.addLocation(product.location), this.addFood(product.food)]).then(data => {
+      let sql = 'UPDATE ' + DatabaseModel.TABLE_PRODUCTS
+        + ' SET '
+        + DatabaseModel.COLUMN_NAME + ' = (?), '
+        + DatabaseModel.COLUMN_PRICE + ' = (?), '
+        + DatabaseModel.COLUMN_DATE + ' = (?), '
+        + DatabaseModel.COLUMN_RATING + ' = (?), '
+        + DatabaseModel.COLUMN_QUANTITY + ' = (?), '
+        + DatabaseModel.COLUMN_COUNT_FRIDGE + ' = (?), '
+        + DatabaseModel.COLUMN_PHOTO + ' = (?), '
+        + DatabaseModel.COLUMN_ID_LOCATION + ' = (?), '
+        + DatabaseModel.COLUMN_ID_FOOD + ' = (?)'
+        + ' WHERE ' + DatabaseModel.COLUMN_ID + ' = (?)';
+
+      return this.database.executeSql(sql,
+        [product.name, product.price, product.date, product.rating, product.quantity, product.count_fridge, product.photo, data[0].id, data[1].id, product.id])
+        .then(() => {
+          console.log('Executed: ', sql);
+          console.log('updateProduct product= ', product);
+          this.deleteAllProductTagsByProductId(product.id)
+            .then(() => {
+              for (let tag of product.tags) {
+                this.addProductTag(product.id, tag);
+              }
+            });
+          return product;
+        }).catch(err => console.log(err));
+    });
+  }
+
+  deleteProduct(product: Product): Promise<Product> {
+    return this.deleteAllProductTagsByProductId(product.id)
+      .then(() => {
+        let sql = 'DELETE FROM ' + DatabaseModel.TABLE_PRODUCTS + ' WHERE ' + DatabaseModel.COLUMN_ID + ' = (?)';
+
+        return this.database.executeSql(sql, [product.id])
+          .then(() => {
+            console.log('Executed: ', sql);
+            //console.log('deleteProduct= product', product);
+            return product;
+          }).catch(err => console.log(err));
+      });
   }
 
   getProduct(id: number): Promise<Product> {
@@ -355,38 +411,6 @@ export class DatabaseProvider {
       console.log('getProduct product= ', product);
       return product;
     }).catch(err => console.log(err));
-
-    /*return this.database.executeSql(sql, [id])
-      .then(data => {
-        console.log('Executed: ', sql);
-        let product: Product = null;
-
-        this.getAllProductTagsByProductId(id)
-          .then(tags => {
-            if (data.rows.length > 0) {
-              let location: Location = new Location(data.rows.item(0).location_name, data.rows.item(0).location_x, data.rows.item(0).location_y)
-              location.id = data.rows.item(0).location_id;
-              let food: Food = new Food(data.rows.item(0).food_name, data.rows.item(0).food_unit);
-              food.id = data.rows.item(0).food_id;
-
-              product = new Product(
-                data.rows.item(0).name,
-                location,
-                data.rows.item(0).price,
-                data.rows.item(0).date,
-                data.rows.item(0).rating,
-                data.rows.item(0).quantity,
-                data.rows.item(0).count_fridge,
-                food,
-                data.rows.item(0).photo,
-                tags);
-              product.id = data.rows.item(0).id;
-            }
-            console.log('getProduct product= ', product);
-            return product;
-          });
-        return product;
-      }).catch(err => console.log(err));*/
   }
 
   getAllProducts(): Promise<Product[]> {
@@ -441,7 +465,7 @@ export class DatabaseProvider {
               })
           }
         }
-        console.log('getAllProducts products= ', products);
+        //console.log('getAllProducts products= ', products);
         return products;
       }).catch(err => console.log(err));
   }
