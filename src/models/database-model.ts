@@ -102,14 +102,6 @@ export class DatabaseModel {
     + DatabaseModel.COLUMN_PHOTO + ' TEXT'
     + ');',
 
-    'CREATE TABLE IF NOT EXISTS ' + DatabaseModel.TABLE_RECIPE_TAGS
-    + ' ('
-    + DatabaseModel.COLUMN_ID_RECIPE + ' INTEGER, '
-    + DatabaseModel.COLUMN_NAME + ' TEXT, '
-    + 'FOREIGN KEY (' + DatabaseModel.COLUMN_ID_RECIPE + ') REFERENCES ' + DatabaseModel.TABLE_RECIPES + '(' + DatabaseModel.COLUMN_ID + '), '
-    + 'PRIMARY KEY (' + DatabaseModel.COLUMN_ID_RECIPE + ', ' + DatabaseModel.COLUMN_NAME + ')'
-    + ');',
-
     'CREATE TABLE IF NOT EXISTS ' + DatabaseModel.TABLE_RECIPE_ITEMS
     + ' ('
     + DatabaseModel.COLUMN_ID_RECIPE + ' INTEGER, '
@@ -120,6 +112,13 @@ export class DatabaseModel {
     + 'PRIMARY KEY (' + DatabaseModel.COLUMN_ID_RECIPE + ', ' + DatabaseModel.COLUMN_ID_FOOD + ')'
     + ');',
 
+    'CREATE TABLE IF NOT EXISTS ' + DatabaseModel.TABLE_RECIPE_TAGS
+    + ' ('
+    + DatabaseModel.COLUMN_ID_RECIPE + ' INTEGER, '
+    + DatabaseModel.COLUMN_NAME + ' TEXT, '
+    + 'FOREIGN KEY (' + DatabaseModel.COLUMN_ID_RECIPE + ') REFERENCES ' + DatabaseModel.TABLE_RECIPES + '(' + DatabaseModel.COLUMN_ID + '), '
+    + 'PRIMARY KEY (' + DatabaseModel.COLUMN_ID_RECIPE + ', ' + DatabaseModel.COLUMN_NAME + ')'
+    + ');',
   ];
 
   private static databaseReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
