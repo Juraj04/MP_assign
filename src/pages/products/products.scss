@@ -1,39 +1,15 @@
 page-products {
   font-family: Roboto;
 
-  .picture {
+  .name {
+    text-transform: uppercase;
   }
-  .listItem {
-    margin-left: -10px;
+  .description {
+    margin-top: 5%;
   }
-  .productName {
-    text-transform: capitalize;
-    line-height: 0.8;
-    font-style: normal;
-    font-size: 130%;
-    margin-left: 1%;
-  }
-  .category{
-    float: left;
-    color: #8e9093;
-  }
-  .point {
-    color: red;
-    float: left;
-  }
-  .location{
-    text-transform: capitalize;
-    margin-left: 15px;
-  }
-  .like {
-    color: yellow;
-    float: left;
-
-  }
-  .price {
-    color: green;
-    position: relative;
-    float: left;
+  #search{
+    //background-color: #F62459;
+    background-color: #2893FF;
   }
 
 

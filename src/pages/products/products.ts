@@ -27,7 +27,7 @@ export class ProductsPage {
     searchInput: string;
 
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private productStore: ProductStoreProvider) {
+    constructor(public navCtrl: NavController, private productStore: ProductStoreProvider) {
 
     }
 
@@ -40,54 +40,51 @@ export class ProductsPage {
         })
 
     }
+    doRefresh($event) {
+        this.ionViewDidLoad();
+        $event.complete();
+    }
 
-    itemSelected(product) {
+    productDetail(product) {
         this.navCtrl.push(ProductDetailPage, {
             product: product
         });
     }
 
     editProduct(product) {
-
+        //TODO: nova stranka plus provider
     }
 
-    removeProduct(index) {
-        //might work
-        let product = this.products[index];
-        this.products.splice(index,1);
-
-        let i = this.allProducts.indexOf(product);
-        if(this.allProducts.indexOf(product) !== -1){
-            this.allProducts.splice(i,1);
-        }
-
+    removeProduct(product){
+        //TODO: vytvorit v provideri
+        //this.productStore.deleteProduct(product);
     }
 
-    gotoCreateProduct() {
+    createProduct() {
         this.navCtrl.push(NewProductPage, {});
     }
 
     selectProducts() {
+
+        //TODO: OPRAVIT
         if (this.searchInput.trim() == "") {
             this.products = this.allProducts;
             return;
         }
 
         let tgs: string[] = this.searchInput.split(" ");
+        console.log(tgs);
+        console.log(tgs.length)
+
         this.products = [];
-        //my eyes are bleeding from this code as well... :(
+        this.products.length = 0;
+        this.products = this.allProducts.filter(value => value.tags.indexOf(this.searchInput.trim()) > -1);
+        /*
+         for (let i = 0; i < tgs.length; i++) {
+         let helpArray = this.allProducts.filter(value => value.tags.indexOf(tgs[i].trim()) > -1);
+         this.addArrays(this.products, helpArray);
+         }*/
 
-
-        for (var i = 0; i < tgs.length; i++) {
-            for (var j = 0; j < this.allProducts.length; j++) {
-                for (var k = 0; k < this.allProducts[j].tags.length; k++) {
-                    if (tgs[i] == this.allProducts[j].tags[k]) {
-                        this.products.push(this.allProducts[j]);
-                        break;
-                    }
-                }
-            }
-        }
     }
 }
 

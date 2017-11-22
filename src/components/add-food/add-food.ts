@@ -28,7 +28,7 @@ export class AddFoodComponent {
 
   constructor(public viewCtrl: ViewController, db: DummyDatabaseProvider) {
     console.log('Hello AddFoodComponent Component');
-    this.foods = db.food;
+    //this.foods = db.food;  TODO: JJ: toto som zapoznamkoval lebo to pindalo, momentalne som neriesil opravu
   }
 
   getItems($event) {

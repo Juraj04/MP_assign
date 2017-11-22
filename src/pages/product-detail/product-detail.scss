@@ -2,33 +2,34 @@ page-product-detail {
   font-family: Roboto;
 
   .name{
-    text-transform: capitalize;
+    text-transform: uppercase;
   }
-  .category{
-    font-style: italic;
+  #location{
+    margin-bottom: 0%;
   }
-
-  .point {
-    color: red;
-    float: left;
+  #price{
+    float: right;
   }
-  .location{
-    text-transform: capitalize;
-    margin-left: 15px;
-  }
-  .like {
-    color: yellow;
-    float: left;
-
-  }
-  .price {
-    color: green;
-    position: relative;
-    float: left;
+  #name{
+    text-shadow: 2px 2px #f2f2f2;
   }
 
-  .tag{
-    color: #007aff;
+  #rating{
+    float: left;
+  }
+  #image{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: block;
+    margin: auto;
+    height: 60%;
+  }
+  #tag{
+    //color: deeppink;
+    color: #2893FF;
+  }
+  #tags{
+    margin-left: 19%;
+    margin-right: 19%;
   }
 
 }

@@ -40,10 +40,10 @@ export class DatabaseProvider {
     });
 
     this.getDatabaseState().subscribe(rdy => {
-      /*if (rdy) {
-        this.createProducts();
-        this.createDummyRecipes();
-      }*/
+      if (rdy) {
+        //this.createProducts();
+        //this.createDummyRecipes();
+      }
     })
   }
 

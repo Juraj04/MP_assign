@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, Toast} from 'ionic-angular';
 import {Product} from "../../models/product";
+import {ProductStoreProvider} from "../../providers/product-store/product-store";
 
 /**
  * Generated class for the ProductDetailPage page.
@@ -15,42 +16,56 @@ import {Product} from "../../models/product";
   templateUrl: 'product-detail.html',
 })
 export class ProductDetailPage {
-  product: Product;
+  private product: Product
+  private originalProduct: Product;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public productStore: ProductStoreProvider) {
     this.product = navParams.get("product");
+    this.originalProduct = this.product;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductDetailPage');
   }
 
-  clickLocation(){
-    console.log(this.product.tags[0]);
+  ionViewWillLeave() {
+    //TODO: this.productStore.updateProduct(this.originalProduct, this.product);
   }
 
-  getColorByRating(){
-    let colors = ["danger","danger","rating2","rating3", "rating4","rating5"];
+  showInMap() {
+    console.log(this.product.location);
+    //this.navCtrl.push(GoogleMapsWindowPage, {
+    //  location: this.product.location
+   // })
+
+    //TODO: nova stranka google maps
+  }
+
+  getColorByRating() {
+    let colors = ["danger", "danger", "rating2", "rating3", "rating4", "rating5"];
     return colors[this.product.rating];
   }
 
-  getEmojiByRating(){
-    if (this.product.rating > 2){
+  getEmojiByRating() {
+    if (this.product.rating > 2) {
       return "md-happy";
     } else {
       return "md-sad";
     }
   }
 
-  ratingUp(){
-    if(this.product.rating < 5){
+  ratingPlus() {
+    if (this.product.rating < 5) {
       this.product.rating++;
+      //TODO: this.productStore.updateProduct(this.originalProduct, this.product);
     }
+
   }
 
-  ratingDown(){
-    if(this.product.rating > 0){
+  ratingMinus() {
+    if (this.product.rating > 0) {
       this.product.rating--;
+      //TODO: this.productStore.updateProduct(this.originalProduct, this.product);
     }
   }
 }

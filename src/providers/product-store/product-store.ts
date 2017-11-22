@@ -18,11 +18,9 @@ import {Product} from "../../models/product";
 export class ProductStoreProvider {
     private _products: BehaviorSubject<Product[]> = new BehaviorSubject([]);
     public readonly products: Observable<Product[]> = this._products.asObservable();
-    private db: DummyDatabaseProvider | DatabaseProvider;
 
 
-    constructor(select: SelectRightProviderProvider) {
-        this.db = select.GetDatabaseProvider();
+    constructor(public db: DatabaseProvider) {
 
         this.db.getDatabaseState().subscribe(rdy => {
             if (rdy) {
@@ -35,8 +33,31 @@ export class ProductStoreProvider {
     }
 
     addProduct(product: Product) {
-        this.db.addProduct(product);
-        this._products.next(this._products.getValue());
+        this.db.addProduct(product).then(value => {
+            let n = this._products.getValue();
+            n.push(value);
+            this._products.next(n)
+        });
+
+    }
+
+    deleteProduct(product: Product){
+        this.db.deleteProduct(product).then(value => {
+            let n = this._products.getValue();
+            let index = n.indexOf(product);
+            n.splice(index,1);
+            this._products.next(n);
+        })
+    }
+
+    updateProduct(original: Product, changed: Product){
+        this.db.updateProduct(changed).then(value => {
+            let n = this._products.getValue();
+            let index = n.indexOf(original);
+            n[index] = value;
+            this._products.next(n);
+        })
+
     }
 
 }

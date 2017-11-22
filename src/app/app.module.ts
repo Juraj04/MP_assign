@@ -28,6 +28,8 @@ import { RecipeStore } from '../providers/recipe-store/recipe-store';
 import {ProductDetailPage} from "../pages/product-detail/product-detail";
 import {NewProductPage} from "../pages/new-product/new-product";
 import { ProductStoreProvider } from '../providers/product-store/product-store';
+import {ImagePicker} from "@ionic-native/image-picker";
+import {Camera} from "@ionic-native/camera";
 
 
 @NgModule({
@@ -77,7 +79,9 @@ import { ProductStoreProvider } from '../providers/product-store/product-store';
         DummyDatabaseProvider,
         SelectRightProviderProvider,
         RecipeStore,
-        ProductStoreProvider
+        ProductStoreProvider,
+        ImagePicker,
+        Camera
     ]
 })
 export class AppModule {

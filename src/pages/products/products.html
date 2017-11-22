@@ -5,124 +5,54 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-    <ion-navbar>
-        <ion-searchbar
-                [(ngModel)]="searchInput"
-                [showCancelButton]="shouldShowCancel"
-                (ionInput)="selectProducts()">
+    <ion-navbar color="primary">
+        <ion-searchbar id="search"
+                       [(ngModel)]="searchInput"
+                       [showCancelButton]="shouldShowCancel"
+                       (ionInput)="selectProducts()">
         </ion-searchbar>
     </ion-navbar>
-
 </ion-header>
 
 
-<ion-content><!--
-    <ion-list inset>
-        <ion-item-sliding>
-                <button class="listItem" ion-item *ngFor="let product of products" (click)="itemSelected(product)">
-                    <ion-avatar item-start>
-                        <img class="picture"
-                             src="https://ae01.alicdn.com/kf/HTB1s_InOVXXXXbLapXXq6xXFXXX8/-font-b-Middle-b-font-font-b-Finger-b-font-Funny-Die-Cut-Vinyl-Decal.jpg">
-                        <!--<img src="../../assets/img/midf.jpg">
-                    </ion-avatar>
-                    <ion-row>
-                        <ion-col col-8>
-                            <h2 class="productName">{{ product.name }} </h2>
-                        </ion-col>
-                        <ion-col>
-
-                        </ion-col>
-                        <ion-col>
-                            <span class="category">{{product.food.name}} </span>
-                        </ion-col>
-                    </ion-row>
-
-                    <br/>
-                    <ion-row>
-                        <ion-col col-8>
-                            <ion-icon class="point" name="md-pin"></ion-icon>
-                            <div class="location">{{ product.location }}</div>
-                        </ion-col>
-                        <ion-col>
-                            <ion-icon class="like" name="md-star"></ion-icon>&nbsp;{{ product.rating }} &nbsp;&nbsp;
-                        </ion-col>
-                        <ion-col>
-                            <ion-icon class="price" name="ios-cash"></ion-icon>&nbsp;{{product.price }}
-                        </ion-col>
-                    </ion-row>
-
-
-                </button>
-
-
-            <ion-item-options side="left">
-                <button ion-button color="primary">
-                    <ion-icon name="text"></ion-icon>
-                    Text
-                </button>
-                <button ion-button color="secondary">
-                    <ion-icon name="call"></ion-icon>
-                    Call
-                </button>
-            </ion-item-options>
-        </ion-item-sliding>
-
-    </ion-list>
-
-    <ion-fab right bottom>
-        <button ion-fab mini (click)="gotoCreateProduct()">
-            <ion-icon name="add"></ion-icon>
-        </button>
-    </ion-fab>-->
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
     <ion-list>
-        <ion-item-sliding class="listItem" *ngFor="let product of products; let i = index">
-            <ion-item (click)="itemSelected(product)">
-                <ion-avatar item-start>
-                    <img class="picture"
-                         src="https://ae01.alicdn.com/kf/HTB1s_InOVXXXXbLapXXq6xXFXXX8/-font-b-Middle-b-font-font-b-Finger-b-font-Funny-Die-Cut-Vinyl-Decal.jpg">
-                </ion-avatar>
-                <ion-row>
-                    <ion-col col-8>
-                        <h2 class="productName">{{ product.name }} </h2>
-                    </ion-col>
-                    <ion-col>
+        <ion-item-sliding id="item" *ngFor="let product of products">
+            <ion-item (click)="productDetail(product)">
+                <ion-thumbnail item-start>
+                    <img src={{product.photo}}>
+                </ion-thumbnail>
 
-                    </ion-col>
-                    <ion-col>
-                        <span class="category">{{product.food.name}} </span>
-                    </ion-col>
-                </ion-row>
-                <br/>
-                <ion-row>
-                    <ion-col col-8>
-                        <ion-icon class="point" name="md-pin"></ion-icon>
-                        <div class="location">{{ product.location }}</div>
-                    </ion-col>
-                    <ion-col>
-                        <ion-icon class="like" name="md-star"></ion-icon>&nbsp;{{ product.rating }} &nbsp;&nbsp;
-                    </ion-col>
-                    <ion-col>
-                        <ion-icon class="price" name="ios-cash"></ion-icon>&nbsp;{{product.price }}
-                    </ion-col>
-                </ion-row>
+                <h1 class="name">{{product.name}}</h1>
+                <p class="description">
+                    {{product.location.name}} • {{product.rating}}
+                    <ion-icon name="ios-star-outline"></ion-icon>
+                </p>
+                <h1 class="price" item-end>{{product.price}}</h1>
+                <p class="euro" item-end>€</p>
+
             </ion-item>
+
             <ion-item-options side="right">
                 <button ion-button color="rating2" (click)="editProduct(product)">
                     <ion-icon name="edit"></ion-icon>
                     Edit
                 </button>
-                <button ion-button color="danger" (click)="removeProduct(i)">
+                <button ion-button color="danger" (click)="removeProduct(product)">
                     <ion-icon name="delete"></ion-icon>
                     Delete
                 </button>
             </ion-item-options>
+
         </ion-item-sliding>
     </ion-list>
 
     <ion-fab right bottom>
-        <button ion-fab mini (click)="gotoCreateProduct()">
+        <button ion-fab mini (click)="createProduct()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
