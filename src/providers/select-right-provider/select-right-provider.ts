@@ -26,7 +26,7 @@ export class SelectRightProviderProvider {
     console.log(this.platform.platforms());
     if(this.platform.is('core') || this.platform.is('mobileweb')) return this.dummy;
 
-    if(this.db == null) this.db =new DatabaseProvider(new SQLite, new SQLitePorter);
+    if(this.db == null) this.db =new DatabaseProvider(new SQLite, new SQLitePorter, this.platform);
     return this.db;
   }
 
