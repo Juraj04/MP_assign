@@ -35,17 +35,17 @@
 
 
     <ion-fab right top>
-            <button ion-fab color="{{getColorByRating()}}">
-                <ion-icon name="{{getEmojiByRating()}}"></ion-icon>
+        <button ion-fab color="{{getColorByRating()}}">
+            <ion-icon name="{{getEmojiByRating()}}"></ion-icon>
+        </button>
+        <ion-fab-list side="down">
+            <button ion-fab (click)="ratingUp()">
+                <ion-icon name="md-thumbs-up" ></ion-icon>
             </button>
-            <ion-fab-list side="down">
-                <button ion-fab>
-                    <ion-icon name="md-thumbs-up"></ion-icon>
-                </button>
-                <button ion-fab>
-                    <ion-icon name="md-thumbs-down"></ion-icon>
-                </button>
-            </ion-fab-list>
+            <button ion-fab (click)="ratingDown()">
+                <ion-icon name="md-thumbs-down" ></ion-icon>
+            </button>
+        </ion-fab-list>
 
     </ion-fab>
 </ion-content>

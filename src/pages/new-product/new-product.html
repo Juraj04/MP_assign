@@ -6,48 +6,60 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Create new product</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only color="royal" (click)="createProduct()">
-        <ion-icon name="checkmark"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Create new product</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only color="royal" (click)="createProduct()">
+                <ion-icon name="checkmark"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Name of product</ion-label>
-      <ion-input [(ngModel)]="name"></ion-input>
-    </ion-item>
+    <ion-list>
+        <ion-item>
+            <ion-label floating>Name of product</ion-label>
+            <ion-input [(ngModel)]="name"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Location</ion-label>
-      <ion-input [(ngModel)]="location"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label floating>Location</ion-label>
+            <ion-input [(ngModel)]="location"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Price</ion-label>
-      <ion-input [(ngModel)]="price"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label floating>Price</ion-label>
+            <ion-input [(ngModel)]="price"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Rating</ion-label>
-      <ion-input [(ngModel)]="rating"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label floating>Rating</ion-label>
+            <ion-input [(ngModel)]="rating"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Quantity</ion-label>
-      <ion-input [(ngModel)]="quantity"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label floating>Quantity</ion-label>
+            <ion-input [(ngModel)]="quantity"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Tags</ion-label>
-      <ion-input [(ngModel)]="tags"></ion-input>
-    </ion-item>
-  </ion-list>
+        <ion-item>
+            <ion-label floating>Tags</ion-label>
+            <ion-input [(ngModel)]="tags"></ion-input>
+        </ion-item>
+
+        <ion-list>
+            <ion-list-header>
+                Food category
+            </ion-list-header>
+            <ion-item>
+                <ion-note item-end *ngIf="food != null">{{food.name}}</ion-note>
+            </ion-item>
+        </ion-list>
+        <button ion-button="" (click)="addFood()">
+            Add food
+        </button>
+    </ion-list>
 </ion-content>

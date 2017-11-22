@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Food, Unit} from "../../models/food";
 import {RecipeItem} from "../../models/recipeItem";
 import {NavController, ViewController} from "ionic-angular";
+import {DummyDatabaseProvider} from "../../providers/dummy-database/dummy-database";
 
 /**
  * Generated class for the AddFoodComponent component.
@@ -25,8 +26,9 @@ export class AddFoodComponent {
   unit: Unit;
   count: number;
 
-  constructor(public viewCtrl: ViewController) {
+  constructor(public viewCtrl: ViewController, db: DummyDatabaseProvider) {
     console.log('Hello AddFoodComponent Component');
+    this.foods = db.food;
   }
 
   getItems($event) {

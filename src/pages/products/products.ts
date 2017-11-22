@@ -22,8 +22,9 @@ import {ProductStoreProvider} from "../../providers/product-store/product-store"
     templateUrl: 'products.html',
 })
 export class ProductsPage {
-    products: Product[]= [];
+    products: Product[] = [];
     allProducts: Product[] = [];
+    searchInput: string;
 
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private productStore: ProductStoreProvider) {
@@ -33,8 +34,11 @@ export class ProductsPage {
     ionViewDidLoad() {
         this.productStore.products.subscribe(data => {
             this.allProducts = data
+            console.log(data);
             this.products = this.allProducts;
+
         })
+
     }
 
     itemSelected(product) {
@@ -43,8 +47,47 @@ export class ProductsPage {
         });
     }
 
+    editProduct(product) {
+
+    }
+
+    removeProduct(index) {
+        //might work
+        let product = this.products[index];
+        this.products.splice(index,1);
+
+        let i = this.allProducts.indexOf(product);
+        if(this.allProducts.indexOf(product) !== -1){
+            this.allProducts.splice(i,1);
+        }
+
+    }
+
     gotoCreateProduct() {
         this.navCtrl.push(NewProductPage, {});
+    }
+
+    selectProducts() {
+        if (this.searchInput.trim() == "") {
+            this.products = this.allProducts;
+            return;
+        }
+
+        let tgs: string[] = this.searchInput.split(" ");
+        this.products = [];
+        //my eyes are bleeding from this code as well... :(
+
+
+        for (var i = 0; i < tgs.length; i++) {
+            for (var j = 0; j < this.allProducts.length; j++) {
+                for (var k = 0; k < this.allProducts[j].tags.length; k++) {
+                    if (tgs[i] == this.allProducts[j].tags[k]) {
+                        this.products.push(this.allProducts[j]);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 

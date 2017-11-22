@@ -36,9 +36,7 @@ export class ProductStoreProvider {
 
     addProduct(product: Product) {
         this.db.addProduct(product);
-        let array = this._products.getValue();
-        array.push(product);
-        this._products.next(array);
+        this._products.next(this._products.getValue());
     }
 
 }

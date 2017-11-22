@@ -41,4 +41,16 @@ export class ProductDetailPage {
       return "md-sad";
     }
   }
+
+  ratingUp(){
+    if(this.product.rating < 5){
+      this.product.rating++;
+    }
+  }
+
+  ratingDown(){
+    if(this.product.rating > 0){
+      this.product.rating--;
+    }
+  }
 }
