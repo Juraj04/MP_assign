@@ -15,29 +15,24 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class FridgeProvider {
 
-  private _foods:BehaviorSubject<RecipeItem[]> = new BehaviorSubject([]);
-  public readonly  foods:Observable<RecipeItem[]> = this._foods.asObservable();
+  private _foods: BehaviorSubject<RecipeItem[]> = new BehaviorSubject([]);
+  public readonly foods: Observable<RecipeItem[]> = this._foods.asObservable();
 
   constructor(private productsStore: ProductStoreProvider) {
     productsStore.products.subscribe(recipes => {
-      let foods: Map<Food, number> = new Map()
+      let foods: Map<number, RecipeItem> = new Map()
 
       recipes.forEach(value => {
         if (value.count_fridge > 0) {
           var count = value.count_fridge
-          if (foods.has(value.food)) {
-            count += foods.get(value.food);
+          if (foods.has(value.food.id)) {
+            count += foods.get(value.food.id).count;
           }
-          foods.set(value.food, count)
+          foods.set(value.food.id, new RecipeItem(value.food, count))
         }
       })
 
-      let recipeItems: RecipeItem[] = [];
-      foods.forEach((value, key) => {
-        recipeItems.push(new RecipeItem(key, value))
-      })
-
-      this._foods.next(recipeItems)
+      this._foods.next(Array.from(foods.values()))
 
     })
     console.log('Hello FridgeProvider Provider');
