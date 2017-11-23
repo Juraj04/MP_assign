@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {Food} from "../../models/food";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {AddFoodComponent} from "../../components/add-food/add-food";
@@ -7,6 +7,9 @@ import {Product} from "../../models/product";
 import {Location} from "../../models/location";
 import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
 import {Camera, CameraOptions} from "@ionic-native/camera";
+import {GoogleMapsWindowPage} from "../google-maps-window/google-maps-window";
+import {LocationStoreProvider} from "../../providers/location-store/location-store";
+import {ProductDetailPage} from "../product-detail/product-detail";
 
 /**
  * Generated class for the NewProductPage page.
@@ -24,17 +27,18 @@ export class NewProductPage {
 
   name: string;
   locationName: string;
-  price: number;
+  price: number = 0;
   rating: number = 3;
   photo: string = "./assets/img/default-placeholder.png";
   tags: string = "";
-  quantity: number;
+  quantity: number = 0;
   food: Food;
 
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera, private imagePicker: ImagePicker,
-              public modal: ModalController,/* private locationStore: LocationStoreProvider,*/ private productStore:ProductStoreProvider) {
+              public modal: ModalController, private locationStore: LocationStoreProvider, private productStore:ProductStoreProvider,
+              private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -42,17 +46,23 @@ export class NewProductPage {
   }
 
   createProduct(){
-    let tgs: string[] = this.tags.toLowerCase().split(" ");
-    tgs.push(this.name.replace(" ",""));
-    //tgs.push(this.location.replace(" ",""));
-    tgs.push(this.food.name.replace(" ",""));
 
-    let loc = new Location("TEST", 69, 69);
-    //TODO: opravit tvorbu produktov, lebo toto je cele na chuja
-    let product: Product = new Product(this.name, loc, this.price, "sss", this.rating, this.quantity, 0, this.food, "hhh", tgs);
+    if(this.validInput()){
+      let tgs: string[] = this.tags.toLowerCase().split(" ");
+      tgs.push(this.name.toLowerCase().replace(" ",""));
+      tgs.push(this.locationName.toLowerCase().replace(" ",""));
+      tgs.push(this.food.name.toLowerCase().replace(" ",""));
 
-    this.productStore.addProduct(product);
-    this.navCtrl.pop();
+      let location = new Location(this.locationName,this.locationStore.lat,this.locationStore.lng);
+
+      let product: Product = new Product(this.name, location, this.price, "date", this.rating, this.quantity, 0, this.food, this.photo, tgs);
+
+      this.productStore.addProduct(product);
+      this.navCtrl.pop();
+      this.navCtrl.push(ProductDetailPage, {
+        product: product
+      });
+    }
 
   }
 
@@ -89,8 +99,7 @@ export class NewProductPage {
   }
 
   getLocation() {
-    //TODO: dorobit location store, a googlemaps window
-    //this.navCtrl.push(GoogleMapsWindowPage, {});
+    this.navCtrl.push(GoogleMapsWindowPage, {});
   };
 
   addFood(){
@@ -104,5 +113,33 @@ export class NewProductPage {
     modal.present();
   }
 
+  validInput(){
+    if(this.name != ""){
+      this.presentToast("Insert name!")
+      return false
+    } else if(this.photo != ""){
+      this.presentToast("Select photo!")
+      return false
+    } else if(this.price != 0){
+      this.presentToast("Insert price!")
+      return false
+    } else if(this.food != null){
+      this.presentToast("Select food!")
+      return false
+    } else {
+      return true
+    }
+  }
+  presentToast(message: string) {
+    const toast = this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
+    });
 
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+    toast.present();
+  }
 }

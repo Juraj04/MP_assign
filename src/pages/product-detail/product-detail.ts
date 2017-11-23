@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, Toast} from 'ionic-angular';
 import {Product} from "../../models/product";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
+import {GoogleMapsWindowPage} from "../google-maps-window/google-maps-window";
 
 /**
  * Generated class for the ProductDetailPage page.
@@ -29,16 +30,14 @@ export class ProductDetailPage {
   }
 
   ionViewWillLeave() {
-    //TODO: this.productStore.updateProduct(this.originalProduct, this.product);
+    this.productStore.updateProduct(this.originalProduct, this.product);
   }
 
   showInMap() {
     console.log(this.product.location);
-    //this.navCtrl.push(GoogleMapsWindowPage, {
-    //  location: this.product.location
-   // })
-
-    //TODO: nova stranka google maps
+    this.navCtrl.push(GoogleMapsWindowPage, {
+      location: this.product.location
+    })
   }
 
   getColorByRating() {

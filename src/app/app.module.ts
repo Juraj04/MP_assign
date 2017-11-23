@@ -30,6 +30,10 @@ import {NewProductPage} from "../pages/new-product/new-product";
 import { ProductStoreProvider } from '../providers/product-store/product-store';
 import {ImagePicker} from "@ionic-native/image-picker";
 import {Camera} from "@ionic-native/camera";
+import { LocationStoreProvider } from '../providers/location-store/location-store';
+import {GoogleMaps} from "@ionic-native/google-maps";
+import {GoogleMapsWindowPage} from "../pages/google-maps-window/google-maps-window";
+import {Geolocation} from '@ionic-native/geolocation';
 
 
 @NgModule({
@@ -48,7 +52,8 @@ import {Camera} from "@ionic-native/camera";
         LongTextPipe,
         AddFoodComponent,
         ProductDetailPage,
-        NewProductPage
+        NewProductPage,
+        GoogleMapsWindowPage
     ],
     imports: [
         BrowserModule,
@@ -67,7 +72,8 @@ import {Camera} from "@ionic-native/camera";
         NewRecipePage,
         AddFoodComponent,
         ProductDetailPage,
-        NewProductPage
+        NewProductPage,
+        GoogleMapsWindowPage
     ],
     providers: [
         StatusBar,
@@ -81,7 +87,10 @@ import {Camera} from "@ionic-native/camera";
         RecipeStore,
         ProductStoreProvider,
         ImagePicker,
-        Camera
+        Camera,
+    LocationStoreProvider,
+        GoogleMaps,
+        Geolocation
     ]
 })
 export class AppModule {

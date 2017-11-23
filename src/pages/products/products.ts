@@ -56,8 +56,7 @@ export class ProductsPage {
     }
 
     removeProduct(product){
-        //TODO: vytvorit v provideri
-        //this.productStore.deleteProduct(product);
+        this.productStore.deleteProduct(product);
     }
 
     createProduct() {
@@ -71,14 +70,14 @@ export class ProductsPage {
             this.products = this.allProducts;
             return;
         }
-
-        let tgs: string[] = this.searchInput.split(" ");
+        /*
+        let tgs: string[] = this.searchInput.toLowerCase().split(" ");
         console.log(tgs);
-        console.log(tgs.length)
+        console.log(tgs.length)*/
 
         this.products = [];
         this.products.length = 0;
-        this.products = this.allProducts.filter(value => value.tags.indexOf(this.searchInput.trim()) > -1);
+        this.products = this.allProducts.filter(value => value.tags.indexOf(this.searchInput.toLowerCase().trim()) > -1);
         /*
          for (let i = 0; i < tgs.length; i++) {
          let helpArray = this.allProducts.filter(value => value.tags.indexOf(tgs[i].trim()) > -1);

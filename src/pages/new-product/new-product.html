@@ -18,7 +18,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
     <img id="img" src="{{photo}}">
     <ion-grid id="gridButtons" padding>
         <ion-row>
@@ -48,11 +48,11 @@
 
         <ion-item>
             <ion-label floating>Price</ion-label>
-            <ion-input [(ngModel)]="price"></ion-input>
+            <ion-input type="number" [(ngModel)]="price"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label floating color="gray">Rating</ion-label>
+            <ion-label floating color="gray">Rating {{rating}}</ion-label>
             <ion-range min="0" max="5" pin="true" color="primary" [(ngModel)]="rating" step="1">
                 <ion-label range-left>0</ion-label>
                 <ion-label range-right>5</ion-label>
@@ -61,7 +61,7 @@
 
         <ion-item>
             <ion-label floating>Quantity</ion-label>
-            <ion-input [(ngModel)]="quantity"></ion-input>
+            <ion-input type="number" [(ngModel)]="quantity"></ion-input>
         </ion-item>
 
         <ion-item>
