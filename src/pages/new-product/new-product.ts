@@ -55,6 +55,9 @@ export class NewProductPage {
 
       let location = new Location(this.locationName,this.locationStore.lat,this.locationStore.lng);
 
+      console.log(this.quantity)
+      console.log(this.price)
+
       let product: Product = new Product(this.name, location, this.price, "date", this.rating, this.quantity, 0, this.food, this.photo, tgs);
 
       this.productStore.addProduct(product);
@@ -114,17 +117,20 @@ export class NewProductPage {
   }
 
   validInput(){
-    if(this.name != ""){
+    if(this.name == ""){
       this.presentToast("Insert name!")
       return false
-    } else if(this.photo != ""){
+    } else if(this.photo == ""){
       this.presentToast("Select photo!")
       return false
-    } else if(this.price != 0){
+    } else if(this.price == 0){
       this.presentToast("Insert price!")
       return false
-    } else if(this.food != null){
+    } else if(this.food == null){
       this.presentToast("Select food!")
+      return false
+    } else if(this.quantity == 0){
+      this.presentToast("Insert quantity!")
       return false
     } else {
       return true

@@ -27,6 +27,7 @@ export class ProductDetailPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductDetailPage');
+    console.log(this.product)
   }
 
   ionViewWillLeave() {
@@ -56,7 +57,7 @@ export class ProductDetailPage {
   ratingPlus() {
     if (this.product.rating < 5) {
       this.product.rating++;
-      //TODO: this.productStore.updateProduct(this.originalProduct, this.product);
+      this.productStore.updateProduct(this.originalProduct, this.product);
     }
 
   }
@@ -64,7 +65,13 @@ export class ProductDetailPage {
   ratingMinus() {
     if (this.product.rating > 0) {
       this.product.rating--;
-      //TODO: this.productStore.updateProduct(this.originalProduct, this.product);
+      this.productStore.updateProduct(this.originalProduct, this.product);
     }
+  }
+
+  addToFridge(){
+    this.product.count_fridge = this.product.count_fridge + this.product.quantity
+    this.productStore.updateProduct(this.originalProduct, this.product);
+    console.log(this.product.count_fridge)
   }
 }

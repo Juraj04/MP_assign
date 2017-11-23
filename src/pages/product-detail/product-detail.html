@@ -8,6 +8,12 @@
 
     <ion-navbar color="primary">
         <ion-title class="name">{{product.name}}</ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only color="royal" (click)="addToFridge()">
+                <ion-icon name="cart"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
