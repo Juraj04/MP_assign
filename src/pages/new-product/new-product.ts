@@ -27,11 +27,11 @@ export class NewProductPage {
 
   name: string;
   locationName: string;
-  price: number = 0;
+  price: number;
   rating: number = 3;
   photo: string = "./assets/img/default-placeholder.png";
   tags: string = "";
-  quantity: number = 0;
+  quantity: number;
   food: Food;
 
 
@@ -43,6 +43,7 @@ export class NewProductPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewProductPage');
+    console.log(typeof this.quantity)
   }
 
   createProduct(){
@@ -57,8 +58,11 @@ export class NewProductPage {
 
       console.log(this.quantity)
       console.log(this.price)
+      console.log(typeof this.quantity)
 
       let product: Product = new Product(this.name, location, this.price, "date", this.rating, this.quantity, 0, this.food, this.photo, tgs);
+
+      console.log(product)
 
       this.productStore.addProduct(product);
       this.navCtrl.pop();
@@ -148,4 +152,8 @@ export class NewProductPage {
     });
     toast.present();
   }
+
+  public convertToNumber(event):number {  return +event; }
+
+
 }
