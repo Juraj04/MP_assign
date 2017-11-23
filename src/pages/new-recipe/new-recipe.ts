@@ -39,7 +39,7 @@ export class NewRecipePage {
   }
 
   addItem() {
-    let modal = this.modal.create(AddFoodComponent);
+    let modal = this.modal.create(AddFoodComponent, {showCount : true});
     modal.onDidDismiss(data => {
       if (data == null) return;
       this.items.push(data.recipeItem);

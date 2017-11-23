@@ -104,10 +104,10 @@ export class NewProductPage {
 
   addFood(){
     //TODO: wat
-    let modal = this.modal.create(AddFoodComponent);
+    let modal = this.modal.create(AddFoodComponent,{showCount : false});
     modal.onDidDismiss(data => {
       if (data == null) return;
-      this.food = data.recipeItem.food;
+      this.food = data.food;
     });
 
     modal.present();

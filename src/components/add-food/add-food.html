@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="!food">
     <ion-item *ngFor="let food of foods" (click)="selectFood(food)">
       {{food.name}}
     </ion-item>
@@ -25,7 +25,7 @@
 
     <p *ngIf="!newFood">Unit: {{food.unit | unit}}</p>
 
-    <ion-item >
+    <ion-item  *ngIf="showCount">
       <ion-label>Count
       </ion-label>
       <ion-input type="number" [(ngModel)]="count"></ion-input>
