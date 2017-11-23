@@ -3,7 +3,7 @@
     <name>MyApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.75:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
@@ -80,6 +80,7 @@
     <vs:toolsetVersion xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps">6.3.1</vs:toolsetVersion>
     <preference name="windows-target-version" value="10.0" />
     <allow-navigation href="http://192.168.1.7:8100" />
+    <allow-navigation href="http://192.168.1.75:8100" />
     <engine name="android" spec="^6.2.2" />
     <engine name="ios" spec="^4.4.0" />
     <engine name="windows" spec="4.4.2" />

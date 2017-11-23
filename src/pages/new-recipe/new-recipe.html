@@ -19,7 +19,17 @@
 
 
 <ion-content padding>
-
+  <img id="img" src="{{photo}}">
+  <ion-grid id="gridButtons" padding>
+    <ion-row>
+      <ion-col>
+        <button id="photoButton" ion-button outline color="primary" (click)="takeAPhoto()">Photo</button>
+      </ion-col>
+      <ion-col>
+        <button id="galeryButton" ion-button outline color="primary" (click)="selectFromGalery()">Galery</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-list>
     <ion-item>

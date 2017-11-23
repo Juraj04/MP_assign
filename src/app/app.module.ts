@@ -24,65 +24,70 @@ import {DifficultyPipe} from "../pipes/difficulty/difficulty";
 import {UnitPipe} from "../pipes/unit/unit";
 import {LongTextPipe} from "../pipes/long-text/long-text";
 import {AddFoodComponent} from "../components/add-food/add-food";
-import { RecipeStore } from '../providers/recipe-store/recipe-store';
+import {RecipeStore} from '../providers/recipe-store/recipe-store';
 import {ProductDetailPage} from "../pages/product-detail/product-detail";
 import {NewProductPage} from "../pages/new-product/new-product";
-import { ProductStoreProvider } from '../providers/product-store/product-store';
+import {ProductStoreProvider} from '../providers/product-store/product-store';
 import {ImagePicker} from "@ionic-native/image-picker";
 import {Camera} from "@ionic-native/camera";
+import {FridgePage} from "../pages/fridge/fridge";
+import { FridgeProvider } from '../providers/fridge/fridge';
 
 
 @NgModule({
-    declarations: [
-        MyApp,
-        AboutPage,
-        ContactPage,
-        HomePage,
-        TabsPage,
-        ProductsPage,
-        RecipesPage,
-        RecipeDetailPage,
-        NewRecipePage,
-        DifficultyPipe,
-        UnitPipe,
-        LongTextPipe,
-        AddFoodComponent,
-        ProductDetailPage,
-        NewProductPage
-    ],
-    imports: [
-        BrowserModule,
-        IonicModule.forRoot(MyApp)
-    ],
-    bootstrap: [IonicApp],
-    entryComponents: [
-        MyApp,
-        AboutPage,
-        ContactPage,
-        HomePage,
-        TabsPage,
-        ProductsPage,
-        RecipesPage,
-        RecipeDetailPage,
-        NewRecipePage,
-        AddFoodComponent,
-        ProductDetailPage,
-        NewProductPage
-    ],
-    providers: [
-        StatusBar,
-        SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler},
-        DatabaseProvider,
-        SQLitePorter,
-        SQLite,
-        DummyDatabaseProvider,
-        SelectRightProviderProvider,
-        RecipeStore,
-        ProductStoreProvider,
-        ImagePicker,
-        Camera
-    ]
+  declarations: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    TabsPage,
+    ProductsPage,
+    RecipesPage,
+    RecipeDetailPage,
+    NewRecipePage,
+    DifficultyPipe,
+    UnitPipe,
+    LongTextPipe,
+    AddFoodComponent,
+    ProductDetailPage,
+    NewProductPage,
+    FridgePage
+  ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp)
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    TabsPage,
+    ProductsPage,
+    RecipesPage,
+    RecipeDetailPage,
+    NewRecipePage,
+    AddFoodComponent,
+    ProductDetailPage,
+    NewProductPage,
+    FridgePage
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DatabaseProvider,
+    SQLitePorter,
+    SQLite,
+    DummyDatabaseProvider,
+    SelectRightProviderProvider,
+    RecipeStore,
+    ProductStoreProvider,
+    ImagePicker,
+    Camera,
+    FridgeProvider
+  ]
 })
 export class AppModule {
 }
