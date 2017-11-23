@@ -18,18 +18,17 @@ import {DummyDatabaseProvider} from "../dummy-database/dummy-database";
 export class RecipeStore {
 private _recipes:BehaviorSubject<Recipe[]> = new BehaviorSubject([]);
 public readonly  recipes:Observable<Recipe[]> = this._recipes.asObservable();
-  private db: DummyDatabaseProvider | DatabaseProvider;
 
 
 
-  constructor(select: SelectRightProviderProvider) {
-    this.db = select.GetDatabaseProvider();
+  constructor(private db: DatabaseProvider) {
 
     this.db.getDatabaseState().subscribe(rdy => {
       if (rdy) {
         this.db.getAllRecipes().then(value => {
           this._recipes.next(value);
           console.log("recipe store :" + value);
+
         })
       }
     })

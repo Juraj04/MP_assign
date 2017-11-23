@@ -57,7 +57,7 @@ export class AddFoodComponent {
   selectFood(food: Food) {
     this.food = food;
     this.newFood = this.all_foods.indexOf(food) < 0;
-    this.searchText="";
+    this.searchText= food.name;
     //this.getItems(null);
   }
 
