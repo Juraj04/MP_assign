@@ -22,12 +22,15 @@ export class GoogleMapsWindowPage {
     lat: number;
     lng: number;
     location: Location;
+    change: Boolean;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private googleMaps: GoogleMaps, private geolocation: Geolocation,
                 private locationStore: LocationStoreProvider, private toastCtrl: ToastController) {
-        if (navParams.get("location") != null) {
+        if (navParams.get("location") != null && navParams.get("change") != null) {
             this.location = navParams.get("location");
+            this.change = navParams.get("change");
             console.log(this.location);
+            console.log(this.change);
         }
     }
 
@@ -36,7 +39,10 @@ export class GoogleMapsWindowPage {
         if (this.location == null) {
             this.loadMap();
         } else {
-            this.showMap();
+            switch (this.change){
+                case true: {this.changeLocation();break;}
+                case false:{this.showMap();break;}
+            }
         }
     }
 
@@ -45,6 +51,7 @@ export class GoogleMapsWindowPage {
     }
 
     loadMap() {
+        console.log("LOAD MAP");
         this.geolocation.getCurrentPosition().then((resp) => {
             this.lat = resp.coords.latitude;
             this.lng = resp.coords.longitude;
@@ -121,7 +128,7 @@ export class GoogleMapsWindowPage {
     }
 
     saveLocation() {
-        if (this.location == null) {
+        if (this.location == null || this.change) {
             this.locationStore.lng = this.lng;
             this.locationStore.lat = this.lat;
             console.log(this.locationStore.lng + "  " + this.locationStore.lat);
@@ -133,7 +140,7 @@ export class GoogleMapsWindowPage {
     }
 
     showMap() {
-
+        console.log("SHOW MAP");
         let mapElement = document.getElementById('map');
         let mapOptions: GoogleMapOptions = {
             camera: {
@@ -166,6 +173,73 @@ export class GoogleMapsWindowPage {
 
                 })
             });
+
+    }
+
+    changeLocation(){
+        console.log("CHANGE LOCATION");
+        let mapElement = document.getElementById('map');
+        let mapOptions: GoogleMapOptions = {
+            camera: {
+                target: {
+                    lat: this.location.x,
+                    lng: this.location.y,
+                },
+                zoom: 18,
+                tilt: 30
+            }
+        };
+
+        this.map = this.googleMaps.create(mapElement, mapOptions);
+
+        // Wait the MAP_READY before using any methods.
+        this.map.one(GoogleMapsEvent.MAP_READY)
+            .then(() => {
+                console.log('Map is ready!');
+
+
+                // Now you can use all methods safely.
+                this.map.addMarker({
+                    title: this.location.name,
+                    icon: 'blue',
+                    animation: 'DROP',
+                    position: {
+                        lat: this.location.x,
+                        lng: this.location.y
+                    },
+
+                });
+
+                this.map.on(GoogleMapsEvent.MAP_CLICK)
+                    .subscribe(data => {
+                        this.map.clear()
+                            .then(() => {
+                                let coordinates = JSON.parse(data);
+                                this.lat = coordinates['lat'];
+                                this.lng = coordinates['lng'];
+                                this.presentToast('New location at: ' + 'Lat: ' + this.lat + '| Lng: ' + this.lng, 'bottom');
+
+                                this.map.addMarker({
+                                    icon: 'blue',
+                                    animation: 'DROP',
+                                    position: {
+                                        lat: this.lat,
+                                        lng: this.lng
+                                    }
+                                })
+                                    .then(marker => {
+                                        marker.on(GoogleMapsEvent.MARKER_CLICK)
+                                            .subscribe(() => {
+                                                alert('Lat: ' + this.lat + '| Lng: ' + this.lng);
+
+                                            });
+                                    });
+                            });
+
+                    })
+            });
+
+
 
     }
 

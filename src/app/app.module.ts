@@ -31,72 +31,78 @@ import {ProductStoreProvider} from '../providers/product-store/product-store';
 import {ImagePicker} from "@ionic-native/image-picker";
 import {Camera} from "@ionic-native/camera";
 import {FridgePage} from "../pages/fridge/fridge";
-import { FridgeProvider } from '../providers/fridge/fridge';
-import { LocationStoreProvider } from '../providers/location-store/location-store';
+import {FridgeProvider} from '../providers/fridge/fridge';
+import {LocationStoreProvider} from '../providers/location-store/location-store';
 import {GoogleMaps} from "@ionic-native/google-maps";
 import {GoogleMapsWindowPage} from "../pages/google-maps-window/google-maps-window";
 import {Geolocation} from '@ionic-native/geolocation';
+import {EditProductPage} from "../pages/edit-product/edit-product";
+import {PictureManagerProvider} from '../providers/picture-manager/picture-manager';
 
 
 @NgModule({
-  declarations: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage,
-    ProductsPage,
-    RecipesPage,
-    RecipeDetailPage,
-    NewRecipePage,
-    DifficultyPipe,
-    UnitPipe,
-    LongTextPipe,
-    AddFoodComponent,
-    ProductDetailPage,
-    NewProductPage,
-    FridgePage,
-      GoogleMapsWindowPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage,
-    ProductsPage,
-    RecipesPage,
-    RecipeDetailPage,
-    NewRecipePage,
-    AddFoodComponent,
-    ProductDetailPage,
-    NewProductPage,
-    FridgePage,
-      GoogleMapsWindowPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DatabaseProvider,
-    SQLitePorter,
-    SQLite,
-    DummyDatabaseProvider,
-    SelectRightProviderProvider,
-    RecipeStore,
-    ProductStoreProvider,
-    ImagePicker,
-    Camera,
-    FridgeProvider,
-      LocationStoreProvider,
-      GoogleMaps,
-      Geolocation
-  ]
+    declarations: [
+        MyApp,
+        AboutPage,
+        ContactPage,
+        HomePage,
+        TabsPage,
+        ProductsPage,
+        RecipesPage,
+        RecipeDetailPage,
+        NewRecipePage,
+        DifficultyPipe,
+        UnitPipe,
+        LongTextPipe,
+        AddFoodComponent,
+        ProductDetailPage,
+        NewProductPage,
+        FridgePage,
+        GoogleMapsWindowPage,
+        EditProductPage
+
+    ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(MyApp)
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        MyApp,
+        AboutPage,
+        ContactPage,
+        HomePage,
+        TabsPage,
+        ProductsPage,
+        RecipesPage,
+        RecipeDetailPage,
+        NewRecipePage,
+        AddFoodComponent,
+        ProductDetailPage,
+        NewProductPage,
+        FridgePage,
+        GoogleMapsWindowPage,
+        EditProductPage
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        DatabaseProvider,
+        SQLitePorter,
+        SQLite,
+        DummyDatabaseProvider,
+        SelectRightProviderProvider,
+        RecipeStore,
+        ProductStoreProvider,
+        ImagePicker,
+        Camera,
+        FridgeProvider,
+        LocationStoreProvider,
+        GoogleMaps,
+        Geolocation,
+        PictureManagerProvider
+    ]
 })
 export class AppModule {
 }

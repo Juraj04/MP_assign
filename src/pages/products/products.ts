@@ -8,6 +8,7 @@ import {DatabaseProvider} from "../../providers/database/database";
 import {ProductDetailPage} from "../product-detail/product-detail";
 import {NewProductPage} from "../new-product/new-product";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
+import {EditProductPage} from "../edit-product/edit-product";
 
 /**
  * Generated class for the ProductsPage page.
@@ -52,7 +53,10 @@ export class ProductsPage {
     }
 
     editProduct(product) {
-        //TODO: nova stranka plus provider
+        this.navCtrl.push(NewProductPage, {
+            product: product,
+            create: false
+        })
     }
 
     removeProduct(product){
@@ -60,7 +64,9 @@ export class ProductsPage {
     }
 
     createProduct() {
-        this.navCtrl.push(NewProductPage, {});
+        this.navCtrl.push(NewProductPage, {
+            create: true
+        });
     }
 
     selectProducts() {

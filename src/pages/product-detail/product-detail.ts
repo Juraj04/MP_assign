@@ -37,7 +37,8 @@ export class ProductDetailPage {
   showInMap() {
     console.log(this.product.location);
     this.navCtrl.push(GoogleMapsWindowPage, {
-      location: this.product.location
+      location: this.product.location,
+      change: false
     })
   }
 

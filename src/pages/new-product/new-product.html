@@ -19,7 +19,7 @@
 
 
 <ion-content>
-    <img id="img" src="{{photo}}">
+    <img id="img" src="{{product.photo}}">
     <ion-grid id="gridButtons" padding>
         <ion-row>
             <ion-col>
@@ -34,7 +34,7 @@
     <ion-list>
         <ion-item>
             <ion-label floating>Name of product</ion-label>
-            <ion-input [(ngModel)]="name"></ion-input>
+            <ion-input [(ngModel)]="product.name"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -42,18 +42,18 @@
                 <ion-icon name="md-pin" color="primary"></ion-icon>
             </button>
             <ion-label floating>Location name</ion-label>
-            <ion-input [(ngModel)]="locationName"></ion-input>
+            <ion-input [(ngModel)]="product.location.name"></ion-input>
 
         </ion-item>
 
         <ion-item>
             <ion-label floating>Price</ion-label>
-            <ion-input type="number" [(ngModel)]="price"></ion-input>
+            <ion-input type="number" [(ngModel)]="product.price"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label floating color="gray">Rating {{rating}}</ion-label>
-            <ion-range min="0" max="5" pin="true" color="primary" [(ngModel)]="rating" step="1">
+            <ion-label floating color="gray">Rating {{product.rating}}</ion-label>
+            <ion-range min="0" max="5" pin="true" color="primary" [(ngModel)]="product.rating" step="1">
                 <ion-label range-left>0</ion-label>
                 <ion-label range-right>5</ion-label>
             </ion-range>
@@ -62,8 +62,8 @@
         <ion-item>
             <ion-label floating>Quantity</ion-label>
             <ion-input type="number"
-                       [(ngModel)]="quantity"
-                       (ngModelChange)="quantity = convertToNumber($event)"></ion-input>
+                       [(ngModel)]="product.quantity"
+                       (ngModelChange)="product.quantity = convertToNumber($event)"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -76,7 +76,7 @@
                 Food category
             </ion-list-header>
             <ion-item>
-                <ion-note item-end *ngIf="food != null">{{food.name}}</ion-note>
+                <ion-note *ngIf="product.food != null">{{product.food.name}}</ion-note>
             </ion-item>
         </ion-list>
         <button ion-button outline color="primary" (click)="addFood()">

@@ -10,6 +10,7 @@ import {Camera, CameraOptions} from "@ionic-native/camera";
 import {GoogleMapsWindowPage} from "../google-maps-window/google-maps-window";
 import {LocationStoreProvider} from "../../providers/location-store/location-store";
 import {ProductDetailPage} from "../product-detail/product-detail";
+import {PictureManagerProvider} from "../../providers/picture-manager/picture-manager";
 
 /**
  * Generated class for the NewProductPage page.
@@ -25,116 +26,119 @@ import {ProductDetailPage} from "../product-detail/product-detail";
 })
 export class NewProductPage {
 
-  name: string;
-  locationName: string;
-  price: number;
-  rating: number = 3;
-  photo: string = "./assets/img/default-placeholder.png";
   tags: string = "";
-  quantity: number;
-  food: Food;
+
+
+  product: Product;
+  originalProduct: Product;
+  create: Boolean;
 
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera, private imagePicker: ImagePicker,
+  constructor(public navCtrl: NavController, public navParams: NavParams,
               public modal: ModalController, private locationStore: LocationStoreProvider, private productStore:ProductStoreProvider,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController, private pictureManager: PictureManagerProvider) {
+    this.create = navParams.get("create");
+    if(this.create){
+      let tgs: string[]
+      this.product = new Product("",new Location("",0,0),0,"",3,0,0,null,"./assets/img/default-placeholder.png",tgs);
+    } else {
+      this.product = navParams.get("product");
+      this.originalProduct = this.product;
+      this.locationStore.lat = this.product.location.x;
+      this.locationStore.lng = this.product.location.y;
+      this.showTags()
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewProductPage');
-    console.log(typeof this.quantity)
   }
 
   createProduct(){
 
     if(this.validInput()){
-      let tgs: string[] = this.tags.toLowerCase().split(" ");
-      tgs.push(this.name.toLowerCase().replace(" ",""));
-      tgs.push(this.locationName.toLowerCase().replace(" ",""));
-      tgs.push(this.food.name.toLowerCase().replace(" ",""));
+      switch (this.create){
+        case true: {
+          let tgs: string[] = this.tags.toLowerCase().split(" ");
+          tgs.push(this.product.name.toLowerCase().replace(" ",""));
+          tgs.push(this.product.location.name.toLowerCase().replace(" ",""));
+          tgs.push(this.product.food.name.toLowerCase().replace(" ",""));
 
-      let location = new Location(this.locationName,this.locationStore.lat,this.locationStore.lng);
+          let location = new Location(this.product.location.name,this.locationStore.lat,this.locationStore.lng);
 
-      console.log(this.quantity)
-      console.log(this.price)
-      console.log(typeof this.quantity)
+          //let product: Product = new Product(this.name, location, this.price, "date", this.rating, this.quantity, 0, this.food, this.photo, tgs);
 
-      let product: Product = new Product(this.name, location, this.price, "date", this.rating, this.quantity, 0, this.food, this.photo, tgs);
+          this.productStore.addProduct(this.product);
+          this.navCtrl.pop();
+          this.navCtrl.push(ProductDetailPage, {
+            product: this.product
+          });
+          break;
+        }
+        case false: {
+          let newLocation: Location = new Location(this.product.location.name,this.locationStore.lat,this.locationStore.lng);
+          this.product.location = newLocation;
 
-      console.log(product)
+          this.product.tags = this.tags.split(",");
 
-      this.productStore.addProduct(product);
-      this.navCtrl.pop();
-      this.navCtrl.push(ProductDetailPage, {
-        product: product
-      });
+          this.productStore.updateProduct(this.originalProduct, this.product);
+          this.navCtrl.pop();
+          break;
+        }
+      }
+
     }
 
   }
 
   takeAPhoto() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      saveToPhotoAlbum: true
-    };
-
-    this.camera.getPicture(options).then((imageData) => {
-      console.log(imageData)
-      this.photo = imageData
-    }, (err) => {
-      console.log("photo failed")
-    });
+    this.product.photo = this.pictureManager.takeAPhoto()
   }
 
   selectFromGalery() {
-    const options: ImagePickerOptions = {
-      quality: 100,
-      maximumImagesCount: 1
-
-    };
-
-    this.imagePicker.getPictures(options).then((imageData) => {
-      console.log(imageData)
-      this.photo = imageData
-    }, (err) => {
-      console.log("photo failed")
-    });
+    this.product.photo = this.pictureManager.selectFromGalery();
   }
 
   getLocation() {
-    this.navCtrl.push(GoogleMapsWindowPage, {});
+    switch (this.create){
+      case true: {this.navCtrl.push(GoogleMapsWindowPage, {});break;}
+      case false: {
+        this.navCtrl.push(GoogleMapsWindowPage, {
+          location: this.product.location,
+          change: true
+        });
+        break;
+      }
+    }
+
   };
 
   addFood(){
-    //TODO: wat
     let modal = this.modal.create(AddFoodComponent,{showCount : false});
     modal.onDidDismiss(data => {
       if (data == null) return;
-      this.food = data.food;
+      this.product.food = data.food;
     });
 
     modal.present();
   }
 
   validInput(){
-    if(this.name == ""){
-      this.presentToast("Insert name!")
+    if(this.product.name == ""){
+      this.presentToast("Insert name!");
       return false
-    } else if(this.photo == ""){
-      this.presentToast("Select photo!")
+    } else if(this.product.price == 0){
+      this.presentToast("Insert price!");
       return false
-    } else if(this.price == 0){
-      this.presentToast("Insert price!")
+    } else if(this.product.food == null){
+      this.presentToast("Select food!");
       return false
-    } else if(this.food == null){
-      this.presentToast("Select food!")
+    } else if(this.product.location.name == ""){
+      this.presentToast("Insert Location name!");
       return false
-    } else if(this.quantity == 0){
-      this.presentToast("Insert quantity!")
+    } else if(this.product.quantity == 0){
+      this.presentToast("Insert quantity!");
       return false
     } else {
       return true
@@ -151,6 +155,20 @@ export class NewProductPage {
       console.log('Dismissed toast');
     });
     toast.present();
+  }
+
+  showTags(){
+    let tgs = this.product.tags.toString();
+    this.tags = tgs.replace(',', ' ');
+  }
+
+  removeBlankSpace(array: string[]){
+    for(let i = 0; i < array.length; i++){
+      if(array[i] == " "){
+        array.splice(i,1);
+        i--;
+      }
+    }
   }
 
   public convertToNumber(event):number {  return +event; }
