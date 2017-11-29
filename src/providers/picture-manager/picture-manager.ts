@@ -12,12 +12,11 @@ import {Camera, CameraOptions} from "@ionic-native/camera";
 */
 @Injectable()
 export class PictureManagerProvider {
-  private photo: string;
 
   constructor(private camera: Camera, private imagePicker: ImagePicker) {
 
   }
-  takeAPhoto(): string{
+  takeAPhoto(): Promise<string>{
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -26,30 +25,27 @@ export class PictureManagerProvider {
       saveToPhotoAlbum: true
     };
 
-    this.camera.getPicture(options).then((imageData) => {
-      console.log(imageData)
-      this.photo = imageData
+    return this.camera.getPicture(options).then((imageData) => {
+      console.log("toto je photo z providera:" + imageData)
+      return imageData;
     }, (err) => {
-      console.log("photo failed")
+      console.log("photo failed", err)
     });
 
-    return this.photo
   }
 
-  selectFromGalery(): string {
+  selectFromGalery(): Promise<string> {
     const options: ImagePickerOptions = {
       quality: 100,
       maximumImagesCount: 1
 
     };
 
-    this.imagePicker.getPictures(options).then((imageData) => {
-      console.log(imageData)
-      this.photo = imageData
+    return this.imagePicker.getPictures(options).then((imageData) => {
+      console.log("toto je galery z providera" + imageData);
+      return imageData
     }, (err) => {
       console.log("photo failed")
     });
-    console.log(this.photo);
-    return this.photo
   }
 }

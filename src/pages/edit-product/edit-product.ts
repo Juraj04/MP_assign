@@ -51,11 +51,11 @@ export class EditProductPage {
     this.navCtrl.pop();
   }
   takeAPhoto(){
-    this.product.photo = this.pictureManager.takeAPhoto();
+   // this.product.photo = this.pictureManager.takeAPhoto();
   }
 
   selectFromGalery(){
-    this.product.photo = this.pictureManager.selectFromGalery();
+    //this.product.photo = this.pictureManager.selectFromGalery();
   }
 
   changeLocation(){
