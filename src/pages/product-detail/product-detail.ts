@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, Toast} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams, Toast} from 'ionic-angular';
 import {Product} from "../../models/product";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {GoogleMapsWindowPage} from "../google-maps-window/google-maps-window";
+import {AddProductToFridgeComponent} from "../../components/add-product-to-fridge/add-product-to-fridge";
 
 /**
  * Generated class for the ProductDetailPage page.
@@ -20,7 +21,8 @@ export class ProductDetailPage {
   private product: Product
   private originalProduct: Product;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public productStore: ProductStoreProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public productStore: ProductStoreProvider,
+              public modal: ModalController) {
     this.product = navParams.get("product");
     this.originalProduct = this.product;
   }
@@ -71,8 +73,18 @@ export class ProductDetailPage {
   }
 
   addToFridge(){
-    this.product.count_fridge = this.product.count_fridge + this.product.quantity
-    this.productStore.updateProduct(this.originalProduct, this.product);
-    console.log(this.product.count_fridge)
+    let count: number;
+    count = this.product.count_fridge == 0 ? this.product.quantity : this.product.count_fridge;
+    let modal = this.modal.create(AddProductToFridgeComponent, {
+      quantity: count
+    });
+    modal.onDidDismiss(data => {
+      if (data == null) return;
+      console.log(data.countInFridge);
+      this.product.count_fridge = data.countInFridge;
+      this.productStore.updateProduct(this.originalProduct, this.product);
+
+    });
+    modal.present();
   }
 }

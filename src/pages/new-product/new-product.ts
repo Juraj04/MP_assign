@@ -58,7 +58,6 @@ export class NewProductPage {
 
         if (this.validInput()) {
             let tgs: string[] = this.tags.toLowerCase().trim().split(" ");
-            this.removeBlankSpace(tgs);
             this.product.location = new Location(this.product.location.name, this.locationStore.lat, this.locationStore.lng);
 
             switch (this.create) {
@@ -68,7 +67,7 @@ export class NewProductPage {
                     tgs.push(this.product.location.name.toLowerCase().trim().replace(" ", ""));
                     tgs.push(this.product.food.name.toLowerCase().trim().replace(" ", ""));
                     this.product.tags = tgs;
-                    console.log(this.product.photo);
+                    console.log("toto je IDCKO " + this.product.food.id);
 
                     this.productStore.addProduct(this.product);
                     this.navCtrl.pop();
@@ -173,15 +172,6 @@ export class NewProductPage {
             tgs += this.product.tags[i] + " ";
         }
         this.tags = tgs
-    }
-
-    removeBlankSpace(array: string[]) {
-        for (let i = 0; i < array.length; i++) {
-            if (array[i] == " ") {
-                array.splice(i, 1);
-                i--;
-            }
-        }
     }
 
     public convertToNumber(event): number {

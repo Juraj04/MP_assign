@@ -9,6 +9,7 @@ import {ProductDetailPage} from "../product-detail/product-detail";
 import {NewProductPage} from "../new-product/new-product";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {EditProductPage} from "../edit-product/edit-product";
+import {Food} from "../../models/food";
 
 /**
  * Generated class for the ProductsPage page.
@@ -27,17 +28,22 @@ export class ProductsPage {
     allProducts: Product[] = [];
     searchInput: string;
 
+    food: Food;
 
-    constructor(public navCtrl: NavController, private productStore: ProductStoreProvider) {
 
+    constructor(public navCtrl: NavController, private productStore: ProductStoreProvider,public navParams: NavParams) {
+        if(navParams.get("food") != null){
+            this.food = navParams.get("food");
+        }
     }
 
     ionViewDidLoad() {
         this.productStore.products.subscribe(data => {
-            this.allProducts = data
-            console.log(data);
+            this.allProducts = data;
             this.products = this.allProducts;
 
+            if(this.food != null)
+                this.sortProductsByFood();
         })
 
     }
@@ -90,6 +96,10 @@ export class ProductsPage {
          this.addArrays(this.products, helpArray);
          }*/
 
+    }
+
+    sortProductsByFood(){
+        this.products = this.allProducts.filter(value => value.food.id == this.food.id);
     }
 }
 

@@ -27,13 +27,42 @@
                     <img src={{product.photo}}>
                 </ion-thumbnail>
 
+                <ion-row>
+                    <ion-col>
+                        <h1 item-start class="name">{{product.name}}</h1>
+                    </ion-col>
+                    <ion-col text-end>
+                        <h1 item-end>{{product.price}}€</h1>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>
+                        <p class="description">
+                            {{product.location.name}} • {{product.rating}}
+                            <ion-icon name="ios-star-outline"></ion-icon>
+                        </p>
+                    </ion-col>
+                    <ion-col text-end>
+                        <ion-note item-end>
+                            {{product.count_fridge}}
+                            <ion-icon name="md-cart"></ion-icon>
+                        </ion-note>
+                    </ion-col>
+                </ion-row>
+                <!--
                 <h1 class="name">{{product.name}}</h1>
-                <p class="description">
-                    {{product.location.name}} • {{product.rating}}
-                    <ion-icon name="ios-star-outline"></ion-icon>
-                </p>
+
                 <h1 class="price" item-end>{{product.price}}</h1>
                 <p class="euro" item-end>€</p>
+
+                <ion-note class="description">
+                    {{product.location.name}} • {{product.rating}}
+                    <ion-icon name="ios-star-outline"></ion-icon>
+                     • {{product.count_fridge}}
+                    <ion-icon name="md-cart"></ion-icon>
+                </ion-note>
+                -->
 
             </ion-item>
 

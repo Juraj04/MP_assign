@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { AddFoodComponent } from './add-food/add-food';
+import { AddProductToFridgeComponent } from './add-product-to-fridge/add-product-to-fridge';
 @NgModule({
-	declarations: [AddFoodComponent],
+	declarations: [AddFoodComponent,
+    AddProductToFridgeComponent],
 	imports: [],
-	exports: [AddFoodComponent]
+	exports: [AddFoodComponent,
+    AddProductToFridgeComponent]
 })
 export class ComponentsModule {}

@@ -1,0 +1,38 @@
+<!-- Generated template for the AddProductToFridgeComponent component -->
+
+
+<div id="background">
+
+    <div id="content">
+
+        <ion-list no-lines>
+            <ion-item>
+
+
+                <ion-label floating>Number in fridge</ion-label>
+                <ion-input type="number"
+                           [(ngModel)]="quantity"
+                           (ngModelChange)="quantity = convertToNumber($event)">
+
+                </ion-input>
+
+                <button item-right icon-only ion-button large color="light" outline (click)="subtractOne()">
+                    <ion-icon name="md-remove" color="primary"></ion-icon>
+                </button>
+
+                <button item-end icon-only ion-button large color="light" outline (click)="addOne()">
+                    <ion-icon name="md-add" color="primary"></ion-icon>
+                </button>
+
+
+            </ion-item>
+        </ion-list>
+
+        <button ion-button full color="primary" (click)="addToFridge()">
+            Add to fridge
+        </button>
+
+    </div>
+
+</div>
+

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {FridgeProvider} from "../../providers/fridge/fridge";
+import {ProductsPage} from "../products/products";
+import {Food} from "../../models/food";
+import {RecipeItem} from "../../models/recipeItem";
 
 /**
  * Generated class for the FridgePage page.
@@ -21,6 +24,12 @@ export class FridgePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FridgePage');
+  }
+
+  showProducts(item: RecipeItem){
+    this.navCtrl.push(ProductsPage, {
+      food: item.food
+    });
   }
 
 }
