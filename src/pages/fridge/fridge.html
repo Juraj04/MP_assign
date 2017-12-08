@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary" >
     <ion-title>Fridge</ion-title>
   </ion-navbar>
 
@@ -24,4 +24,12 @@
     </ion-item>
 
   </ion-list>
+
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="SwipeToProducts()" >
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
 </ion-content>

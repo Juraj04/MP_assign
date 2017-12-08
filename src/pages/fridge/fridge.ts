@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FridgeProvider} from "../../providers/fridge/fridge";
 import {ProductsPage} from "../products/products";
-import {Food} from "../../models/food";
 import {RecipeItem} from "../../models/recipeItem";
 
 /**
@@ -19,7 +18,7 @@ import {RecipeItem} from "../../models/recipeItem";
 })
 export class FridgePage {
 
-  constructor(public navCtrl: NavController, public fridge:FridgeProvider) {
+  constructor(public navCtrl: NavController, public fridge:FridgeProvider, private events:Events) {
   }
 
   ionViewDidLoad() {
@@ -27,9 +26,12 @@ export class FridgePage {
   }
 
   showProducts(item: RecipeItem){
-    this.navCtrl.push(ProductsPage, {
-      food: item.food
-    });
+
+    this.events.publish("search_from_fridge", item.food.name)
+    this.navCtrl.parent.select(0);
   }
 
+  SwipeToProducts(){
+    this.navCtrl.parent.select(0);
+  }
 }

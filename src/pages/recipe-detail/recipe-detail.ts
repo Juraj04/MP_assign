@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Recipe} from "../../models/recipe";
 import {Food, Unit} from "../../models/food";
+import {FridgePage} from "../fridge/fridge";
+import {FridgeProvider} from "../../providers/fridge/fridge";
+import {RecipeItem} from "../../models/recipeItem";
 
 /**
  * Generated class for the RecipeDetailPage page.
@@ -18,9 +21,9 @@ import {Food, Unit} from "../../models/food";
 export class RecipeDetailPage {
   private recipe: Recipe;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fridge: FridgeProvider) {
     this.recipe = this.navParams.get("recipe");
-  }
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RecipeDetailPage');
@@ -41,4 +44,6 @@ export class RecipeDetailPage {
   prepareFood(){
     console.log("prepareFood()");
   }
+
+
 }
