@@ -1,15 +1,9 @@
 import {Component} from '@angular/core';
 import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {DummyDatabaseProvider} from '../../providers/dummy-database/dummy-database';
-
 import {Product} from '../../models/product'
-import {SelectRightProviderProvider} from "../../providers/select-right-provider/select-right-provider";
-import {DatabaseProvider} from "../../providers/database/database";
 import {ProductDetailPage} from "../product-detail/product-detail";
 import {NewProductPage} from "../new-product/new-product";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
-import {EditProductPage} from "../edit-product/edit-product";
-import {Food} from "../../models/food";
 
 /**
  * Generated class for the ProductsPage page.
