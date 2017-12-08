@@ -39,6 +39,7 @@ import {Geolocation} from '@ionic-native/geolocation';
 import {EditProductPage} from "../pages/edit-product/edit-product";
 import {PictureManagerProvider} from '../providers/picture-manager/picture-manager';
 import {AddProductToFridgeComponent} from "../components/add-product-to-fridge/add-product-to-fridge";
+import {ScreenOrientation} from "@ionic-native/screen-orientation";
 
 
 @NgModule({
@@ -104,7 +105,8 @@ import {AddProductToFridgeComponent} from "../components/add-product-to-fridge/a
         LocationStoreProvider,
         GoogleMaps,
         Geolocation,
-        PictureManagerProvider
+        PictureManagerProvider,
+        ScreenOrientation
     ]
 })
 export class AppModule {
