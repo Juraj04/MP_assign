@@ -45,7 +45,7 @@
 
 
     <ion-list>
-      <ion-item *ngFor="let item of recipe.items" [ngClass]="this.fridge.haveEnough(item) ? 'enough' : 'not-enough'">
+      <ion-item *ngFor="let item of recipe.items" [ngClass]="checkFood(item) ? 'enough' : 'not-enough'">
         {{item.food.name}}
         <ion-note item-end>{{item.count}} {{item.food.unit | unit}} </ion-note>
 

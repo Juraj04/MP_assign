@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Recipe} from "../../models/recipe";
 import {Food, Unit} from "../../models/food";
 import {FridgePage} from "../fridge/fridge";
 import {FridgeProvider} from "../../providers/fridge/fridge";
 import {RecipeItem} from "../../models/recipeItem";
+import {ProductStoreProvider} from "../../providers/product-store/product-store";
 
 /**
  * Generated class for the RecipeDetailPage page.
@@ -20,28 +21,68 @@ import {RecipeItem} from "../../models/recipeItem";
 })
 export class RecipeDetailPage {
   private recipe: Recipe;
+  private missing: Set<RecipeItem> = new Set<RecipeItem>();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fridge: FridgeProvider) {
+  constructor(public navParams: NavParams, public fridge: FridgeProvider, private alertCtrl: AlertController, private productsStore: ProductStoreProvider) {
     this.recipe = this.navParams.get("recipe");
-    }
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RecipeDetailPage');
   }
 
-  getDifficulty(diff:number):string{
-    var a:string[] = [ "EASY", "MEDIUM", "HARD"];
-    return a[diff-1];
+  checkFood(food: RecipeItem): boolean {
+    let ret = this.fridge.haveEnough(food)
+
+    if (ret) {
+      this.missing.delete(food)
+    } else {
+
+      this.missing.add(food)
+    }
+
+    return ret
   }
 
 
-  getUnit(unit:number){
+  prepareFood() {
+    console.log(this.missing)
+    if (this.missing.size > 0) {
 
-    return Unit[unit];
-  }
+      //TODO vypisat ktore chybaju
+
+      this.alertCtrl.create({
+        title: "No enough food",
+        message: "There is no enough food in you fridge",
+        buttons: ["Ok"]
+      }).present();
+    } else {
+
+      for(let item of this.recipe.items){
+        let suitableProducts = this.productsStore.getProductByFood(item.food);
+        if (suitableProducts.length = 0) {
+          //hmm toto by nastat nikdy nemalo
+        } else if (suitableProducts.length = 1) {
+          // iba jeden najdeny !! parada ez
+          suitableProducts[0].count_fridge -= item.count;
+          this.productsStore.updateProduct(suitableProducts[0], suitableProducts[0])
+
+        } else {
+          // shit je ich viac co teraz ?
+          // TODO
+        }
+      }
 
 
-  prepareFood(){
+      this.alertCtrl.create({
+        title: "Recipe cooked",
+        message: "All food was successfully reduced from fridge",
+        buttons: ["Ok"]
+      }).present();
+
+
+
+    }
     console.log("prepareFood()");
   }
 
