@@ -33,7 +33,11 @@ export class ProductsPage {
     this.productStore.products.subscribe(data => {
       this.allProducts = data;
       this.products = this.allProducts;
-    })
+    });
+    this.selectProducts();
+  }
+  ionViewDidEnter(){
+    this.selectProducts();
   }
 
   doRefresh($event) {
@@ -65,25 +69,14 @@ export class ProductsPage {
   }
 
   selectProducts() {
-
-    //TODO: OPRAVIT
-    if (this.searchInput.trim() == "") {
-      this.products = this.allProducts;
-      return;
+    if(this.searchInput != null){
+      if (this.searchInput.trim() == "") {
+        this.products = this.allProducts;
+        return;
+      }
+      this.products = this.allProducts.filter(value => value.tags.indexOf(this.searchInput.toLowerCase().trim()) > -1);
     }
-    /*
-    let tgs: string[] = this.searchInput.toLowerCase().split(" ");
-    console.log(tgs);
-    console.log(tgs.length)*/
 
-    this.products = [];
-    this.products.length = 0;
-    this.products = this.allProducts.filter(value => value.tags.indexOf(this.searchInput.toLowerCase().trim()) > -1);
-    /*
-     for (let i = 0; i < tgs.length; i++) {
-     let helpArray = this.allProducts.filter(value => value.tags.indexOf(tgs[i].trim()) > -1);
-     this.addArrays(this.products, helpArray);
-     }*/
 
   }
 

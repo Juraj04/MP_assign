@@ -6,8 +6,9 @@
 -->
 <ion-header>
 
-    <ion-navbar>
-        <ion-title>Create new product</ion-title>
+    <ion-navbar color="primary">
+        <ion-title *ngIf="create; else elseBlock">Create new product</ion-title>
+        <ng-template #elseBlock> <ion-title>Edit product</ion-title></ng-template>
         <ion-buttons end>
             <button ion-button icon-only color="royal" (click)="createProduct()">
                 <ion-icon name="checkmark"></ion-icon>
@@ -18,7 +19,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content padding>
     <img id="img" src="{{product.photo}}">
     <ion-grid id="gridButtons" padding>
         <ion-row>
@@ -60,7 +61,7 @@
         </ion-item>
 
         <ion-item>
-            <ion-label floating>Quantity</ion-label>
+            <ion-label floating>Quantity per package</ion-label>
             <ion-input type="number"
                        [(ngModel)]="product.quantity"
                        (ngModelChange)="product.quantity = convertToNumber($event)"></ion-input>

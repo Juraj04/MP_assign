@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, Keyboard, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {AddFoodComponent} from "../../components/add-food/add-food";
 import {Product} from "../../models/product";
@@ -37,7 +37,7 @@ export class NewProductPage {
         this.create = navParams.get("create");
         if (this.create) {
             let tgs: string[];
-            this.product = new Product("", new Location("", 0, 0), 0, "", 3, 0, 0, null, "./assets/img/default-placeholder.png", tgs);
+            this.product = new Product("", new Location("", 0, 0), null, "", 3, null, 0, null, "./assets/img/default-placeholder.png", tgs);
         } else {
             this.product = navParams.get("product");
             this.originalProduct = this.product;
@@ -49,6 +49,7 @@ export class NewProductPage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad NewProductPage');
+
     }
 
     createProduct() {
@@ -142,7 +143,7 @@ export class NewProductPage {
         if (this.product.name.trim() == "") {
             this.presentToast("Insert name!");
             return false
-        } else if (this.product.price == 0) {
+        } else if (this.product.price == null) {
             this.presentToast("Insert price!");
             return false
         } else if (this.product.food == null) {
@@ -151,7 +152,7 @@ export class NewProductPage {
         } else if (this.product.location.name.trim() == "") {
             this.presentToast("Insert Location name!");
             return false
-        } else if (this.product.quantity == 0) {
+        } else if (this.product.quantity == null || this.product.quantity == 0) {
             this.presentToast("Insert quantity!");
             return false
         } else {
