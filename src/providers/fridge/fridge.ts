@@ -19,10 +19,11 @@ export class FridgeProvider {
   public readonly foods: Observable<RecipeItem[]> = this._foods.asObservable();
 
   constructor(private productsStore: ProductStoreProvider) {
-    productsStore.products.subscribe(recipes => {
+
+    productsStore.products.subscribe(products => {
       let foods: Map<number, RecipeItem> = new Map()
 
-      recipes.forEach(value => {
+      products.forEach(value => {
         if (value.count_fridge > 0) {
           var count = value.count_fridge
           if (foods.has(value.food.id)) {
@@ -45,5 +46,7 @@ export class FridgeProvider {
     }
     return false
   }
+
+
 
 }

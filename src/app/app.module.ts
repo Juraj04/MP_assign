@@ -41,6 +41,7 @@ import {PictureManagerProvider} from '../providers/picture-manager/picture-manag
 import {AddProductToFridgeComponent} from "../components/add-product-to-fridge/add-product-to-fridge";
 import {ScreenOrientation} from "@ionic-native/screen-orientation";
 
+import {RecipeDetailPopoverComponent} from '../components/recipe-detail-popover/recipe-detail-popover';
 
 @NgModule({
     declarations: [
@@ -62,6 +63,7 @@ import {ScreenOrientation} from "@ionic-native/screen-orientation";
         FridgePage,
         GoogleMapsWindowPage,
         EditProductPage,
+        RecipeDetailPopoverComponent,
         AddProductToFridgeComponent
 
     ],
@@ -86,6 +88,7 @@ import {ScreenOrientation} from "@ionic-native/screen-orientation";
         FridgePage,
         GoogleMapsWindowPage,
         EditProductPage,
+        RecipeDetailPopoverComponent,
         AddProductToFridgeComponent
     ],
     providers: [

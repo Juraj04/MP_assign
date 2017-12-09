@@ -1,7 +1,7 @@
 <!-- Generated template for the AddFoodComponent component -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-searchbar [(ngModel)]="searchText" (ionInput)="getItems($event)"></ion-searchbar>
   </ion-navbar>
 </ion-header>
@@ -25,13 +25,13 @@
 
     <p *ngIf="!newFood">Unit: {{food.unit | unit}}</p>
 
-    <ion-item  *ngIf="showCount">
+    <ion-item *ngIf="showCount">
       <ion-label>Count
       </ion-label>
       <ion-input type="number" [(ngModel)]="count"></ion-input>
     </ion-item>
 
-    <button ion-button  (click)="addItem()">Add</button>
+    <button ion-button (click)="addItem()">Add</button>
 
   </div>
 </ion-content>

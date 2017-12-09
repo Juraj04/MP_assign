@@ -81,7 +81,6 @@
     <preference name="windows-target-version" value="10.0" />
     <allow-navigation href="http://192.168.1.7:8100" />
     <allow-navigation href="http://192.168.1.73:8100" />
-    <allow-navigation href="http://192.168.1.75:8100" />
     <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="^4.4.0" />
     <engine name="windows" spec="4.4.2" />
@@ -106,4 +105,5 @@
     <plugin name="cordova-sqlite-storage" spec="^2.0.4" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="uk.co.workingedge.cordova.plugin.sqliteporter" spec="^1.0.0" />
+    <allow-navigation href="http://192.168.1.75:8100" />
 </widget>
