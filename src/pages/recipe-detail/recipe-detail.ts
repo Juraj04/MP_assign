@@ -1,10 +1,13 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Recipe} from "../../models/recipe";
 import {Food, Unit} from "../../models/food";
 import {RecipeStore} from "../../providers/recipe-store/recipe-store";
 import {RecipeDetailPopoverComponent} from "../../components/recipe-detail-popover/recipe-detail-popover";
 
+import {FridgePage} from "../fridge/fridge";
+import {FridgeProvider} from "../../providers/fridge/fridge";
+import {RecipeItem} from "../../models/recipeItem";
 
 /**
  * Generated class for the RecipeDetailPage page.
@@ -27,8 +30,7 @@ export class RecipeDetailPage {
               private recipeStore: RecipeStore,
               public popoverCtrl: PopoverController) {
     this.recipe = this.navParams.get("recipe");
-    this.originalRecipe = this.recipe;
-  }
+  this.originalRecipe = this.recipe;}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RecipeDetailPage');
@@ -39,18 +41,19 @@ export class RecipeDetailPage {
     this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
   }
 
-  getDifficulty(diff: number): string {
-    var a: string[] = ["EASY", "MEDIUM", "HARD"];
-    return a[diff - 1];
+  getDifficulty(diff:number):string{
+    var a:string[] = [ "EASY", "MEDIUM", "HARD"];
+    return a[diff-1];
   }
 
 
-  getUnit(unit: number) {
+  getUnit(unit:number){
+
     return Unit[unit];
   }
 
 
-  prepareFood() {
+  prepareFood(){
     console.log("prepareFood()");
   }
 

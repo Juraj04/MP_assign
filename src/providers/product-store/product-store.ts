@@ -1,11 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {BehaviorSubject, Observable} from "rxjs";
-import {Recipe} from "../../models/recipe";
-import {DummyDatabaseProvider} from "../dummy-database/dummy-database";
 import {DatabaseProvider} from "../database/database";
-import {SelectRightProviderProvider} from "../select-right-provider/select-right-provider";
 import {Product} from "../../models/product";
 
 /*

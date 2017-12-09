@@ -71,11 +71,13 @@
 
   <div padding>
     <ion-list>
-      <ion-item *ngFor="let item of recipe.items">
+      <ion-item *ngFor="let item of recipe.items" [ngClass]="this.fridge.haveEnough(item) ? 'enough' : 'not-enough'">
         {{item.food.name}}
         <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
       </ion-item>
+
     </ion-list>
+
 
     {{recipe.description}}
   </div>

@@ -2,10 +2,10 @@ page-products {
   font-family: Roboto;
 
   .name {
-    text-transform: uppercase;
+    text-transform: capitalize;
   }
   .description {
-    margin-top: 5%;
+    //margin-top: 5%;
   }
   #search{
     //background-color: #F62459;

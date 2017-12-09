@@ -38,6 +38,9 @@ import {GoogleMapsWindowPage} from "../pages/google-maps-window/google-maps-wind
 import {Geolocation} from '@ionic-native/geolocation';
 import {EditProductPage} from "../pages/edit-product/edit-product";
 import {PictureManagerProvider} from '../providers/picture-manager/picture-manager';
+import {AddProductToFridgeComponent} from "../components/add-product-to-fridge/add-product-to-fridge";
+import {ScreenOrientation} from "@ionic-native/screen-orientation";
+
 import {RecipeDetailPopoverComponent} from '../components/recipe-detail-popover/recipe-detail-popover';
 
 @NgModule({
@@ -60,7 +63,9 @@ import {RecipeDetailPopoverComponent} from '../components/recipe-detail-popover/
         FridgePage,
         GoogleMapsWindowPage,
         EditProductPage,
-        RecipeDetailPopoverComponent
+        RecipeDetailPopoverComponent,
+        AddProductToFridgeComponent
+
     ],
     imports: [
         BrowserModule,
@@ -83,7 +88,8 @@ import {RecipeDetailPopoverComponent} from '../components/recipe-detail-popover/
         FridgePage,
         GoogleMapsWindowPage,
         EditProductPage,
-        RecipeDetailPopoverComponent
+        RecipeDetailPopoverComponent,
+        AddProductToFridgeComponent
     ],
     providers: [
         StatusBar,
@@ -102,7 +108,8 @@ import {RecipeDetailPopoverComponent} from '../components/recipe-detail-popover/
         LocationStoreProvider,
         GoogleMaps,
         Geolocation,
-        PictureManagerProvider
+        PictureManagerProvider,
+        ScreenOrientation
     ]
 })
 export class AppModule {
