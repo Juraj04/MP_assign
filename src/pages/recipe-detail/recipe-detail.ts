@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {AlertController, IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {Recipe} from "../../models/recipe";
-import {Food, Unit} from "../../models/food";
-import {FridgePage} from "../fridge/fridge";
 import {FridgeProvider} from "../../providers/fridge/fridge";
 import {RecipeItem} from "../../models/recipeItem";
+import {RecipeStore} from "../../providers/recipe-store/recipe-store";
+import {ProductStoreProvider} from "../../providers/product-store/product-store";
+import {RecipeDetailPopoverComponent} from "../../components/recipe-detail-popover/recipe-detail-popover";
 
 /**
  * Generated class for the RecipeDetailPage page.
@@ -26,10 +27,13 @@ export class RecipeDetailPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private recipeStore: RecipeStore,
+              private productsStore: ProductStoreProvider,
               public popoverCtrl: PopoverController,
-              public fridge :FridgeProvider) {
+              public fridge: FridgeProvider,
+              public alertCtrl: AlertController) {
     this.recipe = this.navParams.get("recipe");
-  this.originalRecipe = this.recipe;}
+    this.originalRecipe = this.recipe;
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RecipeDetailPage');
@@ -67,7 +71,7 @@ export class RecipeDetailPage {
       }).present();
     } else {
 
-      for(let item of this.recipe.items){
+      for (let item of this.recipe.items) {
         let suitableProducts = this.productsStore.getProductByFood(item.food);
         if (suitableProducts.length == 0) {
           //hmm toto by nastat nikdy nemalo
@@ -90,7 +94,6 @@ export class RecipeDetailPage {
         message: "All food was successfully reduced from fridge",
         buttons: ["Ok"]
       }).present();
-
 
 
     }
