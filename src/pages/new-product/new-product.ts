@@ -99,6 +99,7 @@ export class NewProductPage {
 
     takeAPhoto() {
         this.pictureManager.takeAPhoto().then(imageData => {
+            if(imageData == null)return;
             this.product.photo = imageData;
             console.log("toto je photo v novom produkte: " + this.product.photo);
         })
@@ -107,6 +108,7 @@ export class NewProductPage {
 
     selectFromGalery() {
         this.pictureManager.selectFromGalery().then(imageData => {
+            if(imageData == null)return;
             this.product.photo = imageData;
             console.log("toto je galery v novom produkte: " + this.product.photo);
         });

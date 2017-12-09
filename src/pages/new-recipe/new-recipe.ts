@@ -35,7 +35,7 @@ export class NewRecipePage {
     if (this.create) {
       let tgs: string[];
       let items: RecipeItem[] = [];
-      this.recipe = new Recipe("", 0, 0, 3, 2, "", "./assets/img/default-placeholder.png", items, tgs);
+      this.recipe = new Recipe("", null, null, 3, 2, "", "./assets/img/default-placeholder.png", items, tgs);
     } else {
       this.recipe = navParams.get("recipe");
       this.originalRecipe = this.recipe;
@@ -49,6 +49,7 @@ export class NewRecipePage {
 
   createRecipe() {
     if (this.validInput()) {
+      this.recipe.name = this.recipe.name.trim();
       let tgs: Set<string> = new Set<string>();
       tgs.add(this.recipe.name.toLowerCase().replace(/ /g, ""));
       if (this.tags != "") {
@@ -86,6 +87,7 @@ export class NewRecipePage {
 
   takeAPhoto() {
     this.pictureManager.takeAPhoto().then(imageData => {
+      if(imageData == null)return;
       this.recipe.photo = imageData;
       console.log("toto je photo v novom recepte: " + this.recipe.photo);
     })
@@ -93,6 +95,7 @@ export class NewRecipePage {
 
   selectFromGalery() {
     this.pictureManager.selectFromGalery().then(imageData => {
+      if(imageData == null)return;
       this.recipe.photo = imageData;
       console.log("toto je galery v novom recepte: " + this.recipe.photo);
     });
@@ -117,10 +120,10 @@ export class NewRecipePage {
     if (this.recipe.name.trim() == "") {
       this.presentToast("Insert name!");
       return false
-    } else if (this.recipe.portions == 0) {
+    } else if (this.recipe.portions == 0 && this.recipe.portions != null) {
       this.presentToast("Insert portions!");
       return false
-    } else if (this.recipe.time == 0) {
+    } else if (this.recipe.time == 0 && this.recipe.time != null) {
       this.presentToast("Insert time!");
       return false
     } else if (this.recipe.items.length == 0) {

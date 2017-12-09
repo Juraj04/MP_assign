@@ -27,7 +27,7 @@
                 <button id="photoButton" ion-button outline color="primary" (click)="takeAPhoto()">Photo</button>
             </ion-col>
             <ion-col>
-                <button id="galeryButton" ion-button outline color="primary" (click)="selectFromGalery()">Galery</button>
+                <button id="galeryButton" ion-button outline color="primary" (click)="selectFromGalery()">Gallery</button>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -55,8 +55,8 @@
         <ion-item>
             <ion-label floating color="gray">Rating {{product.rating}}</ion-label>
             <ion-range min="0" max="5" pin="true" color="primary" [(ngModel)]="product.rating" step="1">
-                <ion-label range-left>0</ion-label>
-                <ion-label range-right>5</ion-label>
+                <ion-label range-left color="gray" >0</ion-label>
+                <ion-label range-right color="gray" >5</ion-label>
             </ion-range>
         </ion-item>
 

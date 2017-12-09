@@ -1,5 +1,12 @@
 <!-- Generated template for the RecipeDetailPopoverComponent component -->
 <ion-list no-lines>
-  <button ion-item (click)="editRecipe()">Edit</button>
-  <button ion-item (click)="removeRecipe()">Delete</button>
+  <div *ngIf="recipe != null; else elseBlock">
+    <button ion-item (click)="editRecipe()">Edit</button>
+    <button ion-item (click)="removeRecipe()">Delete</button>
+  </div>
+  <ng-template #elseBlock>
+    <button ion-item (click)="editProduct()">Edit</button>
+    <button ion-item (click)="removeProduct()">Delete</button>
+  </ng-template>
+
 </ion-list>

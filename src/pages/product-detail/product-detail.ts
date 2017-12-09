@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams, Toast} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams, PopoverController, Toast} from 'ionic-angular';
 import {Product} from "../../models/product";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {GoogleMapsWindowPage} from "../google-maps-window/google-maps-window";
 import {AddProductToFridgeComponent} from "../../components/add-product-to-fridge/add-product-to-fridge";
+import {RecipeDetailPopoverComponent} from "../../components/recipe-detail-popover/recipe-detail-popover";
+import {NewProductPage} from "../new-product/new-product";
 
 /**
  * Generated class for the ProductDetailPage page.
@@ -22,7 +24,7 @@ export class ProductDetailPage {
   private originalProduct: Product;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public productStore: ProductStoreProvider,
-              public modal: ModalController) {
+              public modal: ModalController, public popoverCtrl: PopoverController) {
     this.product = navParams.get("product");
     this.originalProduct = this.product;
   }
@@ -86,5 +88,22 @@ export class ProductDetailPage {
 
     });
     modal.present();
+  }
+
+  presentPopover(event) {
+    let popover = this.popoverCtrl.create(RecipeDetailPopoverComponent, {product: this.product});
+    popover.present({
+      ev: event
+    });
+    popover.onDidDismiss((data) => {
+      this.navCtrl.pop();
+      if(data.edit && data != null){
+        this.navCtrl.push(NewProductPage, {
+          product: this.product,
+          create: false
+        })
+      }
+
+    })
   }
 }

@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, ViewController} from "ionic-angular";
-import {NewRecipePage} from "../../pages/new-recipe/new-recipe";
 import {Recipe} from "../../models/recipe";
 import {RecipeStore} from "../../providers/recipe-store/recipe-store";
+import {ProductStoreProvider} from "../../providers/product-store/product-store";
+import {Product} from "../../models/product";
 
 /**
  * Generated class for the RecipeDetailPopoverComponent component.
@@ -11,33 +12,39 @@ import {RecipeStore} from "../../providers/recipe-store/recipe-store";
  * Components.
  */
 @Component({
-  selector: 'recipe-detail-popover',
-  templateUrl: 'recipe-detail-popover.html'
+    selector: 'recipe-detail-popover',
+    templateUrl: 'recipe-detail-popover.html'
 })
 export class RecipeDetailPopoverComponent {
-  recipe: Recipe;
+    recipe: Recipe;
+    product: Product;
 
-  constructor(public navCtrl: NavController,
-              public params: NavParams,
-              public viewCtrl: ViewController,
-              private recipeStore: RecipeStore) {
-    console.log('Hello RecipeDetailPopoverComponent Component');
-    this.recipe = this.params.get("recipe");
-  }
+    constructor(public navCtrl: NavController,
+                public params: NavParams,
+                public viewCtrl: ViewController,
+                private recipeStore: RecipeStore,
+                private productStore: ProductStoreProvider) {
+        console.log('Hello RecipeDetailPopoverComponent Component');
+        this.recipe = this.params.get("recipe");
+        this.product = this.params.get("product");
+    }
 
-  close() {
-    this.viewCtrl.dismiss();
-  }
 
-  editRecipe() {
-    this.navCtrl.push(NewRecipePage, {
-      recipe: this.recipe,
-      create: false
-    })
-  }
+    editRecipe() {
+        this.viewCtrl.dismiss({edit: true});
+    }
 
-  removeRecipe() {
-    this.navCtrl.pop();
-    this.recipeStore.deleteRecipe(this.recipe);
-  }
+    removeRecipe() {
+        this.recipeStore.deleteRecipe(this.recipe);
+        this.viewCtrl.dismiss({edit: false});
+    }
+
+    editProduct() {
+        this.viewCtrl.dismiss({edit: true});
+    }
+
+    removeProduct() {
+        this.productStore.deleteProduct(this.product);
+        this.viewCtrl.dismiss({edit: false});
+    }
 }
