@@ -62,12 +62,18 @@ export class ProductStoreProvider {
   }
 
   getProductByFood(food: Food): Product[] {
-    let products: Product[] = []
+    let prds: Product[] = [];
 
-    for (let p of this._products.getValue()) {
-      if (p.food.id == food.id) products.push(p)
+    let all = this._products.getValue();
+    console.log(all)
+
+    for (let i = 0 ; i < all.length; i++) {
+      if (all[i].food.id == food.id)
+        prds.push(all[i])
     }
-    return products;
+
+    console.log(prds);
+    return prds;
   }
 
 

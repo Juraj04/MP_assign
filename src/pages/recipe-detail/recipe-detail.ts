@@ -60,10 +60,12 @@ export class RecipeDetailPage {
 
       for(let item of this.recipe.items){
         let suitableProducts = this.productsStore.getProductByFood(item.food);
-        if (suitableProducts.length = 0) {
+        if (suitableProducts.length == 0) {
           //hmm toto by nastat nikdy nemalo
-        } else if (suitableProducts.length = 1) {
+        } else if (suitableProducts.length == 1) {
           // iba jeden najdeny !! parada ez
+          console.log(suitableProducts);
+          console.log(suitableProducts[0])
           suitableProducts[0].count_fridge -= item.count;
           this.productsStore.updateProduct(suitableProducts[0], suitableProducts[0])
 
