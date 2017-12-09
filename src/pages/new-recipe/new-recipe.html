@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Create new recipe</ion-title>
     <ion-buttons end>
       <button ion-button icon-only color="royal" (click)="createRecipe()">
@@ -18,8 +18,8 @@
 </ion-header>
 
 
-<ion-content padding>
-  <img id="img" src="{{photo}}">
+<ion-content>
+  <img id="img" src="{{recipe.photo}}">
   <ion-grid id="gridButtons" padding>
     <ion-row>
       <ion-col>
@@ -34,55 +34,54 @@
   <ion-list>
     <ion-item>
       <ion-label floating>Name of recipe</ion-label>
-      <ion-input [(ngModel)]="name"></ion-input>
+      <ion-input [(ngModel)]="recipe.name"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Number of portions</ion-label>
-      <ion-input type="number" [(ngModel)]="portions"></ion-input>
+      <ion-input type="number" [(ngModel)]="recipe.portions"></ion-input>
     </ion-item>
+
     <ion-item>
-      <ion-label floating>Time</ion-label>
-      <ion-input type="number" [(ngModel)]="time"></ion-input>
+      <ion-label floating>Total time</ion-label>
+      <ion-input type="number" [(ngModel)]="recipe.time"></ion-input>
     </ion-item>
+
     <ion-item>
       <ion-note>
-        Difficulty: {{difficulty | difficulty}}
+        Difficulty {{difficulty | difficulty}}
       </ion-note>
     </ion-item>
+
     <ion-item>
-      <ion-range min="1" max="3" [(ngModel)]="difficulty" step="1">
+      <ion-range min="1" max="3" [(ngModel)]="recipe.difficulty" step="1">
         <ion-label range-left>EASY</ion-label>
         <ion-label range-right>HARD</ion-label>
       </ion-range>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>tags</ion-label>
-      <ion-input [(ngModel)]="tags"> </ion-input>
+      <ion-label floating>Tags</ion-label>
+      <ion-input [(ngModel)]="tags"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Description</ion-label>
-      <ion-input [(ngModel)]="description"></ion-input>
+      <ion-input [(ngModel)]="recipe.description"></ion-input>
     </ion-item>
-
-
   </ion-list>
-
 
   <ion-list>
     <ion-list-header>
-      Items
+      Ingredients
     </ion-list-header>
-    <ion-item *ngFor="let item of items">
+    <ion-item *ngFor="let item of recipe.items">
       {{item.food.name}}
       <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
     </ion-item>
   </ion-list>
+
   <button ion-button="" (click)="addItem()">
     Add recipe item
   </button>
-
-
 </ion-content>

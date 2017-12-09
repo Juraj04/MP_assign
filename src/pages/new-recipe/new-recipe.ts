@@ -1,14 +1,11 @@
 import {Component} from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {RecipeItem} from "../../models/recipeItem";
 import {AddFoodComponent} from "../../components/add-food/add-food";
 import {Recipe} from "../../models/recipe";
-import {SelectRightProviderProvider} from "../../providers/select-right-provider/select-right-provider";
-import {DatabaseProvider} from "../../providers/database/database";
-import {DummyDatabaseProvider} from "../../providers/dummy-database/dummy-database";
 import {RecipeStore} from "../../providers/recipe-store/recipe-store";
-import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
-import {Camera, CameraOptions} from "@ionic-native/camera";
+import {PictureManagerProvider} from "../../providers/picture-manager/picture-manager";
+import {RecipeDetailPage} from "../recipe-detail/recipe-detail";
 
 /**
  * Generated class for the NewRecipePage page.
@@ -23,76 +20,136 @@ import {Camera, CameraOptions} from "@ionic-native/camera";
   templateUrl: 'new-recipe.html',
 })
 export class NewRecipePage {
-
-  difficulty: number = 2;
-  portions: number;
-  time: number;
-  name: string;
-  items: RecipeItem[] = [];
-  description: string;
   tags: string = "";
-  photo: string = "http://www.seriouseats.com/images/2015/09/20150914-pressure-cooker-recipes-roundup-09.jpg";
+  recipe: Recipe;
+  originalRecipe: Recipe;
+  create: Boolean;
 
-  constructor(public navCtrl: NavController, public modal: ModalController,private recipeStore:RecipeStore,private camera: Camera, private imagePicker: ImagePicker) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public modal: ModalController,
+              private recipeStore: RecipeStore,
+              private toastCtrl: ToastController,
+              private pictureManager: PictureManagerProvider) {
+    this.create = navParams.get("create");
+    if (this.create) {
+      let tgs: string[];
+      let items: RecipeItem[] = [];
+      this.recipe = new Recipe("", 0, 0, 3, 2, "", "./assets/img/default-placeholder.png", items, tgs);
+    } else {
+      this.recipe = navParams.get("recipe");
+      this.originalRecipe = this.recipe;
+      this.showTags()
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewRecipePage');
   }
 
+  createRecipe() {
+    if (this.validInput()) {
+      let tgs: Set<string> = new Set<string>();
+      tgs.add(this.recipe.name.toLowerCase().replace(/ /g, ""));
+      if (this.tags != "") {
+        let arrayTgs = this.tags.toLowerCase().trim().split(" ");
+        for (let i = 0; i < arrayTgs.length; i++) {
+          if (arrayTgs[i] != " " && arrayTgs[i] != "")
+            tgs.add(arrayTgs[i]);
+        }
+      }
+      this.recipe.items.forEach(value => tgs.add(value.food.name));
+      this.recipe.tags = Array.from(tgs);
+
+      switch (this.create) {
+        case true: {
+          //tgs.push(this.recipe.name.toLowerCase().trim().replace(" ", ""));
+
+          this.recipeStore.addRecipe(this.recipe);
+          this.navCtrl.pop();
+          this.navCtrl.push(RecipeDetailPage, {
+            recipe: this.recipe
+          });
+          break;
+        }
+        case false: {
+          this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
+          this.navCtrl.pop();
+          this.navCtrl.push(RecipeDetailPage, {
+            recipe: this.recipe
+          });
+          break;
+        }
+      }
+    }
+  }
+
+  takeAPhoto() {
+    this.pictureManager.takeAPhoto().then(imageData => {
+      this.recipe.photo = imageData;
+      console.log("toto je photo v novom recepte: " + this.recipe.photo);
+    })
+  }
+
+  selectFromGalery() {
+    this.pictureManager.selectFromGalery().then(imageData => {
+      this.recipe.photo = imageData;
+      console.log("toto je galery v novom recepte: " + this.recipe.photo);
+    });
+  }
+
+  //toto bude treba opravit
   addItem() {
-    let modal = this.modal.create(AddFoodComponent, {showCount : true});
+    let modal = this.modal.create(AddFoodComponent, {showCount: true});
     modal.onDidDismiss(data => {
-      if (data == null) return;
-      this.items.push(data.recipeItem);
+      if (data == null) {
+        console.log("addItem - modal-data-null");
+        return;
+      }
+      console.log("addItem - modal-data-NOT-null");
+      this.recipe.items.push(data.recipeItem);
     });
 
     modal.present();
   }
 
-
-  createRecipe() {
-
-    var tgs: string[] = this.tags.split(" ");
-    this.items.forEach(value => tgs.push(value.food.name));
-    var recipe: Recipe = new Recipe(this.name, this.portions, this.time, 5, this.difficulty, this.description, this.photo, this.items, tgs);
-    this.recipeStore.addRecipe(recipe);
-    this.navCtrl.pop();
-
+  validInput() {
+    if (this.recipe.name.trim() == "") {
+      this.presentToast("Insert name!");
+      return false
+    } else if (this.recipe.portions == 0) {
+      this.presentToast("Insert portions!");
+      return false
+    } else if (this.recipe.time == 0) {
+      this.presentToast("Insert time!");
+      return false
+    } else if (this.recipe.items.length == 0) {
+      this.presentToast("Add at least one item!");
+      return false
+    } else {
+      return true
+    }
   }
 
-
-  takeAPhoto() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      saveToPhotoAlbum: true
-    };
-
-    this.camera.getPicture(options).then((imageData) => {
-      console.log(imageData)
-      this.photo = imageData
-    }, (err) => {
-      console.log("photo failed")
+  presentToast(message: string) {
+    const toast = this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
     });
-  }
 
-  selectFromGalery() {
-    const options: ImagePickerOptions = {
-      quality: 100,
-      maximumImagesCount: 1
-
-    };
-
-    this.imagePicker.getPictures(options).then((imageData) => {
-      console.log(imageData)
-      this.photo = imageData
-    }, (err) => {
-      console.log("photo failed")
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
     });
+    toast.present();
   }
 
+  showTags() {
+    let tgs = "";
+    for (let i = 0; i < this.recipe.tags.length; i++) {
+      tgs += this.recipe.tags[i] + " ";
+    }
+    this.tags = tgs;
+  }
 
 }

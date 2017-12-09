@@ -38,7 +38,7 @@ import {GoogleMapsWindowPage} from "../pages/google-maps-window/google-maps-wind
 import {Geolocation} from '@ionic-native/geolocation';
 import {EditProductPage} from "../pages/edit-product/edit-product";
 import {PictureManagerProvider} from '../providers/picture-manager/picture-manager';
-
+import {RecipeDetailPopoverComponent} from '../components/recipe-detail-popover/recipe-detail-popover';
 
 @NgModule({
     declarations: [
@@ -59,8 +59,8 @@ import {PictureManagerProvider} from '../providers/picture-manager/picture-manag
         NewProductPage,
         FridgePage,
         GoogleMapsWindowPage,
-        EditProductPage
-
+        EditProductPage,
+        RecipeDetailPopoverComponent
     ],
     imports: [
         BrowserModule,
@@ -82,7 +82,8 @@ import {PictureManagerProvider} from '../providers/picture-manager/picture-manag
         NewProductPage,
         FridgePage,
         GoogleMapsWindowPage,
-        EditProductPage
+        EditProductPage,
+        RecipeDetailPopoverComponent
     ],
     providers: [
         StatusBar,

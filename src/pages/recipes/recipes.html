@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-searchbar
       [(ngModel)]="myInput"
       [showCancelButton]="shouldShowCancel"
@@ -18,48 +18,37 @@
 </ion-header>
 
 
-<ion-content >
-  <ion-refresher (ionRefresh)="doRefresh($event)">
+<ion-content>
+  <ion-refresher (ionRefresh)=" doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <ion-card *ngFor="let recipe of  recipes" (click)="onCardClicked(recipe)">
+    <div class="thumbnail">
+      <img src="{{recipe.photo}}" class="portrait"/>
+    </div>
+    <ion-card-content>
+      <ion-card-title class="name">{{recipe.name}}</ion-card-title>
+      <p class="description">
+        {{recipe.portions}}
+        <ion-icon name="people"></ion-icon>
+        • {{recipe.time}}
+        <ion-icon name="timer"></ion-icon>
+        • {{recipe.difficulty | difficulty}}
+        • {{recipe.rating }}
+        <ion-icon name="star-outline"></ion-icon>
+      </p>
+      <p>
+        <span *ngFor="let tag of recipe.tags">
+          <span class="tag" (click)="onTagClicked(tag);$event.stopPropagation()">#{{tag}}</span>&nbsp;
+        </span>
+      </p>
+    </ion-card-content>
+  </ion-card>
 
   <ion-fab bottom right>
-    <button ion-fab (click)="CreateRecipe()" >
+    <button ion-fab (click)="createRecipe()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-
-  <ion-card *ngFor="let recipe of  recipes" >
-    <img src="{{recipe.photo}}" (click)="onCardClicked(recipe)"/>
-    <ion-card-content>
-      <ion-card-title>
-        {{recipe.name}}
-      </ion-card-title>
-      <p>
-        {{recipe.description | longText:45}}
-      </p>
-
-      <p><span *ngFor="let tag of recipe.tags" class="tag" (click)="onTagClicked(tag)"> #{{tag }} </span></p>
-
-
-      <p>
-      <span>
-          <ion-icon name="timer"></ion-icon>
-          <span>{{recipe.time}} | </span>
-      </span>
-        <span>
-          <ion-icon name="star-outline"></ion-icon>
-          <span>{{recipe.rating }} | </span>
-      </span>
-        <span center text-center>
-        <ion-icon name="people"></ion-icon>
-        <span>{{recipe.portions}} | </span>
-      </span>
-        <span>{{recipe.difficulty | difficulty}}</span>
-      </p>
-    </ion-card-content>
-
-
-  </ion-card>
 </ion-content>
