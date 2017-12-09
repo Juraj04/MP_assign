@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Recipe} from "../../models/recipe";
 import {Food, Unit} from "../../models/food";
 import {FridgePage} from "../fridge/fridge";
 import {FridgeProvider} from "../../providers/fridge/fridge";
 import {RecipeItem} from "../../models/recipeItem";
-import {ProductStoreProvider} from "../../providers/product-store/product-store";
 
 /**
  * Generated class for the RecipeDetailPage page.
@@ -21,14 +20,24 @@ import {ProductStoreProvider} from "../../providers/product-store/product-store"
 })
 export class RecipeDetailPage {
   private recipe: Recipe;
+  private originalRecipe: Recipe;
   private missing: Set<RecipeItem> = new Set<RecipeItem>();
 
-  constructor(public navParams: NavParams, public fridge: FridgeProvider, private alertCtrl: AlertController, private productsStore: ProductStoreProvider) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private recipeStore: RecipeStore,
+              public popoverCtrl: PopoverController,
+              public fridge :FridgeProvider) {
     this.recipe = this.navParams.get("recipe");
-  }
+  this.originalRecipe = this.recipe;}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RecipeDetailPage');
+    console.log(this.recipe);
+  }
+
+  ionViewWillLeave() {
+    this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
   }
 
   checkFood(food: RecipeItem): boolean {
@@ -88,5 +97,38 @@ export class RecipeDetailPage {
     console.log("prepareFood()");
   }
 
+  getColorByRating() {
+    let colors = ["danger", "danger", "rating2", "rating3", "rating4", "rating5"];
+    return colors[this.recipe.rating];
+  }
 
+  getEmojiByRating() {
+    if (this.recipe.rating > 2) {
+      return "md-happy";
+    } else {
+      return "md-sad";
+    }
+  }
+
+  ratingPlus() {
+    if (this.recipe.rating < 5) {
+      this.recipe.rating++;
+      this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
+    }
+
+  }
+
+  ratingMinus() {
+    if (this.recipe.rating > 0) {
+      this.recipe.rating--;
+      this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
+    }
+  }
+
+  presentPopover(event) {
+    let popover = this.popoverCtrl.create(RecipeDetailPopoverComponent, {recipe: this.recipe});
+    popover.present({
+      ev: event
+    });
+  }
 }

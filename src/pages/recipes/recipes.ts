@@ -8,6 +8,7 @@ import {RecipeDetailPage} from "../recipe-detail/recipe-detail";
 import {NewRecipePage} from "../new-recipe/new-recipe";
 import {DifficultyPipe} from "../../pipes/difficulty/difficulty";
 import {RecipeStore} from "../../providers/recipe-store/recipe-store";
+import {NewProductPage} from "../new-product/new-product";
 
 /**
  * Generated class for the RecipesPage page.
@@ -47,7 +48,6 @@ export class RecipesPage {
 
 
   onCardClicked(recipe) {
-
     this.navCtrl.push(RecipeDetailPage, {recipe: recipe});
   }
 
@@ -74,10 +74,10 @@ export class RecipesPage {
 
   }
 
-  CreateRecipe() {
-    // TODO dorobit !!!!
-    console.log("CreateRecipe!!");
-    this.navCtrl.push(NewRecipePage);
+  createRecipe() {
+    this.navCtrl.push(NewRecipePage, {
+      create: true
+    });
   }
 
 

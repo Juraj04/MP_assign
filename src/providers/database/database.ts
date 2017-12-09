@@ -34,7 +34,7 @@ export class DatabaseProvider {
         .then((database: SQLiteObject) => {
           this.database = database;
           //DatabaseModel.dropAllTables(sqlitePorter, this.database).then(() => {
-            DatabaseModel.createTables(sqlitePorter, this.database);
+          DatabaseModel.createTables(sqlitePorter, this.database);
           //});
         });
     });
@@ -46,6 +46,8 @@ export class DatabaseProvider {
       }
     })
   }
+
+  //TODO: zapoznamkovat vypisy
 
   private createProducts() {
     let names = ["voda", "mnasko", "cipsik", "vlocky", "jogurt", "kondomy", "chlieb", "ryza"];

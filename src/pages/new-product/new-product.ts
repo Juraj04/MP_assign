@@ -1,12 +1,9 @@
 import {Component} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
-import {Food} from "../../models/food";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {AddFoodComponent} from "../../components/add-food/add-food";
 import {Product} from "../../models/product";
 import {Location} from "../../models/location";
-import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
-import {Camera, CameraOptions} from "@ionic-native/camera";
 import {GoogleMapsWindowPage} from "../google-maps-window/google-maps-window";
 import {LocationStoreProvider} from "../../providers/location-store/location-store";
 import {ProductDetailPage} from "../product-detail/product-detail";
@@ -39,7 +36,7 @@ export class NewProductPage {
                 private toastCtrl: ToastController, private pictureManager: PictureManagerProvider) {
         this.create = navParams.get("create");
         if (this.create) {
-            let tgs: string[]
+            let tgs: string[];
             this.product = new Product("", new Location("", 0, 0), 0, "", 3, 0, 0, null, "./assets/img/default-placeholder.png", tgs);
         } else {
             this.product = navParams.get("product");
@@ -57,18 +54,27 @@ export class NewProductPage {
     createProduct() {
 
         if (this.validInput()) {
-            let tgs: string[] = this.tags.toLowerCase().trim().split(" ");
+            console.log("prve trimnutie: " + this.tags.toLowerCase().trim());
+
+            let tgs: Set<string> = new Set<string>();
+            if (this.tags != "") {
+                let arrayTgs = this.tags.toLowerCase().trim().split(" ");
+                for (let i = 0; i < arrayTgs.length; i++) {
+                    if (arrayTgs[i] != " " && arrayTgs[i] != "")
+                        tgs.add(arrayTgs[i]);
+                }
+            }
+            console.log("vznik pola: " + tgs);
+            this.trimNameAndLocation();
             this.product.location = new Location(this.product.location.name, this.locationStore.lat, this.locationStore.lng);
+
+            tgs.add(this.product.name.toLowerCase().replace(/ /g, ""));
+            tgs.add(this.product.location.name.toLowerCase().replace(/ /g, ""));
+            tgs.add(this.product.food.name.toLowerCase().replace(" ", ""));
+            this.product.tags = Array.from(tgs);
 
             switch (this.create) {
                 case true: {
-
-                    tgs.push(this.product.name.toLowerCase().trim().replace(" ", ""));
-                    tgs.push(this.product.location.name.toLowerCase().trim().replace(" ", ""));
-                    tgs.push(this.product.food.name.toLowerCase().trim().replace(" ", ""));
-                    this.product.tags = tgs;
-                    console.log("toto je IDCKO " + this.product.food.id);
-
                     this.productStore.addProduct(this.product);
                     this.navCtrl.pop();
                     this.navCtrl.push(ProductDetailPage, {
@@ -77,10 +83,11 @@ export class NewProductPage {
                     break;
                 }
                 case false: {
-                    this.product.tags = tgs;
-                    console.log("photo" + this.product.photo);
                     this.productStore.updateProduct(this.originalProduct, this.product);
                     this.navCtrl.pop();
+                    this.navCtrl.push(ProductDetailPage, {
+                        product: this.product
+                    });
                     break;
                 }
             }
@@ -90,7 +97,6 @@ export class NewProductPage {
     }
 
     takeAPhoto() {
-
         this.pictureManager.takeAPhoto().then(imageData => {
             this.product.photo = imageData;
             console.log("toto je photo v novom produkte: " + this.product.photo);
@@ -176,6 +182,11 @@ export class NewProductPage {
 
     public convertToNumber(event): number {
         return +event;
+    }
+
+    trimNameAndLocation(){
+        this.product.name = this.product.name.trim();
+        this.product.location.name = this.product.location.name.trim();
     }
 
 
