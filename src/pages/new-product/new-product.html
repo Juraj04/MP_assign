@@ -8,7 +8,9 @@
 
     <ion-navbar color="primary">
         <ion-title *ngIf="create; else elseBlock">Create new product</ion-title>
-        <ng-template #elseBlock> <ion-title>Edit product</ion-title></ng-template>
+        <ng-template #elseBlock>
+            <ion-title>Edit product</ion-title>
+        </ng-template>
         <ion-buttons end>
             <button ion-button icon-only color="royal" (click)="createProduct()">
                 <ion-icon name="checkmark"></ion-icon>
@@ -24,12 +26,12 @@
     <ion-grid id="gridButtons" padding>
         <ion-row>
             <ion-col>
-                <button id="photoButton" ion-button outline color="primary" icon-only="" (click)="takeAPhoto()">
-                    <ion-icon color="primary" item-start name="ios-camera-outline"></ion-icon>
+                <button id="photoButton" item-start large ion-button outline color="primary" icon-only="" (click)="takeAPhoto()">
+                    <ion-icon color="primary" name="ios-camera-outline"></ion-icon>
                 </button>
             </ion-col>
             <ion-col>
-                <button id="galeryButton" item-end ion-button outline color="primary" (click)="selectFromGalery()">
+                <button id="galeryButton" item-end large ion-button outline color="primary" (click)="selectFromGalery()">
                     <ion-icon color="primary" name="ios-images-outline"></ion-icon>
                 </button>
             </ion-col>
@@ -40,56 +42,72 @@
         <ion-item>
             <ion-label floating>Name of product</ion-label>
             <ion-input [(ngModel)]="product.name"></ion-input>
-            <ion-icon item-end color="primary" name="ios-pricetag-outline"></ion-icon>
-        </ion-item>
-
-        <ion-item>
-            <button id="locationButton" item-end large ion-button icon-only color="light" outline (click)="getLocation()">
-                <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
-            </button>
-            <ion-label floating>Location name</ion-label>
-            <ion-input [(ngModel)]="product.location.name"></ion-input>
-
-        </ion-item>
-
-        <ion-item>
-            <ion-label floating>Price</ion-label>
-            <ion-input type="number" [(ngModel)]="product.price"></ion-input>
-            <ion-icon item-end color="primary" name="ios-cash-outline"></ion-icon>
-        </ion-item>
-
-        <ion-item>
-            <ion-label floating color="gray">Rating {{product.rating}}</ion-label>
-            <ion-range min="0" max="5" pin="true" color="primary" [(ngModel)]="product.rating" step="1">
-                <ion-label range-left color="gray" >0</ion-label>
-                <ion-label range-right color="gray" >5</ion-label>
-            </ion-range>
-        </ion-item>
-
-        <ion-list>
-            <ion-list-header>
-                Food category
-                <button ion-button outline item-end color="primary" (click)="addFood()" id="foodButton">Add food</button>
-            </ion-list-header>
-            <ion-item *ngIf="product.food != null">
-                <ion-note *ngIf="product.food != null">{{product.food.name}}</ion-note>
+            <!--    <ion-icon item-end color="primary" name="ios-pricetag-outline"></ion-icon>-->
             </ion-item>
+
+            <ion-item>
+                <button id="locationButton" item-end large ion-button icon-only color="light" outline
+                        (click)="getLocation()">
+                    <ion-icon name="ios-pin-outline" color="primary"></ion-icon>
+                </button>
+                <ion-label floating>Location name</ion-label>
+                <ion-input [(ngModel)]="product.location.name"></ion-input>
+
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Price</ion-label>
+                <ion-input type="number" [(ngModel)]="product.price"></ion-input>
+           <!--     <ion-icon item-end color="primary" name="ios-cash-outline"></ion-icon>-->
+            </ion-item>
+
+            <ion-item>
+                <button ion-button outline item-end color="light" large icon-only (click)="addFood()" id="foodButton">
+                    <ion-icon name="ios-pizza-outline" color="primary"></ion-icon>
+                </button>
+
+                <ion-label floating color="gray">Food category</ion-label>
+                <ion-input [disabled]="true" *ngIf="product.food != null" [(ngModel)] ="product.food.name"></ion-input>
+
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Quantity per package</ion-label>
+                <ion-input type="number"
+                           [(ngModel)]="product.quantity"
+                           (ngModelChange)="product.quantity = convertToNumber($event)"></ion-input>
+            <!--    <ion-icon item-end color="primary" name="ios-cube-outline"></ion-icon>-->
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating color="gray">Rating {{product.rating}}</ion-label>
+                <ion-range min="0" max="5" pin="true" color="primary" [(ngModel)]="product.rating" step="1">
+                    <ion-label range-left color="gray">0</ion-label>
+                    <ion-label range-right color="gray">5</ion-label>
+                </ion-range>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Tags</ion-label>
+                <ion-input [(ngModel)]="tags"></ion-input>
+            <!--    <ion-icon item-end color="primary" name="ios-grid-outline"></ion-icon>-->
+            </ion-item>
+
         </ion-list>
+    </ion-content>
 
-        <ion-item>
-            <ion-label floating>Quantity per package</ion-label>
-            <ion-note *ngIf="product.food != null" item-end> {{product.food.unit | unit}}</ion-note>
-            <ion-input type="number"
-                       [(ngModel)]="product.quantity"
-                       (ngModelChange)="product.quantity = convertToNumber($event)" item-start></ion-input>
-            <ion-icon item-end color="primary" name="ios-cube-outline"></ion-icon>
+
+    <!-- <ion-note *ngIf="product.food != null" item-end> {{product.food.unit | unit}}</ion-note> -->
+
+<!--
+<ion-item>
+            <ion-label color="gray">
+                Food category
+            </ion-label>
+            <button ion-button outline item-end color="primary" (click)="addFood()" id="foodButton">Add food
+            </button>
         </ion-item>
-
-        <ion-item>
-            <ion-label floating>Tags</ion-label>
-            <ion-input [(ngModel)]="tags"></ion-input>
-            <ion-icon item-end color="primary" name="ios-grid-outline"></ion-icon>
+        <ion-item *ngIf="product.food != null">
+            <ion-label *ngIf="product.food != null">{{product.food.name}}</ion-label>
         </ion-item>
-
-    </ion-list>
-</ion-content>
+-->

@@ -6,80 +6,100 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary">
-    <ion-title *ngIf="create; else elseBlock">Create new recipe</ion-title>
-    <ng-template #elseBlock>
-      <ion-title>Edit recipe</ion-title>
-    </ng-template>
-    <ion-buttons end>
-      <button ion-button icon-only color="royal" (click)="createRecipe()">
-        <ion-icon name="checkmark"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <ion-title *ngIf="create; else elseBlock">Create new recipe</ion-title>
+        <ng-template #elseBlock>
+            <ion-title>Edit recipe</ion-title>
+        </ng-template>
+        <ion-buttons end>
+            <button ion-button icon-only color="royal" (click)="createRecipe()">
+                <ion-icon name="checkmark"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <div class="thumbnail">
-    <img src="{{recipe.photo}}" class="portrait"/>
-  </div>
-  <ion-grid id="gridButtons" padding>
-    <ion-row>
-      <ion-col>
-        <button id="photoButton" ion-button outline color="primary" (click)="takeAPhoto()">Photo</button>
-      </ion-col>
-      <ion-col>
-        <button id="galeryButton" ion-button outline color="primary" (click)="selectFromGalery()">Gallery</button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-content>
+    <div class="thumbnail">
+        <img src="{{recipe.photo}}" class="portrait"/>
+    </div>
+    <ion-grid id="gridButtons" padding>
+        <ion-row>
+            <ion-col>
+                <button id="photoButton" item-start large ion-button outline color="primary" icon-only=""
+                        (click)="takeAPhoto()">
+                    <ion-icon color="primary" name="ios-camera-outline"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col>
+                <button id="galeryButton" item-end large ion-button outline color="primary"
+                        (click)="selectFromGalery()">
+                    <ion-icon color="primary" name="ios-images-outline"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Name of recipe</ion-label>
-      <ion-input [(ngModel)]="recipe.name"></ion-input>
-    </ion-item>
+    <ion-list>
+        <ion-item>
+            <ion-label floating>Name of recipe</ion-label>
+            <ion-input [(ngModel)]="recipe.name"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Number of portions</ion-label>
-      <ion-input type="number" [(ngModel)]="recipe.portions"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label floating>Number of portions</ion-label>
+            <ion-input type="number" [(ngModel)]="recipe.portions"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Total time</ion-label>
-      <ion-input type="number" [(ngModel)]="recipe.time"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label floating>Total time</ion-label>
+            <ion-input type="number" [(ngModel)]="recipe.time"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating color="gray">Difficulty {{recipe.difficulty}}</ion-label>
-      <ion-range min="1" max="3" pin="true" color="primary" [(ngModel)]="recipe.difficulty" step="1">
-        <ion-label range-left color="gray">Easy</ion-label>
-        <ion-label range-right color="gray">Hard</ion-label>
-      </ion-range>
-    </ion-item>
+        <ion-item>
+            <ion-label floating color="gray">Difficulty {{recipe.difficulty}}</ion-label>
+            <ion-range min="1" max="3" pin="true" color="primary" [(ngModel)]="recipe.difficulty" step="1">
+                <ion-label range-left color="gray">Easy</ion-label>
+                <ion-label range-right color="gray">Hard</ion-label>
+            </ion-range>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Tags</ion-label>
-      <ion-input [(ngModel)]="tags"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label floating>Description</ion-label>
+            <ion-input [(ngModel)]="recipe.description"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Description</ion-label>
-      <ion-input [(ngModel)]="recipe.description"></ion-input>
-    </ion-item>
-  </ion-list>
 
-  <ion-list>
-    <ion-list-header>
-      Ingredients
-      <button ion-button outline item-end color="royal" (click)="addItem()" id="ingredientButton">Add ingredient</button>
-    </ion-list-header>
-    <ion-item *ngFor="let item of recipe.items">
-      {{item.food.name}}
-      <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
-      <button ion-button icon-only item-end clear class="removeItem" (click)="removeItem(item)">
-        <ion-icon name="remove-circle" color="primary"></ion-icon>
-      </button>
-    </ion-item>
-  </ion-list>
+        <ion-item>
+
+
+            <button ion-button outline item-end color="light" large icon-only (click)="addItem()" id="ingredientButton">
+                <ion-icon name="ios-pizza-outline" color="primary"></ion-icon>
+            </button>
+            <ion-label color="gray">Ingredients</ion-label>
+        </ion-item>
+            <ion-list>
+                <ion-item *ngFor="let item of recipe.items">
+                    {{item.food.name}}
+                    <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
+                    <button ion-button icon-only item-end clear class="removeItem" (click)="removeItem(item)">
+                        <ion-icon name="remove-circle" color="primary"></ion-icon>
+                    </button>
+                </ion-item>
+            </ion-list>
+
+        <ion-item>
+            <ion-label floating color="gray">Rating {{recipe.rating}}</ion-label>
+            <ion-range min="0" max="5" pin="true" color="primary" [(ngModel)]="recipe.rating" step="1">
+                <ion-label range-left color="gray">0</ion-label>
+                <ion-label range-right color="gray">5</ion-label>
+            </ion-range>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Tags</ion-label>
+            <ion-input [(ngModel)]="tags"></ion-input>
+        </ion-item>
+
+    </ion-list>
 </ion-content>

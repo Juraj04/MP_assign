@@ -95,17 +95,18 @@
 
   <p id="tags" align="center"><span *ngFor="let tag of recipe.tags" (click)="onTagClick(tag)" class="tag"> #{{tag }} </span></p>
 
-  <ion-fab right bottom>
-    <button ion-fab color="{{getColorByRating()}}">
+  <ion-fab top right>
+    <button mini ion-fab color="{{getColorByRating()}}">
       <ion-icon name="{{getEmojiByRating()}}"></ion-icon>
     </button>
-    <ion-fab-list side="left">
-      <button ion-fab color="primary" (click)="ratingMinus()">
-        <ion-icon name="md-thumbs-down"></ion-icon>
-      </button>
+    <ion-fab-list side="bottom">
       <button ion-fab color="primary" (click)="ratingPlus()">
         <ion-icon name="md-thumbs-up"></ion-icon>
       </button>
+      <button ion-fab color="primary" (click)="ratingMinus()">
+        <ion-icon name="md-thumbs-down"></ion-icon>
+      </button>
+
     </ion-fab-list>
   </ion-fab>
 
