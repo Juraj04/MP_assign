@@ -77,6 +77,8 @@ export class ProductDetailPage {
     count = this.product.count_fridge == 0 ? this.product.quantity : this.product.count_fridge;
     let modal = this.modal.create(AddProductToFridgeComponent, {
       quantity: count
+    },{
+      enableBackdropDismiss : false
     });
     modal.onDidDismiss(data => {
       if (data == null) return;

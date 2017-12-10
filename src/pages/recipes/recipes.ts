@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {SelectRightProviderProvider} from "../../providers/select-right-provider/select-right-provider";
 import {DatabaseProvider} from "../../providers/database/database";
 import {DummyDatabaseProvider} from "../../providers/dummy-database/dummy-database";
@@ -29,7 +29,11 @@ export class RecipesPage {
   allRecipes: Recipe[] = [];
   recipes: Recipe[] = [];
 
-  constructor(public navCtrl: NavController, private recipeStore: RecipeStore) {
+  constructor(public navCtrl: NavController, private recipeStore: RecipeStore, private events: Events) {
+
+    this.events.subscribe("on_recipe_tag_click",(tag) => {
+      this.onTagClicked(tag)
+    })
 
   }
 

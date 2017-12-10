@@ -38,4 +38,8 @@ export class AddProductToFridgeComponent {
       this.quantity--;
   }
 
+  close(){
+    this.viewCtrl.dismiss()
+  }
+
 }

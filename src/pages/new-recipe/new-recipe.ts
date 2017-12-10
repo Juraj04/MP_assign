@@ -100,7 +100,7 @@ export class NewRecipePage {
 
   //toto bude treba opravit
   addItem() {
-    let modal = this.modal.create(AddFoodComponent, {showCount: true});
+    let modal = this.modal.create(AddFoodComponent, {getCount: true});
     modal.onDidDismiss(data => {
       if (data == null) {
         console.log("addItem - modal-data-null");

@@ -33,7 +33,7 @@ page-recipe-detail {
     margin: auto;
   }
 
-  #tag{
+  .tag{
     color: #2893FF;
   }
   #tags{
@@ -49,4 +49,9 @@ page-recipe-detail {
   .not-enough{
     color: red;
   }
+
+
+}
+.no-balls{
+  list-style-type: none;
 }

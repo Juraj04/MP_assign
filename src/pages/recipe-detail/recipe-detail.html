@@ -82,7 +82,7 @@
     {{recipe.description}}
   </div>
 
-  <p id="tags" align="center"><span *ngFor="let tag of recipe.tags" id="tag"> #{{tag }} </span></p>
+  <p id="tags" align="center"><span *ngFor="let tag of recipe.tags" class="tag" (click)="onTagClick(tag)"> #{{tag }} </span></p>
 
   <ion-fab top right>
     <button ion-fab (click)="prepareFood()">
