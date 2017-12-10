@@ -59,7 +59,7 @@
         </ion-grid>
     </h3>
 
-    <p id="tags" align="center"><span *ngFor="let tag of product.tags" id="tag"> #{{tag }} </span></p>
+    <p id="tags" align="center"><span *ngFor="let tag of product.tags" class="tag" (click)="onTagClick(tag)" > #{{tag }} </span></p>
 
     <ion-fab right bottom>
         <button ion-fab color="{{getColorByRating()}}">

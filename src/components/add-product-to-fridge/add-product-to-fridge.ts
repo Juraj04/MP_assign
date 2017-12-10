@@ -38,7 +38,8 @@ export class AddProductToFridgeComponent {
       this.quantity--;
   }
 
-  closeModal(){
-    this.viewCtrl.dismiss();
+  close(){
+    this.viewCtrl.dismiss()
   }
+
 }

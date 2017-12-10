@@ -1,9 +1,23 @@
 page-new-recipe {
-  #img{
+  font-family: Roboto;
+
+  .thumbnail {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    display: block;
-    margin: auto;
-    height: 60%;
+  }
+  .thumbnail img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    transform: translate(-50%,-50%);
+  }
+  .thumbnail img.portrait {
+    width: 100%;
+    height: auto;
   }
 
   #gridButtons{
@@ -20,6 +34,12 @@ page-new-recipe {
 
   #galeryButton{
     float: right;
+    border-radius: 5px;
+    border-color: #c8c7cc;
+    margin-right: 0%;
+  }
+
+  #ingredient{
     border-radius: 5px;
     border-color: #c8c7cc;
     margin-right: 0%;

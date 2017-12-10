@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams, PopoverController, Toast} from 'ionic-angular';
+import {Events, IonicPage, ModalController, NavController, NavParams, PopoverController, Toast} from 'ionic-angular';
 import {Product} from "../../models/product";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {GoogleMapsWindowPage} from "../google-maps-window/google-maps-window";
@@ -24,7 +24,7 @@ export class ProductDetailPage {
   private originalProduct: Product;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public productStore: ProductStoreProvider,
-              public modal: ModalController, public popoverCtrl: PopoverController) {
+              public modal: ModalController, public popoverCtrl: PopoverController, private events: Events) {
     this.product = navParams.get("product");
     this.originalProduct = this.product;
   }
@@ -78,11 +78,7 @@ export class ProductDetailPage {
     let count: number;
     count = this.product.count_fridge == 0 ? this.product.quantity : this.product.count_fridge;
     let modal = this.modal.create(AddProductToFridgeComponent, {
-      quantity: count,
-
-    },{
-      showBackdrop: true,
-      enableBackdropDismiss: true
+      quantity: count
     });
 
     modal.onDidDismiss(data => {
@@ -112,4 +108,10 @@ export class ProductDetailPage {
 
     })
   }
+
+  onTagClick(tag){
+    this.events.publish("on_product_tag_click",tag)
+    this.navCtrl.pop()
+  }
+
 }

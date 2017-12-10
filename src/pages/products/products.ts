@@ -27,6 +27,14 @@ export class ProductsPage {
       this.searchInput = item;
       this.selectProducts();
     })
+
+
+    this.events.subscribe("on_product_tag_click",(tag) => {
+
+      this.searchInput = tag;
+      this.selectProducts()
+    })
+
   }
 
   ionViewDidLoad() {
