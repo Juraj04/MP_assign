@@ -83,8 +83,14 @@
       </ion-item>
     </ion-list>
 
-
-    {{recipe.description}}
+    <ion-list>
+      <ion-list-header>
+        Description
+      </ion-list-header>
+      <ion-item>
+        {{recipe.description}}
+      </ion-item>
+    </ion-list>
   </div>
 
   <p id="tags" align="center"><span *ngFor="let tag of recipe.tags" (click)="onTagClick(tag)" class="tag"> #{{tag }} </span></p>

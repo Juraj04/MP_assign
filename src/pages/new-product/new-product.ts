@@ -8,6 +8,7 @@ import {GoogleMapsWindowPage} from "../google-maps-window/google-maps-window";
 import {LocationStoreProvider} from "../../providers/location-store/location-store";
 import {ProductDetailPage} from "../product-detail/product-detail";
 import {PictureManagerProvider} from "../../providers/picture-manager/picture-manager";
+import {Unit} from "../../models/food";
 
 /**
  * Generated class for the NewProductPage page.
@@ -24,7 +25,7 @@ import {PictureManagerProvider} from "../../providers/picture-manager/picture-ma
 export class NewProductPage {
 
     tags: string = "";
-
+    unit: Unit;
 
     product: Product;
     originalProduct: Product;

@@ -72,12 +72,12 @@
   <ion-list>
     <ion-list-header>
       Ingredients
-      <button ion-button outline item-end color="royal" (click)="addItem()" id="ingredient">Add ingredient</button>
+      <button ion-button outline item-end color="royal" (click)="addItem()" id="ingredientButton">Add ingredient</button>
     </ion-list-header>
     <ion-item *ngFor="let item of recipe.items">
       {{item.food.name}}
       <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
-      <button ion-button icon-only item-end color="light" (click)="buttonClick()">
+      <button ion-button icon-only item-end clear class="removeItem" (click)="removeItem(item)">
         <ion-icon name="remove-circle" color="primary"></ion-icon>
       </button>
     </ion-item>
