@@ -6,6 +6,7 @@ import {RecipeItem} from "../../models/recipeItem";
 import {RecipeStore} from "../../providers/recipe-store/recipe-store";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {RecipeDetailPopoverComponent} from "../../components/recipe-detail-popover/recipe-detail-popover";
+import {NewRecipePage} from "../new-recipe/new-recipe";
 import {Product} from "../../models/product";
 import {min} from "rxjs/operator/min";
 import {Unit} from "../../models/food";
@@ -90,8 +91,6 @@ export class RecipeDetailPage {
           usedProductsString += "<li>"+sp.name + " " + count + " " + Unit[sp.food.unit]  + "</li>"
           this.productsStore.updateProduct(sp,sp);
         }
-
-
       }
       usedProductsString += "</ul>"
 
@@ -101,7 +100,6 @@ export class RecipeDetailPage {
         message: "Following products was reduced from fridge \n" + usedProductsString,
         buttons: ["Ok"]
       }).present();
-
 
 
     }
@@ -141,6 +139,16 @@ export class RecipeDetailPage {
     popover.present({
       ev: event
     });
+    popover.onDidDismiss((data) => {
+      this.navCtrl.pop();
+      if(data.edit && data != null){
+        this.navCtrl.push(NewRecipePage, {
+          product: this.recipe,
+          create: false
+        })
+      }
+
+    })
   }
 
   onTagClick(tag){

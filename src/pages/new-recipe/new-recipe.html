@@ -7,7 +7,8 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Create new recipe</ion-title>
+    <ion-title *ngIf="create; else elseBlock">Create new recipe</ion-title>
+    <ng-template #elseBlock> <ion-title>Edit recipe</ion-title></ng-template>
     <ion-buttons end>
       <button ion-button icon-only color="royal" (click)="createRecipe()">
         <ion-icon name="checkmark"></ion-icon>
@@ -18,7 +19,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content padding>
   <img id="img" src="{{recipe.photo}}">
   <ion-grid id="gridButtons" padding>
     <ion-row>
@@ -26,7 +27,7 @@
         <button id="photoButton" ion-button outline color="primary" (click)="takeAPhoto()">Photo</button>
       </ion-col>
       <ion-col>
-        <button id="galeryButton" ion-button outline color="primary" (click)="selectFromGalery()">Galery</button>
+        <button id="galeryButton" ion-button outline color="primary" (click)="selectFromGalery()">Gallery</button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -48,15 +49,10 @@
     </ion-item>
 
     <ion-item>
-      <ion-note>
-        Difficulty {{difficulty | difficulty}}
-      </ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-range min="1" max="3" [(ngModel)]="recipe.difficulty" step="1">
-        <ion-label range-left>EASY</ion-label>
-        <ion-label range-right>HARD</ion-label>
+      <ion-label floating color="gray">Difficulty {{recipe.difficulty}}</ion-label>
+      <ion-range min="1" max="3" pin="true" color="primary" [(ngModel)]="recipe.difficulty" step="1">
+        <ion-label range-left color="gray" >Easy</ion-label>
+        <ion-label range-right color="gray" >Hard</ion-label>
       </ion-range>
     </ion-item>
 
