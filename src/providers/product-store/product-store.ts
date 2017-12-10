@@ -64,7 +64,7 @@ export class ProductStoreProvider {
     console.log(all)
 
     for (let i = 0 ; i < all.length; i++) {
-      if (all[i].food.id == food.id)
+      if (all[i].food.id == food.id && all[i].count_fridge > 0)
         prds.push(all[i])
     }
 

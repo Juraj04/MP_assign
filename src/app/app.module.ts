@@ -42,75 +42,78 @@ import {AddProductToFridgeComponent} from "../components/add-product-to-fridge/a
 import {ScreenOrientation} from "@ionic-native/screen-orientation";
 
 import {RecipeDetailPopoverComponent} from '../components/recipe-detail-popover/recipe-detail-popover';
+import {CreateNewFoodComponent} from "../components/create-new-food/create-new-food";
 
 @NgModule({
-    declarations: [
-        MyApp,
-        AboutPage,
-        ContactPage,
-        HomePage,
-        TabsPage,
-        ProductsPage,
-        RecipesPage,
-        RecipeDetailPage,
-        NewRecipePage,
-        DifficultyPipe,
-        UnitPipe,
-        LongTextPipe,
-        AddFoodComponent,
-        ProductDetailPage,
-        NewProductPage,
-        FridgePage,
-        GoogleMapsWindowPage,
-        EditProductPage,
-        RecipeDetailPopoverComponent,
-        AddProductToFridgeComponent
+  declarations: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    TabsPage,
+    ProductsPage,
+    RecipesPage,
+    RecipeDetailPage,
+    NewRecipePage,
+    DifficultyPipe,
+    UnitPipe,
+    LongTextPipe,
+    AddFoodComponent,
+    ProductDetailPage,
+    NewProductPage,
+    FridgePage,
+    GoogleMapsWindowPage,
+    EditProductPage,
+    RecipeDetailPopoverComponent,
+    AddProductToFridgeComponent,
+    CreateNewFoodComponent
 
-    ],
-    imports: [
-        BrowserModule,
-        IonicModule.forRoot(MyApp)
-    ],
-    bootstrap: [IonicApp],
-    entryComponents: [
-        MyApp,
-        AboutPage,
-        ContactPage,
-        HomePage,
-        TabsPage,
-        ProductsPage,
-        RecipesPage,
-        RecipeDetailPage,
-        NewRecipePage,
-        AddFoodComponent,
-        ProductDetailPage,
-        NewProductPage,
-        FridgePage,
-        GoogleMapsWindowPage,
-        EditProductPage,
-        RecipeDetailPopoverComponent,
-        AddProductToFridgeComponent
-    ],
-    providers: [
-        StatusBar,
-        SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler},
-        DatabaseProvider,
-        SQLitePorter,
-        SQLite,
-        DummyDatabaseProvider,
-        SelectRightProviderProvider,
-        RecipeStore,
-        ProductStoreProvider,
-        ImagePicker,
-        Camera,
-        FridgeProvider,
-        LocationStoreProvider,
-        GoogleMaps,
-        Geolocation,
-        PictureManagerProvider,
-        ScreenOrientation
-    ]
+  ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp, {tabsHideOnSubPages: true})
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    TabsPage,
+    ProductsPage,
+    RecipesPage,
+    RecipeDetailPage,
+    NewRecipePage,
+    AddFoodComponent,
+    ProductDetailPage,
+    NewProductPage,
+    FridgePage,
+    GoogleMapsWindowPage,
+    EditProductPage,
+    RecipeDetailPopoverComponent,
+    AddProductToFridgeComponent,
+    CreateNewFoodComponent
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DatabaseProvider,
+    SQLitePorter,
+    SQLite,
+    DummyDatabaseProvider,
+    SelectRightProviderProvider,
+    RecipeStore,
+    ProductStoreProvider,
+    ImagePicker,
+    Camera,
+    FridgeProvider,
+    LocationStoreProvider,
+    GoogleMaps,
+    Geolocation,
+    PictureManagerProvider,
+    ScreenOrientation
+  ]
 })
 export class AppModule {
 }

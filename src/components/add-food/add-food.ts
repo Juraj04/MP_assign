@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {Food, Unit} from "../../models/food";
 import {RecipeItem} from "../../models/recipeItem";
-import {NavController, NavParams, ViewController} from "ionic-angular";
+import {AlertController, ModalController, NavController, NavParams, ViewController} from "ionic-angular";
 import {DatabaseProvider} from "../../providers/database/database";
+import {CreateNewFoodComponent} from "../create-new-food/create-new-food";
 
 /**
  * Generated class for the AddFoodComponent component.
@@ -25,15 +26,15 @@ export class AddFoodComponent {
   newFood: boolean = true;
   unit: Unit;
   count: number;
-  showCount: boolean = true;
+  getCount: boolean = true;
 
-  constructor(public viewCtrl: ViewController, public db: DatabaseProvider, public params: NavParams) {
+  constructor(public viewCtrl: ViewController, public db: DatabaseProvider, public params: NavParams, private modalCtrl: ModalController, private alertCtrl: AlertController) {
     console.log('Hello AddFoodComponent Component');
     db.getAllFoods().then(value => {
       this.foods = value;
       this.all_foods = value
     });
-    this.showCount = params.get("showCount");
+    this.getCount = params.get("getCount");
     //this.foods = db.get;  //TODO: JJ: toto som zapoznamkoval lebo to pindalo, momentalne som neriesil opravu
   }
 
@@ -47,34 +48,115 @@ export class AddFoodComponent {
     }
 
     this.foods = this.all_foods.filter(value => value.name.indexOf(this.searchText) > -1);
-    if (this.foods.length == 0 && this.searchText != "") {
-      let f: Food = new Food(this.searchText, Unit.kg);
-      this.foods.push(f);
-    }
+
   }
 
 
   selectFood(food: Food) {
-    this.food = food;
-    this.newFood = this.all_foods.indexOf(food) < 0;
-    this.searchText = food.name;
-    //this.getItems(null);
-  }
+    console.log(this.getCount,food);
+    if (this.getCount) {
+      this.getCountForFood(food);
 
-
-  addItem() {
-    if (this.newFood) {
-      this.food.unit = this.unit;
-      this.all_foods.push(this.food);
-      this.db.addFood(this.food);
-    }
-    if (this.showCount) {
-      let recipeItem: RecipeItem = new RecipeItem(this.food, this.count);
-      this.viewCtrl.dismiss({recipeItem: recipeItem});
     } else {
-      this.viewCtrl.dismiss({food: this.food});
+      this.viewCtrl.dismiss({food: food});
     }
   }
 
 
+  close(){
+    this.viewCtrl.dismiss()
+  }
+
+
+  createFood() {
+
+
+    this.alertCtrl.create({
+      title: 'Create food',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'name'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Ok',
+          handler: data => {
+            this.continueCreate(data.name)
+          }
+        }
+      ]
+    }).present();
+
+  }
+
+
+  private continueCreate(name: string) {
+    let prompt = this.alertCtrl.create({
+      title: 'Choose unit',
+      message: 'Unit: ',
+      inputs: [
+        {
+          type: 'radio',
+          label: 'l',
+          value: '1'
+        },
+        {
+          type: 'radio',
+          label: 'kg',
+          value: '2'
+        },
+        {
+          type: 'radio',
+          label: 'pcs',
+          value: '3'
+        }],
+      buttons: [
+        {
+          text: "Cancel"
+        },
+        {
+          text: "Ok",
+          handler: data => {
+            let newFood = new Food(name, data)
+            this.db.addFood(newFood)
+            this.selectFood(newFood)
+          }
+        }]
+    });
+    prompt.present();
+  }
+
+
+  private getCountForFood(food: Food) {
+    this.alertCtrl.create({
+      title: 'Set count',
+      inputs: [
+        {
+          name: 'count',
+          type: 'number',
+          placeholder: '1'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Ok',
+          handler: data => {
+            console.log(data);
+            let recipeItem: RecipeItem = new RecipeItem(food, data.count);
+            this.viewCtrl.dismiss({recipeItem: recipeItem});
+          }
+        }
+      ]
+    }).present();
+  }
 }
