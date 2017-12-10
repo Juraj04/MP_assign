@@ -60,11 +60,22 @@
             </ion-range>
         </ion-item>
 
+        <ion-list>
+            <ion-list-header>
+                Food category
+                <button ion-button outline item-end color="primary" (click)="addFood()" id="foodButton">Add food</button>
+            </ion-list-header>
+            <ion-item *ngIf="product.food != null">
+                <ion-note *ngIf="product.food != null">{{product.food.name}}</ion-note>
+            </ion-item>
+        </ion-list>
+
         <ion-item>
             <ion-label floating>Quantity per package</ion-label>
+            <ion-note *ngIf="product.food != null" item-end> {{product.food.unit | unit}}</ion-note>
             <ion-input type="number"
                        [(ngModel)]="product.quantity"
-                       (ngModelChange)="product.quantity = convertToNumber($event)"></ion-input>
+                       (ngModelChange)="product.quantity = convertToNumber($event)" item-start></ion-input>
         </ion-item>
 
         <ion-item>
@@ -72,16 +83,5 @@
             <ion-input [(ngModel)]="tags"></ion-input>
         </ion-item>
 
-        <ion-list>
-            <ion-list-header>
-                Food category
-            </ion-list-header>
-            <ion-item>
-                <ion-note *ngIf="product.food != null">{{product.food.name}}</ion-note>
-            </ion-item>
-        </ion-list>
-        <button ion-button outline color="primary" (click)="addFood()">
-            Add food
-        </button>
     </ion-list>
 </ion-content>

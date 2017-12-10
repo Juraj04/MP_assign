@@ -87,7 +87,7 @@ export class NewRecipePage {
 
   takeAPhoto() {
     this.pictureManager.takeAPhoto().then(imageData => {
-      if(imageData == null)return;
+      if (imageData == null) return;
       this.recipe.photo = imageData;
       console.log("toto je photo v novom recepte: " + this.recipe.photo);
     })
@@ -95,7 +95,7 @@ export class NewRecipePage {
 
   selectFromGalery() {
     this.pictureManager.selectFromGalery().then(imageData => {
-      if(imageData == null)return;
+      if (imageData == null) return;
       this.recipe.photo = imageData;
       console.log("toto je galery v novom recepte: " + this.recipe.photo);
     });
@@ -114,6 +114,13 @@ export class NewRecipePage {
     });
 
     modal.present();
+  }
+
+  removeItem(item: RecipeItem) {
+    let index = this.recipe.items.indexOf(item);
+    if (index > -1) {
+      this.recipe.items.splice(index, 1);
+    }
   }
 
   validInput() {

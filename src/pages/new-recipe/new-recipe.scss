@@ -39,9 +39,13 @@ page-new-recipe {
     margin-right: 0%;
   }
 
-  #ingredient{
+  #ingredientButton{
     border-radius: 5px;
     border-color: #c8c7cc;
     margin-right: 0%;
+  }
+
+  .removeItem{
+    border:none;
   }
 }
