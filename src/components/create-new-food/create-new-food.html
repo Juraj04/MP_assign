@@ -1,0 +1,40 @@
+<!-- Generated template for the AddProductToFridgeComponent component -->
+
+<div class="my_modal">
+  <ion-header>
+
+    <ion-navbar color="primary">
+      <ion-title>Create new Food</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only color="royal" (click)="close()">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+
+  </ion-header>
+
+  <ion-content >
+    <ion-list no-lines>
+      <ion-item>
+        <ion-label floating>Name of food</ion-label>
+        <ion-input [(ngModel)]="name">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Select Unit</ion-label>
+        <ion-select [(ngModel)]="unit" cancelText="Nah" okText="Okay!">
+          <ion-option *ngFor="let i of [1,2,3]" value="{{i}}">{{i | unit}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-list>
+
+    <button ion-button full color="primary" (click)="create()">
+      Create food
+    </button>
+
+
+  </ion-content>
+</div>

@@ -1,0 +1,14 @@
+create-new-food {
+  background: rgba(0,0,0,0.5);
+  z-index: 500;
+  .my_modal{
+    background: white;
+    padding: 10px;
+    position:  absolute;
+    top: 20%;
+    left: 5%;
+    display: block;
+    width: 90%;
+    height: 50%;
+  }
+}
