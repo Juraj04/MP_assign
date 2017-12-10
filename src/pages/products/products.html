@@ -21,9 +21,9 @@
     </ion-refresher>
 
     <ion-list>
-        <ion-item-sliding id="item" *ngFor="let product of products">
+        <ion-item-sliding #slidingItem id="item" *ngFor="let product of products">
             <ion-item (click)="productDetail(product)">
-                <ion-thumbnail item-start>
+                <ion-thumbnail  item-start>
                     <img src={{product.photo}}>
                 </ion-thumbnail>
 
@@ -67,11 +67,11 @@
             </ion-item>
 
             <ion-item-options side="right">
-                <button ion-button color="rating2" (click)="editProduct(product)">
+                <button ion-button color="rating2" (click)="editProduct(product, slidingItem)">
                     <ion-icon name="edit"></ion-icon>
                     Edit
                 </button>
-                <button ion-button color="danger" (click)="removeProduct(product)">
+                <button ion-button color="danger" (click)="removeProduct(product, slidingItem)">
                     <ion-icon name="delete"></ion-icon>
                     Delete
                 </button>

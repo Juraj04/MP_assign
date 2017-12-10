@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams, ItemSliding} from 'ionic-angular';
 import {Product} from '../../models/product'
 import {ProductDetailPage} from "../product-detail/product-detail";
 import {NewProductPage} from "../new-product/new-product";
@@ -59,14 +59,16 @@ export class ProductsPage {
     });
   }
 
-  editProduct(product) {
+  editProduct(product, slidingItem: ItemSliding) {
+    slidingItem.close();
     this.navCtrl.push(NewProductPage, {
       product: product,
       create: false
     })
   }
 
-  removeProduct(product) {
+  removeProduct(product, slidingItem: ItemSliding) {
+    slidingItem.close();
     this.productStore.deleteProduct(product);
   }
 

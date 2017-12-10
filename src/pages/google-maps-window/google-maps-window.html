@@ -6,7 +6,8 @@
 -->
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Find your place</ion-title>
+    <ion-title *ngIf="location != null && !change; else elseBlock">{{location.name}}</ion-title>
+    <ng-template #elseBlock><ion-title>Find your place</ion-title></ng-template>
     <ion-buttons end>
       <button ion-button icon-only color="royal" (click)="saveLocation()">
         <ion-icon name="checkmark"></ion-icon>
