@@ -157,4 +157,12 @@ export class RecipeDetailPage {
     this.events.publish("on_recipe_tag_click",tag)
     this.navCtrl.pop()
   }
+
+  showProducts(item: RecipeItem){
+
+    this.events.publish("search_from_fridge", item.food.name)
+    this.navCtrl.parent.select(0);
+    this.navCtrl.pop()
+  }
+
 }

@@ -1,9 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
-import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {SelectRightProviderProvider} from "../../providers/select-right-provider/select-right-provider";
-import {DatabaseProvider} from "../../providers/database/database";
-import {DummyDatabaseProvider} from "../../providers/dummy-database/dummy-database";
+import {Events, IonicPage, NavController} from 'ionic-angular';
 import {Recipe} from "../../models/recipe";
 import {RecipeDetailPage} from "../recipe-detail/recipe-detail";
 import {NewRecipePage} from "../new-recipe/new-recipe";

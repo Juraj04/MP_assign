@@ -1,33 +1,33 @@
 page-product-detail {
   font-family: Roboto;
 
-  .name{
+  .name {
     text-transform: uppercase;
   }
-  #location{
+  #location {
     margin-bottom: 0%;
   }
-  #price{
+  #price {
     float: right;
   }
-  #name{
+  #name {
     text-shadow: 2px 2px #f2f2f2;
   }
 
-  #rating{
+  #rating {
     float: left;
   }
-  #image{
+  #image {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: block;
     margin: auto;
     height: 60%;
   }
-  #tag{
+  .tag {
     //color: deeppink;
     color: #2893FF;
   }
-  #tags{
+  #tags {
     margin-left: 19%;
     margin-right: 19%;
   }

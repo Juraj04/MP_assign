@@ -77,7 +77,7 @@
       <ion-list-header>
         Ingredients
       </ion-list-header>
-      <ion-item *ngFor="let item of recipe.items" [ngClass]="checkFood(item) ? 'enough' : 'not-enough'">
+      <ion-item *ngFor="let item of recipe.items" [ngClass]="checkFood(item) ? 'enough' : 'not-enough'"  (click)="showProducts(item)">
         {{item.food.name}}
         <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
       </ion-item>
@@ -87,7 +87,7 @@
     {{recipe.description}}
   </div>
 
-  <p id="tags" align="center"><span *ngFor="let tag of recipe.tags" class="tag"> #{{tag }} </span></p>
+  <p id="tags" align="center"><span *ngFor="let tag of recipe.tags" (click)="onTagClick(tag)" class="tag"> #{{tag }} </span></p>
 
   <ion-fab right bottom>
     <button ion-fab color="{{getColorByRating()}}">
