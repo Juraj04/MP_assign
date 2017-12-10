@@ -5,27 +5,22 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-searchbar
-      [(ngModel)]="myInput"
-      [showCancelButton]="shouldShowCancel"
-      (ionInput)="onInput($event)"
-      (ionCancel)="onCancel($event)">
+    <ion-searchbar [(ngModel)]="searchInput"
+                   [showCancelButton]="shouldShowCancel"
+                   (ionInput)="selectRecipes()">
     </ion-searchbar>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content>
-  <ion-refresher (ionRefresh)=" doRefresh($event)">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <ion-card *ngFor="let recipe of  recipes" (click)="onCardClicked(recipe)">
     <div class="thumbnail">
-      <img src="{{recipe.photo}}" class="portrait"/>
+      <img src="{{recipe.photo}}" class="portrait" id="image+{{recipe.photo}}"/>
     </div>
     <ion-card-content>
       <ion-card-title class="name">{{recipe.name}}</ion-card-title>

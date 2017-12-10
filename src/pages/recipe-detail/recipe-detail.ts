@@ -25,6 +25,7 @@ export class RecipeDetailPage {
   private originalRecipe: Recipe;
   private missing: Set<RecipeItem> = new Set<RecipeItem>();
 
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private recipeStore: RecipeStore,
@@ -135,14 +136,15 @@ export class RecipeDetailPage {
       ev: event
     });
     popover.onDidDismiss((data) => {
+      if (data == null) return;
+
       this.navCtrl.pop();
-      if(data.edit && data != null){
+      if (data.edit && data != null) {
         this.navCtrl.push(NewRecipePage, {
-          product: this.recipe,
+          recipe: this.recipe,
           create: false
         })
       }
-
     })
   }
 }

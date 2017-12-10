@@ -8,19 +8,21 @@
 
   <ion-navbar color="primary">
     <ion-title *ngIf="create; else elseBlock">Create new recipe</ion-title>
-    <ng-template #elseBlock> <ion-title>Edit recipe</ion-title></ng-template>
+    <ng-template #elseBlock>
+      <ion-title>Edit recipe</ion-title>
+    </ng-template>
     <ion-buttons end>
       <button ion-button icon-only color="royal" (click)="createRecipe()">
         <ion-icon name="checkmark"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-  <img id="img" src="{{recipe.photo}}">
+  <div class="thumbnail">
+    <img src="{{recipe.photo}}" class="portrait"/>
+  </div>
   <ion-grid id="gridButtons" padding>
     <ion-row>
       <ion-col>
@@ -51,8 +53,8 @@
     <ion-item>
       <ion-label floating color="gray">Difficulty {{recipe.difficulty}}</ion-label>
       <ion-range min="1" max="3" pin="true" color="primary" [(ngModel)]="recipe.difficulty" step="1">
-        <ion-label range-left color="gray" >Easy</ion-label>
-        <ion-label range-right color="gray" >Hard</ion-label>
+        <ion-label range-left color="gray">Easy</ion-label>
+        <ion-label range-right color="gray">Hard</ion-label>
       </ion-range>
     </ion-item>
 
@@ -70,14 +72,14 @@
   <ion-list>
     <ion-list-header>
       Ingredients
+      <button ion-button outline item-end color="royal" (click)="addItem()" id="ingredient">Add ingredient</button>
     </ion-list-header>
     <ion-item *ngFor="let item of recipe.items">
       {{item.food.name}}
       <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
+      <button ion-button icon-only item-end color="light" (click)="buttonClick()">
+        <ion-icon name="remove-circle" color="primary"></ion-icon>
+      </button>
     </ion-item>
   </ion-list>
-
-  <button ion-button="" (click)="addItem()">
-    Add recipe item
-  </button>
 </ion-content>

@@ -120,10 +120,10 @@ export class NewRecipePage {
     if (this.recipe.name.trim() == "") {
       this.presentToast("Insert name!");
       return false
-    } else if (this.recipe.portions == 0 && this.recipe.portions != null) {
+    } else if (this.recipe.portions == 0 || this.recipe.portions == null) {
       this.presentToast("Insert portions!");
       return false
-    } else if (this.recipe.time == 0 && this.recipe.time != null) {
+    } else if (this.recipe.time == 0 || this.recipe.time == null) {
       this.presentToast("Insert time!");
       return false
     } else if (this.recipe.items.length == 0) {
@@ -154,5 +154,4 @@ export class NewRecipePage {
     }
     this.tags = tgs;
   }
-
 }

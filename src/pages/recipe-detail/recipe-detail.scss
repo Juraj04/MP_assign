@@ -3,6 +3,7 @@ page-recipe-detail {
 
   .thumbnail {
     position: relative;
+    width: auto;
     height: 300px;
     overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -27,13 +28,13 @@ page-recipe-detail {
     text-shadow: 2px 2px #f2f2f2;
   }
 
-  #image{
+  #recipeDetailImage{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: block;
     margin: auto;
   }
 
-  #tag{
+  .tag{
     color: #2893FF;
   }
   #tags{

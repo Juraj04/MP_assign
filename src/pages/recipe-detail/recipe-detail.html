@@ -9,6 +9,9 @@
   <ion-navbar color="primary">
     <ion-title class="name">{{recipe.name}}</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="prepareFood()">
+        <ion-icon name="pizza"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
@@ -21,10 +24,10 @@
 <ion-content *ngIf="recipe">
 
   <div class="thumbnail">
-    <img src="{{recipe.photo}}" class="portrait" id="image"/>
+    <img src="{{recipe.photo}}" class="portrait" id="recipeDetailImage"/>
   </div>
 
-  <h1 align="center" class="name" id="name"> {{recipe.name}}</h1>
+  <!--<h1 align="center" class="name" id="name"> {{recipe.name}}</h1>-->
 
   <h3 align="center" outline>
     <ion-grid id="gridButtons">
@@ -71,30 +74,26 @@
 
   <div padding>
     <ion-list>
+      <ion-list-header>
+        Ingredients
+      </ion-list-header>
       <ion-item *ngFor="let item of recipe.items" [ngClass]="checkFood(item) ? 'enough' : 'not-enough'">
         {{item.food.name}}
         <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
       </ion-item>
-
     </ion-list>
 
 
     {{recipe.description}}
   </div>
 
-  <p id="tags" align="center"><span *ngFor="let tag of recipe.tags" id="tag"> #{{tag }} </span></p>
-
-  <ion-fab top right>
-    <button ion-fab (click)="prepareFood()">
-      <ion-icon name="pizza"></ion-icon>
-    </button>
-  </ion-fab>
+  <p id="tags" align="center"><span *ngFor="let tag of recipe.tags" class="tag"> #{{tag }} </span></p>
 
   <ion-fab right bottom>
     <button ion-fab color="{{getColorByRating()}}">
       <ion-icon name="{{getEmojiByRating()}}"></ion-icon>
     </button>
-    <ion-fab-list side="top">
+    <ion-fab-list side="left">
       <button ion-fab color="primary" (click)="ratingMinus()">
         <ion-icon name="md-thumbs-down"></ion-icon>
       </button>
@@ -103,5 +102,4 @@
       </button>
     </ion-fab-list>
   </ion-fab>
-
 </ion-content>
