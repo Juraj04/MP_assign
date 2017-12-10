@@ -95,7 +95,7 @@ export class NewRecipePage {
 
   selectFromGalery() {
     this.pictureManager.selectFromGalery().then(imageData => {
-      if(imageData == null)return;
+      if(imageData == null || imageData == "")return;
       this.recipe.photo = imageData;
       console.log("toto je galery v novom recepte: " + this.recipe.photo);
     });

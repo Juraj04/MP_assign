@@ -42,10 +42,10 @@ export class PictureManagerProvider {
     };
 
     return this.imagePicker.getPictures(options).then((imageData) => {
-      console.log("toto je galery z providera" + imageData);
-      return imageData
+      console.log("toto je galery z providera" + imageData)
+      return imageData;
     }, (err) => {
-      console.log("photo failed")
+      console.log("photo failed", err)
     });
   }
 }

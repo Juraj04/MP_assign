@@ -78,8 +78,13 @@ export class ProductDetailPage {
     let count: number;
     count = this.product.count_fridge == 0 ? this.product.quantity : this.product.count_fridge;
     let modal = this.modal.create(AddProductToFridgeComponent, {
-      quantity: count
+      quantity: count,
+
+    },{
+      showBackdrop: true,
+      enableBackdropDismiss: true
     });
+
     modal.onDidDismiss(data => {
       if (data == null) return;
       console.log(data.countInFridge);
@@ -96,6 +101,7 @@ export class ProductDetailPage {
       ev: event
     });
     popover.onDidDismiss((data) => {
+      if(data == null) return;
       this.navCtrl.pop();
       if(data.edit && data != null){
         this.navCtrl.push(NewProductPage, {

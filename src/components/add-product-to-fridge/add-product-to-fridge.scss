@@ -1,11 +1,24 @@
+
 add-product-to-fridge {
+  body, html {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
   #content{
     padding: 30px;
   }
-  #background{
-    position: absolute;
+  .background{
     margin: auto auto;
+    height: 50%;
+    float: left;
+  }
+  .background:first-child{
     background-color: white;
+  }
+  .background:nth-child(2){
+    background-color: red;
   }
 
 

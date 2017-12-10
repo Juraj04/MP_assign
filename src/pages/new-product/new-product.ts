@@ -108,7 +108,7 @@ export class NewProductPage {
 
     selectFromGalery() {
         this.pictureManager.selectFromGalery().then(imageData => {
-            if(imageData == null)return;
+            if(imageData == null || imageData == "")return;
             this.product.photo = imageData;
             console.log("toto je galery v novom produkte: " + this.product.photo);
         });
