@@ -21,13 +21,25 @@ page-recipes {
 
   .name {
     text-transform: uppercase;
+    padding: 0;
   }
   .description {
-    //margin-top: 5%;
+    margin-top: 0;
   }
 
   .tag {
     //color: #fff;
     text-decoration: underline;
+  }
+  .rating{
+    //display: inline-block;
+    margin: 0%;
+    padding: 0%;
+  }
+  .timer{
+    //margin-left: 5%;
+  }
+  .cols{
+    padding: 0;
   }
 }

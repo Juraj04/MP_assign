@@ -8,6 +8,7 @@ export enum Difficulty {
 
 export class Recipe {
   id: number;
+  ratingArray:number[];
 
   constructor(public name: string,
               public portions: number,
@@ -18,5 +19,10 @@ export class Recipe {
               public photo: string,
               public items: RecipeItem[],
               public tags: string[]) {
+    this.refreshArray();
+  }
+
+  public refreshArray(){
+    this.ratingArray = Array(this.rating).fill(0).map((x,i) => i);
   }
 }

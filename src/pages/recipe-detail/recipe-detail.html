@@ -29,71 +29,64 @@
 
   <!--<h1 align="center" class="name" id="name"> {{recipe.name}}</h1>-->
 
-  <h3 align="center" outline>
-    <ion-grid id="gridButtons">
-      <ion-row>
-        <ion-col>
-          <span>
-            <ion-chip color="light">
-              <ion-label>{{recipe.portions}}</ion-label>
-              <ion-icon color="primary" name="people"></ion-icon>
-            </ion-chip>
-          </span>
-        </ion-col>
+  <div>
+    <ion-row class="rating">
+      <ion-col class="cols" text-center>
+        <ion-icon float="center" *ngFor="let rat of recipe.ratingArray"
+                  name="star-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
 
-        <ion-col>
-          <span>
-            <ion-chip color="light">
-              <ion-label>{{recipe.time}}</ion-label>
-              <ion-icon color="primary" name="timer"></ion-icon>
-            </ion-chip>
-          </span>
-        </ion-col>
-
-        <ion-col>
-          <span>
-            <ion-chip color="light">
-              <ion-icon color="primary" name="refresh"></ion-icon>
-              <ion-label>{{recipe.difficulty | difficulty}}</ion-label>
-            </ion-chip>
-          </span>
-        </ion-col>
-
-        <ion-col>
-          <span>
-            <ion-chip color="light">
-              <ion-icon color="primary" name="star-outline"></ion-icon>
-              <ion-label>{{recipe.rating}}</ion-label>
-            </ion-chip>
-          </span>
-        </ion-col>
-
-      </ion-row>
-    </ion-grid>
-  </h3>
-
-  <div padding>
-    <ion-list>
-      <ion-list-header>
-        Ingredients
-      </ion-list-header>
-      <ion-item *ngFor="let item of recipe.items" [ngClass]="checkFood(item) ? 'enough' : 'not-enough'"  (click)="showProducts(item)">
-        {{item.food.name}}
-        <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
-      </ion-item>
-    </ion-list>
-
-    <ion-list>
-      <ion-list-header>
-        Description
-      </ion-list-header>
-      <ion-item>
-        {{recipe.description}}
-      </ion-item>
-    </ion-list>
+    <ion-row class="description">
+      <ion-col class="cols">
+        <ion-item no-lines class="description" text-end>
+          <ion-label class="description" item-right>{{recipe.portions}}</ion-label>
+          <ion-icon class="description" item-right name="people"></ion-icon>
+        </ion-item>
+      </ion-col>
+      <ion-col class="cols" text-center>
+        <ion-label >{{recipe.difficulty | difficulty}}</ion-label>
+      </ion-col>
+      <ion-col class="cols">
+        <ion-item no-lines class="description" text-start>
+          <ion-icon class="description" item-left class="timer" name="timer"></ion-icon>
+          <ion-label class="description" item-left>{{recipe.time}}</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
   </div>
 
-  <p id="tags" align="center"><span *ngFor="let tag of recipe.tags" (click)="onTagClick(tag)" class="tag"> #{{tag }} </span></p>
+  <ion-segment color="primary" [(ngModel)]="data">
+    <ion-segment-button value="ingredients">
+      Ingredients
+    </ion-segment-button>
+    <ion-segment-button value="description">
+      Description
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="data">
+
+      <ion-list *ngSwitchCase="'ingredients'">
+        <ion-item *ngFor="let item of recipe.items" [ngClass]="checkFood(item) ? 'enough' : 'not-enough'"  (click)="showProducts(item)">
+          {{item.food.name}}
+          <ion-note item-end>{{item.count}} {{item.food.unit | unit}}</ion-note>
+        </ion-item>
+      </ion-list>
+
+      <div *ngSwitchCase="'description'">
+        <ion-list >
+          <ion-item text-wrap text-center>
+              <p>
+                {{recipe.description}}
+              </p>
+          </ion-item>
+        </ion-list>
+
+        <p class="tags" align="center"><span *ngFor="let tag of recipe.tags" (click)="onTagClick(tag)" class="tag"> #{{tag }} </span></p>
+      </div>
+
+  </div>
 
   <ion-fab top right>
     <button mini ion-fab color="{{getColorByRating()}}">

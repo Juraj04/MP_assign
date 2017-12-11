@@ -37,7 +37,7 @@ page-recipe-detail {
   .tag{
     color: #2893FF;
   }
-  #tags{
+  .tags{
     margin-left: 19%;
     margin-right: 19%;
   }
@@ -51,6 +51,9 @@ page-recipe-detail {
     color: red;
   }
 
+  .rating{
+    margin-top: 3%;
+  }
 
 }
 .no-balls{

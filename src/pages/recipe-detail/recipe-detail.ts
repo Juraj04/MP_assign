@@ -27,6 +27,7 @@ export class RecipeDetailPage {
   private recipe: Recipe;
   private originalRecipe: Recipe;
   private missing: Set<RecipeItem> = new Set<RecipeItem>();
+  private data: string = "ingredients";
 
 
   constructor(public navCtrl: NavController,
@@ -98,7 +99,7 @@ export class RecipeDetailPage {
 
       this.alertCtrl.create({
         title: "Recipe cooked",
-        message: "Following products was reduced from fridge \n" + usedProductsString,
+        message: "Amount of following products was removed \n" + usedProductsString,
         buttons: ["Ok"]
       }).present();
 
@@ -124,6 +125,7 @@ export class RecipeDetailPage {
     if (this.recipe.rating < 5) {
       this.recipe.rating++;
       this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
+      this.recipe.refreshArray();
     }
 
   }
@@ -132,6 +134,7 @@ export class RecipeDetailPage {
     if (this.recipe.rating > 0) {
       this.recipe.rating--;
       this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
+      this.recipe.refreshArray();
     }
   }
 

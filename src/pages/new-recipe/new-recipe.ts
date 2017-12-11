@@ -31,6 +31,9 @@ export class NewRecipePage {
               private recipeStore: RecipeStore,
               private toastCtrl: ToastController,
               private pictureManager: PictureManagerProvider) {
+
+
+
     this.create = navParams.get("create");
     if (this.create) {
       let tgs: string[];
@@ -40,6 +43,7 @@ export class NewRecipePage {
       this.recipe = navParams.get("recipe");
       this.originalRecipe = this.recipe;
       this.showTags()
+
     }
   }
 
@@ -75,6 +79,7 @@ export class NewRecipePage {
         }
         case false: {
           this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
+          this.recipe.refreshArray();
           this.navCtrl.pop();
           this.navCtrl.push(RecipeDetailPage, {
             recipe: this.recipe
@@ -110,7 +115,8 @@ export class NewRecipePage {
         return;
       }
       console.log("addItem - modal-data-NOT-null");
-      this.recipe.items.push(data.recipeItem);
+      if(!this.hasItem(this.recipe.items,data.recipeItem))
+        this.recipe.items.push(data.recipeItem);
     });
 
     modal.present();
@@ -121,6 +127,8 @@ export class NewRecipePage {
     if (index > -1) {
       this.recipe.items.splice(index, 1);
     }
+
+
   }
 
   validInput() {
@@ -160,5 +168,13 @@ export class NewRecipePage {
       tgs += this.recipe.tags[i] + " ";
     }
     this.tags = tgs;
+  }
+
+  hasItem(array: RecipeItem[], item: RecipeItem){
+    for(let i of array){
+      if(i.food.name == item.food.name) return true;
+    }
+    return false;
+
   }
 }
