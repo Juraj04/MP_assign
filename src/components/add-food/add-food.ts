@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
 import {Food, Unit} from "../../models/food";
 import {RecipeItem} from "../../models/recipeItem";
-import {AlertController, ModalController, NavController, NavParams, ViewController} from "ionic-angular";
+import {AlertController, ModalController, NavParams, ViewController} from "ionic-angular";
 import {DatabaseProvider} from "../../providers/database/database";
-import {CreateNewFoodComponent} from "../create-new-food/create-new-food";
 
 /**
  * Generated class for the AddFoodComponent component.
@@ -16,26 +15,27 @@ import {CreateNewFoodComponent} from "../create-new-food/create-new-food";
   templateUrl: 'add-food.html'
 })
 export class AddFoodComponent {
-
   searchText: string;
 
   foods: Food[] = [];
   all_foods: Food[] = [];
 
   food: Food;
-  newFood: boolean = true;
   unit: Unit;
   count: number;
   getCount: boolean = true;
 
-  constructor(public viewCtrl: ViewController, public db: DatabaseProvider, public params: NavParams, private modalCtrl: ModalController, private alertCtrl: AlertController) {
+  constructor(private viewCtrl: ViewController,
+              private db: DatabaseProvider,
+              private params: NavParams,
+              private modalCtrl: ModalController,
+              private alertCtrl: AlertController) {
     console.log('Hello AddFoodComponent Component');
     db.getAllFoods().then(value => {
       this.foods = value;
       this.all_foods = value
     });
     this.getCount = params.get("getCount");
-    //this.foods = db.get;  //TODO: JJ: toto som zapoznamkoval lebo to pindalo, momentalne som neriesil opravu
   }
 
   getItems($event) {
@@ -48,12 +48,10 @@ export class AddFoodComponent {
     }
 
     this.foods = this.all_foods.filter(value => value.name.indexOf(this.searchText) > -1);
-
   }
 
-
   selectFood(food: Food) {
-    console.log(this.getCount,food);
+    console.log(this.getCount, food);
     if (this.getCount) {
       this.getCountForFood(food);
 
@@ -62,15 +60,11 @@ export class AddFoodComponent {
     }
   }
 
-
-  close(){
+  close() {
     this.viewCtrl.dismiss()
   }
 
-
   createFood() {
-
-
     this.alertCtrl.create({
       title: 'Create food',
       inputs: [
@@ -92,9 +86,7 @@ export class AddFoodComponent {
         }
       ]
     }).present();
-
   }
-
 
   private continueCreate(name: string) {
     let prompt = this.alertCtrl.create({
@@ -131,7 +123,6 @@ export class AddFoodComponent {
     });
     prompt.present();
   }
-
 
   private getCountForFood(food: Food) {
     this.alertCtrl.create({

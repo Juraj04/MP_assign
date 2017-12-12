@@ -1,13 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Recipe} from "../../models/recipe";
 import {Observable} from "rxjs/Observable";
-import {SelectRightProviderProvider} from "../select-right-provider/select-right-provider";
 import {DatabaseProvider} from "../database/database";
-import {DummyDatabaseProvider} from "../dummy-database/dummy-database";
-import {Product} from "../../models/product";
 
 /*
   Generated class for the RecipeStoreProvider provider.
@@ -16,7 +12,7 @@ import {Product} from "../../models/product";
   and Angular DI.
 */
 @Injectable()
-export class RecipeStore {
+export class RecipeStoreProvider {
   private _recipes: BehaviorSubject<Recipe[]> = new BehaviorSubject([]);
   public readonly recipes: Observable<Recipe[]> = this._recipes.asObservable();
 

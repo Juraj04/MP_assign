@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Events, IonicPage, NavController, NavParams, ItemSliding} from 'ionic-angular';
+import {Events, IonicPage, NavController, ItemSliding} from 'ionic-angular';
 import {Product} from '../../models/product'
 import {ProductDetailPage} from "../product-detail/product-detail";
 import {NewProductPage} from "../new-product/new-product";
@@ -22,19 +22,19 @@ export class ProductsPage {
   allProducts: Product[] = [];
   searchInput: string;
 
-  constructor(public navCtrl: NavController, private productStore: ProductStoreProvider, private events: Events) {
+  constructor(private navCtrl: NavController,
+              private productStore: ProductStoreProvider,
+              private events: Events) {
     this.events.subscribe("search_from_fridge", (item) => {
       this.searchInput = item;
       this.selectProducts();
-    })
-
+    });
 
     this.events.subscribe("on_product_tag_click",(tag) => {
 
       this.searchInput = tag;
       this.selectProducts()
     })
-
   }
 
   ionViewDidLoad() {
@@ -44,6 +44,7 @@ export class ProductsPage {
     });
     this.selectProducts();
   }
+
   ionViewDidEnter(){
     this.selectProducts();
   }
@@ -86,11 +87,5 @@ export class ProductsPage {
       }
       this.products = this.allProducts.filter(value => value.tags.indexOf(this.searchInput.toLowerCase().trim()) > -1);
     }
-
-
   }
-
-
 }
-
-

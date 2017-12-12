@@ -3,12 +3,10 @@ import {AlertController, Events, IonicPage, NavController, NavParams, PopoverCon
 import {Recipe} from "../../models/recipe";
 import {FridgeProvider} from "../../providers/fridge/fridge";
 import {RecipeItem} from "../../models/recipeItem";
-import {RecipeStore} from "../../providers/recipe-store/recipe-store";
+import {RecipeStoreProvider} from "../../providers/recipe-store/recipe-store";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {RecipeDetailPopoverComponent} from "../../components/recipe-detail-popover/recipe-detail-popover";
 import {NewRecipePage} from "../new-recipe/new-recipe";
-import {Product} from "../../models/product";
-import {min} from "rxjs/operator/min";
 import {Unit} from "../../models/food";
 
 /**
@@ -24,19 +22,17 @@ import {Unit} from "../../models/food";
   templateUrl: 'recipe-detail.html',
 })
 export class RecipeDetailPage {
-  private recipe: Recipe;
-  private originalRecipe: Recipe;
-  private missing: Set<RecipeItem> = new Set<RecipeItem>();
-  private data: string = "ingredients";
+  recipe: Recipe;
+  originalRecipe: Recipe;
+  missing: Set<RecipeItem> = new Set<RecipeItem>();
 
-
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private recipeStore: RecipeStore,
+  constructor(private navCtrl: NavController,
+              private navParams: NavParams,
+              private recipeStore: RecipeStoreProvider,
               private productsStore: ProductStoreProvider,
-              public popoverCtrl: PopoverController,
-              public fridge: FridgeProvider,
-              public alertCtrl: AlertController,
+              private popoverCtrl: PopoverController,
+              private fridge: FridgeProvider,
+              private alertCtrl: AlertController,
               private events: Events) {
     this.recipe = this.navParams.get("recipe");
     this.originalRecipe = this.recipe;

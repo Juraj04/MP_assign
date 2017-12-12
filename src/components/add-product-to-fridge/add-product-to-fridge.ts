@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavParams, ViewController} from "ionic-angular";
 
 /**
@@ -12,34 +12,32 @@ import {NavParams, ViewController} from "ionic-angular";
   templateUrl: 'add-product-to-fridge.html'
 })
 export class AddProductToFridgeComponent {
-
-  text: string;
   quantity: number;
 
-  constructor(public params: NavParams, public viewCtrl: ViewController) {
+  constructor(private params: NavParams,
+              private viewCtrl: ViewController) {
     console.log('Hello AddProductToFridgeComponent Component');
-    this.text = 'Hello World';
     this.quantity = params.get("quantity");
   }
 
-  public convertToNumber(event): number {
+  convertToNumber(event): number {
     return +event;
   }
 
-  addToFridge(){
+  addToFridge() {
     this.viewCtrl.dismiss({countInFridge: this.quantity});
   }
 
-  addOne(){
+  addOne() {
     this.quantity++;
   }
-  subtractOne(){
-    if(this.quantity != 0)
+
+  subtractOne() {
+    if (this.quantity != 0)
       this.quantity--;
   }
 
-  close(){
+  close() {
     this.viewCtrl.dismiss()
   }
-
 }

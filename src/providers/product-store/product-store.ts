@@ -16,8 +16,7 @@ export class ProductStoreProvider {
   private _products: BehaviorSubject<Product[]> = new BehaviorSubject([]);
   public readonly products: Observable<Product[]> = this._products.asObservable();
 
-
-  constructor(public db: DatabaseProvider) {
+  constructor(private db: DatabaseProvider) {
 
     this.db.getDatabaseState().subscribe(rdy => {
       if (rdy) {

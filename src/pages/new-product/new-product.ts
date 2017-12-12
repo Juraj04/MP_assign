@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, Keyboard, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {AddFoodComponent} from "../../components/add-food/add-food";
 import {Product} from "../../models/product";
@@ -23,7 +23,6 @@ import {Unit} from "../../models/food";
     templateUrl: 'new-product.html',
 })
 export class NewProductPage {
-
     tags: string = "";
     unit: Unit;
 
@@ -31,10 +30,13 @@ export class NewProductPage {
     originalProduct: Product;
     create: Boolean;
 
-
-    constructor(public navCtrl: NavController, public navParams: NavParams,
-                public modal: ModalController, private locationStore: LocationStoreProvider, private productStore: ProductStoreProvider,
-                private toastCtrl: ToastController, private pictureManager: PictureManagerProvider) {
+    constructor(private navCtrl: NavController,
+                private navParams: NavParams,
+                private modal: ModalController,
+                private locationStore: LocationStoreProvider,
+                private productStore: ProductStoreProvider,
+                private toastCtrl: ToastController,
+                private pictureManager: PictureManagerProvider) {
         this.create = navParams.get("create");
         if (this.create) {
             let tgs: string[];
@@ -48,13 +50,11 @@ export class NewProductPage {
         }
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad NewProductPage');
-
-    }
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad NewProductPage');
+  }
 
     createProduct() {
-
         if (this.validInput()) {
             console.log("prve trimnutie: " + this.tags.toLowerCase().trim());
 
@@ -142,7 +142,7 @@ export class NewProductPage {
         modal.present();
     }
 
-    validInput() {
+    private validInput() {
         if (this.product.name.trim() == "") {
             this.presentToast("Insert name!");
             return false
@@ -163,7 +163,7 @@ export class NewProductPage {
         }
     }
 
-    presentToast(message: string) {
+    private presentToast(message: string) {
         const toast = this.toastCtrl.create({
             message: message,
             duration: 2000,
@@ -176,7 +176,7 @@ export class NewProductPage {
         toast.present();
     }
 
-    showTags() {
+    private showTags() {
         let tgs = "";
         for (let i = 0; i < this.product.tags.length; i++) {
             tgs += this.product.tags[i] + " ";
@@ -184,14 +184,12 @@ export class NewProductPage {
         this.tags = tgs
     }
 
-    public convertToNumber(event): number {
+    convertToNumber(event): number {
         return +event;
     }
 
-    trimNameAndLocation(){
+    private trimNameAndLocation(){
         this.product.name = this.product.name.trim();
         this.product.location.name = this.product.location.name.trim();
     }
-
-
 }

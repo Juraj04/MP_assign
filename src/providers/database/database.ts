@@ -622,9 +622,9 @@ export class DatabaseProvider {
         if (data[0].rows.length > 0) {
           recipe = new Recipe(
             data[0].rows.item(0).name,
-            data[0].rows.item(0).rating,
             data[0].rows.item(0).portions,
             data[0].rows.item(0).time,
+            data[0].rows.item(0).rating,
             data[0].rows.item(0).difficulty,
             data[0].rows.item(0).description,
             data[0].rows.item(0).photo,
@@ -651,9 +651,9 @@ export class DatabaseProvider {
               .then((data2) => {
                 let recipe: Recipe = new Recipe(
                   data.rows.item(i).name,
-                  data.rows.item(i).rating,
                   data.rows.item(i).portions,
                   data.rows.item(i).time,
+                  data.rows.item(i).rating,
                   data.rows.item(i).difficulty,
                   data.rows.item(i).description,
                   data.rows.item(i).photo,
@@ -670,7 +670,7 @@ export class DatabaseProvider {
       .catch(err => console.log(err));
   }
 
-  addRecipeItem(id_recipe: number, recipeItem: RecipeItem) {
+  addRecipeItem(id_recipe: number, recipeItem: RecipeItem) : Promise<RecipeItem> {
     let sql = 'INSERT INTO ' + DatabaseModel.TABLE_RECIPE_ITEMS
       + ' ('
       + DatabaseModel.COLUMN_ID_RECIPE + ', '

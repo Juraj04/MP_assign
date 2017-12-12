@@ -20,11 +20,15 @@ import {NewProductPage} from "../new-product/new-product";
   templateUrl: 'product-detail.html',
 })
 export class ProductDetailPage {
-  private product: Product
-  private originalProduct: Product;
+  product: Product
+  originalProduct: Product;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public productStore: ProductStoreProvider,
-              public modal: ModalController, public popoverCtrl: PopoverController, private events: Events) {
+  constructor(private navCtrl: NavController,
+              private navParams: NavParams,
+              private productStore: ProductStoreProvider,
+              private modal: ModalController,
+              private popoverCtrl: PopoverController,
+              private events: Events) {
     this.product = navParams.get("product");
     this.originalProduct = this.product;
   }

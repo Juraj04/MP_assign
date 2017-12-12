@@ -3,7 +3,7 @@ import {IonicPage, ModalController, NavController, NavParams, ToastController} f
 import {RecipeItem} from "../../models/recipeItem";
 import {AddFoodComponent} from "../../components/add-food/add-food";
 import {Recipe} from "../../models/recipe";
-import {RecipeStore} from "../../providers/recipe-store/recipe-store";
+import {RecipeStoreProvider} from "../../providers/recipe-store/recipe-store";
 import {PictureManagerProvider} from "../../providers/picture-manager/picture-manager";
 import {RecipeDetailPage} from "../recipe-detail/recipe-detail";
 
@@ -25,15 +25,12 @@ export class NewRecipePage {
   originalRecipe: Recipe;
   create: Boolean;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public modal: ModalController,
-              private recipeStore: RecipeStore,
+  constructor(private navCtrl: NavController,
+              private navParams: NavParams,
+              private modal: ModalController,
+              private recipeStore: RecipeStoreProvider,
               private toastCtrl: ToastController,
               private pictureManager: PictureManagerProvider) {
-
-
-
     this.create = navParams.get("create");
     if (this.create) {
       let tgs: string[];
@@ -42,8 +39,7 @@ export class NewRecipePage {
     } else {
       this.recipe = navParams.get("recipe");
       this.originalRecipe = this.recipe;
-      this.showTags()
-
+      this.showTags();
     }
   }
 
@@ -106,7 +102,6 @@ export class NewRecipePage {
     });
   }
 
-  //toto bude treba opravit
   addItem() {
     let modal = this.modal.create(AddFoodComponent, {getCount: true});
     modal.onDidDismiss(data => {
@@ -131,7 +126,7 @@ export class NewRecipePage {
 
   }
 
-  validInput() {
+  private validInput() {
     if (this.recipe.name.trim() == "") {
       this.presentToast("Insert name!");
       return false
@@ -149,7 +144,7 @@ export class NewRecipePage {
     }
   }
 
-  presentToast(message: string) {
+  private presentToast(message: string) {
     const toast = this.toastCtrl.create({
       message: message,
       duration: 2000,
@@ -162,7 +157,7 @@ export class NewRecipePage {
     toast.present();
   }
 
-  showTags() {
+  private showTags() {
     let tgs = "";
     for (let i = 0; i < this.recipe.tags.length; i++) {
       tgs += this.recipe.tags[i] + " ";
@@ -175,6 +170,5 @@ export class NewRecipePage {
       if(i.food.name == item.food.name) return true;
     }
     return false;
-
   }
 }

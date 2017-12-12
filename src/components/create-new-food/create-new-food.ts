@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavParams, ViewController} from "ionic-angular";
+import {ViewController} from "ionic-angular";
 import {Food, Unit} from "../../models/food";
 import {DatabaseProvider} from "../../providers/database/database";
 
@@ -18,19 +18,17 @@ export class CreateNewFoodComponent {
   name: string = "";
   unit: Unit;
 
-  constructor(public viewCtrl: ViewController, public db: DatabaseProvider) {
-
+  constructor(private viewCtrl: ViewController,
+              private db: DatabaseProvider) {
   }
+
   close(){
     this.viewCtrl.dismiss()
   }
+
   create(){
-    //TODO check input
     let food = new Food(this.name,this.unit);
     this.db.addFood(food)
     this.viewCtrl.dismiss({food})
   }
-
-
-
 }

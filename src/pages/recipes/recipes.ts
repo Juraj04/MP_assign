@@ -3,7 +3,7 @@ import {Events, IonicPage, NavController} from 'ionic-angular';
 import {Recipe} from "../../models/recipe";
 import {RecipeDetailPage} from "../recipe-detail/recipe-detail";
 import {NewRecipePage} from "../new-recipe/new-recipe";
-import {RecipeStore} from "../../providers/recipe-store/recipe-store";
+import {RecipeStoreProvider} from "../../providers/recipe-store/recipe-store";
 
 /**
  * Generated class for the RecipesPage page.
@@ -22,12 +22,13 @@ export class RecipesPage {
   allRecipes: Recipe[] = [];
   searchInput: string = "";
 
-  constructor(public navCtrl: NavController, private recipeStore: RecipeStore, private events: Events) {
+  constructor(private navCtrl: NavController,
+              private recipeStore: RecipeStoreProvider,
+              private events: Events) {
 
     this.events.subscribe("on_recipe_tag_click",(tag) => {
       this.onTagClicked(tag)
     })
-
   }
 
   ionViewDidLoad() {
@@ -70,10 +71,5 @@ export class RecipesPage {
       }
       this.recipes = this.allRecipes.filter(value => value.tags.indexOf(this.searchInput.toLowerCase().trim()) > -1);
     }
-  }
-
-  getDifficulty(diff: number): string {
-    var a: string[] = ["EASY", "MEDIUM", "HARD"];
-    return a[diff - 1];
   }
 }

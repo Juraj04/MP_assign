@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {ProductStoreProvider} from "../product-store/product-store";
-import {Food} from "../../models/food";
 import {RecipeItem} from "../../models/recipeItem";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Observable} from "rxjs/Observable";

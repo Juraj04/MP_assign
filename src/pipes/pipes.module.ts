@@ -1,14 +1,13 @@
-import { NgModule } from '@angular/core';
-import { DifficultyPipe } from './difficulty/difficulty';
-import { UnitPipe } from './unit/unit';
-import { LongTextPipe } from './long-text/long-text';
+import {NgModule} from '@angular/core';
+import {DifficultyPipe} from './difficulty/difficulty';
+import {UnitPipe} from './unit/unit';
+
 @NgModule({
-	declarations: [DifficultyPipe,
-    UnitPipe,
-    LongTextPipe],
-	imports: [],
-	exports: [DifficultyPipe,
-    UnitPipe,
-    LongTextPipe]
+  declarations: [DifficultyPipe,
+    UnitPipe],
+  imports: [],
+  exports: [DifficultyPipe,
+    UnitPipe]
 })
-export class PipesModule {}
+export class PipesModule {
+}

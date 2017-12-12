@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, ViewController} from "ionic-angular";
 import {Recipe} from "../../models/recipe";
-import {RecipeStore} from "../../providers/recipe-store/recipe-store";
+import {RecipeStoreProvider} from "../../providers/recipe-store/recipe-store";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {Product} from "../../models/product";
 
@@ -19,10 +19,10 @@ export class RecipeDetailPopoverComponent {
     recipe: Recipe;
     product: Product;
 
-    constructor(public navCtrl: NavController,
-                public params: NavParams,
-                public viewCtrl: ViewController,
-                private recipeStore: RecipeStore,
+    constructor(private navCtrl: NavController,
+                private params: NavParams,
+                private viewCtrl: ViewController,
+                private recipeStore: RecipeStoreProvider,
                 private productStore: ProductStoreProvider) {
         console.log('Hello RecipeDetailPopoverComponent Component');
         this.recipe = this.params.get("recipe");
