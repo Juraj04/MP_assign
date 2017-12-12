@@ -6,9 +6,9 @@ import {SQLitePorter} from '@ionic-native/sqlite-porter';
 import {Observable} from 'rxjs/Observable';
 
 import {Product} from '../../models/product';
-import {Difficulty, Recipe} from "../../models/recipe";
+import {Recipe} from "../../models/recipe";
 import {DatabaseModel} from "../../models/database-model";
-import {Food, Unit} from "../../models/food";
+import {Food} from "../../models/food";
 import {Location} from '../../models/location';
 import {RecipeItem} from "../../models/recipeItem";
 
@@ -34,7 +34,7 @@ export class DatabaseProvider {
         .then((database: SQLiteObject) => {
           this.database = database;
           //DatabaseModel.dropAllTables(sqlitePorter, this.database).then(() => {
-          DatabaseModel.createTables(sqlitePorter, this.database);
+          DatabaseModel.createTables(this.sqlitePorter, this.database);
           //});
         });
     });
@@ -47,9 +47,7 @@ export class DatabaseProvider {
     })
   }
 
-  //TODO: zapoznamkovat vypisy
-
-  private createProducts() {
+  /*private createProducts() {
     let names = ["voda", "mnasko", "cipsik", "vlocky", "jogurt", "kondomy", "chlieb", "ryza"];
     let locations = [new Location('Prisma', 0, 0), new Location('Lidl', 0, 0), new Location('K-Market', 0, 0), new Location('Tesco', 0, 0)];
     let dates = ["1.1.2017", "2.2.2017", "3.3.2017", "4.4.2017", "5.5.2017", "6.6.2017"];
@@ -81,9 +79,9 @@ export class DatabaseProvider {
         tags
       ));
     }
-  }
+  }*/
 
-  private createDummyRecipes() {
+  /*private createDummyRecipes() {
     let names = ["Halusky", "Rizoto", "Plnena paprika"];
     let description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
     let photos = ["https://upload.wikimedia.org/wikipedia/commons/a/ad/Bryndzov%C3%A9_halu%C5%A1ky_so_slaninou.jpg", "https://t3.aimg.sk/magaziny/_s9Ln897Tl2N3M98rzvOtA.1280~Rybacie-rizoto-s-paprikou.jpg", "https://bonvivani.sk/sites/default/files/styles/large/public/recept/87/459/11759.jpg"];
@@ -118,7 +116,7 @@ export class DatabaseProvider {
         tags
       ));
     }
-  }
+  }*/
 
   addLocation(location: Location): Promise<Location> {
     if (location.id == null) {

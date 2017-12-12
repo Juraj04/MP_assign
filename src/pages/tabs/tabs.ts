@@ -15,6 +15,6 @@ export class TabsPage {
     tab3Root = RecipesPage;
 
     constructor(private screenOrientation: ScreenOrientation) {
-        //this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
 }

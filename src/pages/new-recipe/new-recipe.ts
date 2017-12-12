@@ -31,7 +31,7 @@ export class NewRecipePage {
               private recipeStore: RecipeStoreProvider,
               private toastCtrl: ToastController,
               private pictureManager: PictureManagerProvider) {
-    this.create = navParams.get("create");
+    this.create = this.navParams.get("create");
     if (this.create) {
       let tgs: string[];
       let items: RecipeItem[] = [];

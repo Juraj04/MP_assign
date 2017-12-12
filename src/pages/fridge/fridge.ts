@@ -18,7 +18,7 @@ import {RecipeItem} from "../../models/recipeItem";
 export class FridgePage {
 
   constructor(private navCtrl: NavController,
-              private fridge: FridgeProvider,
+              public fridge: FridgeProvider,
               private events: Events) {
   }
 

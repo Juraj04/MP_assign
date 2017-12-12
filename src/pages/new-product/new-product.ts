@@ -37,7 +37,7 @@ export class NewProductPage {
                 private productStore: ProductStoreProvider,
                 private toastCtrl: ToastController,
                 private pictureManager: PictureManagerProvider) {
-        this.create = navParams.get("create");
+        this.create = this.navParams.get("create");
         if (this.create) {
             let tgs: string[];
             this.product = new Product("", new Location("", 0, 0), null, "", 3, null, 0, null, "./assets/img/default-placeholder.png", tgs);

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Food, Unit} from "../../models/food";
 import {RecipeItem} from "../../models/recipeItem";
-import {AlertController, ModalController, NavParams, ViewController} from "ionic-angular";
+import {AlertController, NavParams, ViewController} from "ionic-angular";
 import {DatabaseProvider} from "../../providers/database/database";
 
 /**
@@ -28,14 +28,13 @@ export class AddFoodComponent {
   constructor(private viewCtrl: ViewController,
               private db: DatabaseProvider,
               private params: NavParams,
-              private modalCtrl: ModalController,
               private alertCtrl: AlertController) {
     console.log('Hello AddFoodComponent Component');
     db.getAllFoods().then(value => {
       this.foods = value;
       this.all_foods = value
     });
-    this.getCount = params.get("getCount");
+    this.getCount = this.params.get("getCount");
   }
 
   getItems($event) {

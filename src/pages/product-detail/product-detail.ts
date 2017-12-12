@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Events, IonicPage, ModalController, NavController, NavParams, PopoverController, Toast} from 'ionic-angular';
+import {Events, IonicPage, ModalController, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {Product} from "../../models/product";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {GoogleMapsWindowPage} from "../google-maps-window/google-maps-window";
@@ -20,7 +20,7 @@ import {NewProductPage} from "../new-product/new-product";
   templateUrl: 'product-detail.html',
 })
 export class ProductDetailPage {
-  product: Product
+  product: Product;
   originalProduct: Product;
 
   constructor(private navCtrl: NavController,
@@ -29,7 +29,7 @@ export class ProductDetailPage {
               private modal: ModalController,
               private popoverCtrl: PopoverController,
               private events: Events) {
-    this.product = navParams.get("product");
+    this.product = this.navParams.get("product");
     this.originalProduct = this.product;
   }
 

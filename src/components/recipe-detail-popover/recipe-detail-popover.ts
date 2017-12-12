@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, ViewController} from "ionic-angular";
+import {NavParams, ViewController} from "ionic-angular";
 import {Recipe} from "../../models/recipe";
 import {RecipeStoreProvider} from "../../providers/recipe-store/recipe-store";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
@@ -19,8 +19,7 @@ export class RecipeDetailPopoverComponent {
     recipe: Recipe;
     product: Product;
 
-    constructor(private navCtrl: NavController,
-                private params: NavParams,
+    constructor(private params: NavParams,
                 private viewCtrl: ViewController,
                 private recipeStore: RecipeStoreProvider,
                 private productStore: ProductStoreProvider) {

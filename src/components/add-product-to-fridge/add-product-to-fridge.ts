@@ -17,7 +17,7 @@ export class AddProductToFridgeComponent {
   constructor(private params: NavParams,
               private viewCtrl: ViewController) {
     console.log('Hello AddProductToFridgeComponent Component');
-    this.quantity = params.get("quantity");
+    this.quantity = this.params.get("quantity");
   }
 
   convertToNumber(event): number {

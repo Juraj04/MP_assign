@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
 import {Camera, CameraOptions} from "@ionic-native/camera";

@@ -25,7 +25,7 @@ export class RecipeDetailPage {
   recipe: Recipe;
   originalRecipe: Recipe;
   missing: Map<Food,number> = new Map<Food,number>();
-  private data: string = "ingredients";
+  data: string = "ingredients";
 
   constructor(private navCtrl: NavController,
               private navParams: NavParams,

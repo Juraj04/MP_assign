@@ -30,9 +30,9 @@ export class GoogleMapsWindowPage {
               private geolocation: Geolocation,
               private locationStore: LocationStoreProvider,
               private toastCtrl: ToastController) {
-    if (navParams.get("location") != null && navParams.get("change") != null) {
-      this.location = navParams.get("location");
-      this.change = navParams.get("change");
+    if (this.navParams.get("location") != null && this.navParams.get("change") != null) {
+      this.location = this.navParams.get("location");
+      this.change = this.navParams.get("change");
       console.log(this.location);
       console.log(this.change);
     }
@@ -180,7 +180,6 @@ export class GoogleMapsWindowPage {
             lat: this.location.x,
             lng: this.location.y
           },
-
         })
       });
 

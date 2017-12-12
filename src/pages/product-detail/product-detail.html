@@ -6,81 +6,82 @@
 -->
 <ion-header>
 
-    <ion-navbar color="primary">
-        <ion-title class="name">{{product.name}}</ion-title>
+  <ion-navbar color="primary">
+    <ion-title class="name">{{product.name}}</ion-title>
 
-        <ion-buttons end>
-            <button ion-button icon-only color="royal" (click)="addToFridge()">
-                <ion-icon name="cart"></ion-icon>
-            </button>
-            <button ion-button icon-only (click)="presentPopover($event)">
-                <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="addToFridge()">
+        <ion-icon name="cart"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 
 </ion-header>
 
 
 <ion-content id="content">
 
+  <div class="thumbnail">
+    <img src="{{product.photo}}" class="portrait" id="recipeDetailImage"/>
+  </div>
 
-    <img id="image" src={{product.photo}}>
+  <ion-list padding>
+    <ion-item>
+      <ion-icon item-left color="primary" name="ios-pizza-outline"></ion-icon>
+      <h1 id="name">{{product.food.name}}</h1>
+    </ion-item>
 
+    <ion-item (click)="showInMap()">
+      <ion-icon item-left color="primary" name="ios-pin-outline"></ion-icon>
+      <h1>{{product.location.name}}</h1>
+    </ion-item>
 
-    <ion-list padding>
-        <ion-item>
-            <ion-icon item-left color="primary" name="ios-pizza-outline"></ion-icon>
-            <h1 id="name">{{product.food.name}}</h1>
-        </ion-item>
+    <ion-item>
+      <ion-icon item-left color="primary" name="ios-cash-outline"></ion-icon>
+      <ion-note>Price</ion-note>
+      <ion-badge item-end>{{product.price}} €</ion-badge>
+    </ion-item>
 
-        <ion-item (click)="showInMap()">
-            <ion-icon item-left color="primary" name="ios-pin-outline"></ion-icon>
-            <h1>{{product.location.name}}</h1>
-        </ion-item>
+    <ion-item>
+      <ion-icon item-left color="primary" name="ios-star-outline"></ion-icon>
+      <ion-note>Rating</ion-note>
+      <ion-badge item-end>{{product.rating}}</ion-badge>
+    </ion-item>
 
-        <ion-item>
-            <ion-icon item-left color="primary" name="ios-cash-outline"></ion-icon>
-            <ion-note>Price</ion-note>
-            <ion-badge item-end>{{product.price}} €</ion-badge>
-        </ion-item>
+    <ion-item>
+      <ion-icon item-left color="primary" name="ios-cart-outline"></ion-icon>
+      <ion-note>Count in fridge</ion-note>
+      <ion-badge item-end>{{product.count_fridge}}</ion-badge>
+    </ion-item>
 
-        <ion-item>
-            <ion-icon item-left color="primary" name="ios-star-outline"></ion-icon>
-            <ion-note>Rating</ion-note>
-            <ion-badge item-end>{{product.rating}}</ion-badge>
-        </ion-item>
-
-        <ion-item>
-            <ion-icon item-left color="primary" name="ios-cart-outline"></ion-icon>
-            <ion-note>Count in fridge</ion-note>
-            <ion-badge item-end>{{product.count_fridge}}</ion-badge>
-        </ion-item>
-
-        <ion-item>
-            <ion-icon item-left color="primary" name="ios-cube-outline"></ion-icon>
-            <ion-note>Quantity in package</ion-note>
-            <ion-badge item-end>{{product.quantity}} {{product.food.unit | unit}}</ion-badge>
-        </ion-item>
-    </ion-list>
-
-
-    <p id="tags" align="center"><span *ngFor="let tag of product.tags" class="tag" (click)="onTagClick(tag)" > #{{tag }} </span></p>
-
-    <ion-fab top right>
-        <button ion-fab mini color="{{getColorByRating()}}">
-            <ion-icon name="{{getEmojiByRating()}}"></ion-icon>
-        </button>
-        <ion-fab-list side="bottom">
-            <button ion-fab color="primary" (click)="ratingPlus()">
-                <ion-icon name="md-thumbs-up"></ion-icon>
-            </button>
-            <button ion-fab color="primary" (click)="ratingMinus()">
-                <ion-icon name="md-thumbs-down"></ion-icon>
-            </button>
+    <ion-item>
+      <ion-icon item-left color="primary" name="ios-cube-outline"></ion-icon>
+      <ion-note>Quantity in package</ion-note>
+      <ion-badge item-end>{{product.quantity}} {{product.food.unit | unit}}</ion-badge>
+    </ion-item>
+  </ion-list>
 
 
-        </ion-fab-list>
-    </ion-fab>
+  <p id="tags" align="center"><span *ngFor="let tag of product.tags" class="tag"
+                                    (click)="onTagClick(tag)"> #{{tag }} </span></p>
+
+  <ion-fab top right>
+    <button ion-fab mini color="{{getColorByRating()}}">
+      <ion-icon name="{{getEmojiByRating()}}"></ion-icon>
+    </button>
+    <ion-fab-list side="bottom">
+      <button ion-fab color="primary" (click)="ratingPlus()">
+        <ion-icon name="md-thumbs-up"></ion-icon>
+      </button>
+      <button ion-fab color="primary" (click)="ratingMinus()">
+        <ion-icon name="md-thumbs-down"></ion-icon>
+      </button>
+
+
+    </ion-fab-list>
+  </ion-fab>
 
 </ion-content>
