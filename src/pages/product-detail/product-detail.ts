@@ -72,7 +72,7 @@ export class ProductDetailPage {
   }
 
   ratingMinus() {
-    if (this.product.rating > 0) {
+    if (this.product.rating > 1) {
       this.product.rating--;
       this.productStore.updateProduct(this.originalProduct, this.product);
     }

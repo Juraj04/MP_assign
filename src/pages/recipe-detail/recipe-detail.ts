@@ -7,7 +7,7 @@ import {RecipeStoreProvider} from "../../providers/recipe-store/recipe-store";
 import {ProductStoreProvider} from "../../providers/product-store/product-store";
 import {RecipeDetailPopoverComponent} from "../../components/recipe-detail-popover/recipe-detail-popover";
 import {NewRecipePage} from "../new-recipe/new-recipe";
-import {Unit} from "../../models/food";
+import {Food, Unit} from "../../models/food";
 
 /**
  * Generated class for the RecipeDetailPage page.
@@ -24,7 +24,8 @@ import {Unit} from "../../models/food";
 export class RecipeDetailPage {
   recipe: Recipe;
   originalRecipe: Recipe;
-  missing: Set<RecipeItem> = new Set<RecipeItem>();
+  missing: Map<Food,number> = new Map<Food,number>();
+  private data: string = "ingredients";
 
   constructor(private navCtrl: NavController,
               private navParams: NavParams,
@@ -47,17 +48,15 @@ export class RecipeDetailPage {
     this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
   }
 
-  checkFood(food: RecipeItem): boolean {
-    let ret = this.fridge.haveEnough(food)
+  checkFood(item: RecipeItem): boolean {
+    let missingCount = this.fridge.howMuchMissing(item)
 
-    if (ret) {
-      this.missing.delete(food)
+    if (missingCount  == 0) {
+      this.missing.delete(item.food)
     } else {
-
-      this.missing.add(food)
+      this.missing.set(item.food,missingCount)
     }
-
-    return ret
+    return missingCount == 0
   }
 
 
@@ -65,11 +64,20 @@ export class RecipeDetailPage {
     console.log(this.missing)
     if (this.missing.size > 0) {
 
-      //TODO vypisat ktore chybaju
+      let missingFoodString: string = "<ul class='no-balls'>"
+
+
+      for (let entry of Array.from(this.missing.entries())) {
+        let food:Food = entry[0];
+        let count:number = entry[1];
+        missingFoodString += "<li>"+food.name + " " + count + " " + Unit[food.unit]  + "</li>"
+      }
+
+      missingFoodString += "</ul>"
 
       this.alertCtrl.create({
         title: "No enough food",
-        message: "There is no enough food in you fridge",
+        message: "There is no enough food in you fridge\n" + missingFoodString,
         buttons: ["Ok"]
       }).present();
     } else {
@@ -127,7 +135,7 @@ export class RecipeDetailPage {
   }
 
   ratingMinus() {
-    if (this.recipe.rating > 0) {
+    if (this.recipe.rating > 1) {
       this.recipe.rating--;
       this.recipeStore.updateRecipe(this.originalRecipe, this.recipe);
       this.recipe.refreshArray();

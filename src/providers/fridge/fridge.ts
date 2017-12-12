@@ -38,12 +38,14 @@ export class FridgeProvider {
     console.log('Hello FridgeProvider Provider');
   }
 
-  public haveEnough(item: RecipeItem): boolean {
+  public howMuchMissing(item: RecipeItem): number {
 
     for (let value of this._foods.getValue()) {
-      if (item.food.name == value.food.name && value.count >= item.count) return true
+      if (item.food.name == value.food.name) {
+        return item.count - Math.min(value.count,item.count);
+      }
     }
-    return false
+    return item.count;
   }
 
 
